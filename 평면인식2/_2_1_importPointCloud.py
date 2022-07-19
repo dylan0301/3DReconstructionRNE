@@ -2,26 +2,26 @@ import os
 import numpy as np
 from plyfile import PlyData
 
+#ply파일에 내장된 법선벡터 쓸때
+def read_ply_xyznormalrgb(filename):
+    """ read XYZ normals RGB point cloud from filename PLY file """
+    assert(os.path.isfile(filename))
+    with open(filename, 'rb') as f:
+        plydata = PlyData.read(f)
+        num_verts = plydata['vertex'].count
+        vertices = np.zeros(shape=[num_verts, 9], dtype=np.float32)
+        vertices[:,0] = plydata['vertex'].data['x']
+        vertices[:,1] = plydata['vertex'].data['y']
+        vertices[:,2] = plydata['vertex'].data['z']
+        vertices[:,3] = plydata['vertex'].data['nx']
+        vertices[:,4] = plydata['vertex'].data['ny']
+        vertices[:,5] = plydata['vertex'].data['nz']
+        vertices[:,6] = plydata['vertex'].data['red']
+        vertices[:,7] = plydata['vertex'].data['green']
+        vertices[:,8] = plydata['vertex'].data['blue']
+    return vertices 
 
-
-# def read_ply_xyznormalrgb(filename):
-#     """ read XYZ normals RGB point cloud from filename PLY file """
-#     assert(os.path.isfile(filename))
-#     with open(filename, 'rb') as f:
-#         plydata = PlyData.read(f)
-#         num_verts = plydata['vertex'].count
-#         vertices = np.zeros(shape=[num_verts, 9], dtype=np.float32)
-#         vertices[:,0] = plydata['vertex'].data['x']
-#         vertices[:,1] = plydata['vertex'].data['y']
-#         vertices[:,2] = plydata['vertex'].data['z']
-#         vertices[:,3] = plydata['vertex'].data['nx']
-#         vertices[:,4] = plydata['vertex'].data['ny']
-#         vertices[:,5] = plydata['vertex'].data['nz']
-#         vertices[:,6] = plydata['vertex'].data['red']
-#         vertices[:,7] = plydata['vertex'].data['green']
-#         vertices[:,8] = plydata['vertex'].data['blue']
-#     return vertices 
-
+#ply파일에서 법선벡터 버리고 xyz rgb정보만 가져옴
 def read_ply_xyzrgb(filename):
     """ read XYZ RGB point cloud from filename PLY file """
     assert(os.path.isfile(filename))
