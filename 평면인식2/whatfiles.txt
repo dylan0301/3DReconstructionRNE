@@ -1,0 +1,85 @@
+목표
+1. 최대한 독립적
+2. 전역변수x hyperparameter class
+3. 벡터클래스 x
+4. 역할별로 파일 나누기
+
+
+파일
+0. datastructure.txt
+
+1. 사용할 포인트클라우드 데이터를 설정하는 파일, hyperparameter 같이들어있음 1_data.py
+    input = np array pointcloud
+    output = AllPoints, Point 모두 생성
+    1-1. importpointcloud 1_1_importPointCloud.py
+        input = ply 파일
+        output = np array pointcloud
+    
+2. point class: 최대한 단순하게. init parameter랑 distance함수만.
+또 plane class 
+2_classes.py
+    input = None
+    output = None
+
+3. removenoise 3_removeNoise.py 
+    input = AllPoints
+    output = (노이즈가 처리된) AllPoints 
+
+4. nearby 찾기 4_nearby.py
+    input = AllPoints
+    output = Point.nearby 업데이트
+
+5. find normal vector 5_findNormal.py
+    input = AllPoints
+    output = Point.normal 업데이트, BoundaryPoints, CenterPoints
+
+6. vector clustering 6_vectorClustering.py
+    input = CenterPoints
+    output = vectorClusters
+
+7. stair clustering 7_distanceStairClustering.py
+    input = vectorClusters
+    output = stairClusters
+
+8. 떨어져있는데 같은 평면으로 구분된거 해결하는 파일 8_Unicorn.py
+    input = stairClusters
+    output = unicornClusters
+
+9. 각 클러스터의 평면 방정식을 Ransac으로 찾어줌 9_findPlane.py
+    input = unicornClusters
+    output = planeEquations
+
+10. 경계점들끼리만 removenoise 10_boundaryRemoveNoise.py
+    input = BoundaryPoints
+    output = (노이즈 처리된) BoundaryPoints
+
+11. 경계점 projection 후 다각형 11_boundarize.py
+    input = planeEquations, BoundaryPoints
+    output = polygon
+
+12. main.py
+AllPoints 
+BoundaryPoints
+CenterPoints
+DistMat
+Point.nearby
+
+
+Class hyperparameter:
+    def __init__(self, p1, p2, p3, ... , pn):
+        self.p1 = p1
+        self.p2 = p2
+        
+
+
+h1 = hyperparameter(2,3,4)
+h2 = hyperparameter(5,5,5)
+
+def dsadlkfj():
+    what < p3
+
+def hyperparameterCube():
+    global p1, p2, p3
+    p1 = 3
+    p2 = 4
+    p3 = 5

@@ -61,7 +61,7 @@ DistMat = [D_ij] where D_ij = Euclidean Distance(P_i, P_j)
     if standardDeviation < stdThreshold:
         P_i는 평면 내부의 점
         CenterPoints.append(P_i)
-        P_i.normal = avg
+        P_i.normal = avg #이거 랜색벡터로 하자
         
     else:
         P_i는 경계의 점

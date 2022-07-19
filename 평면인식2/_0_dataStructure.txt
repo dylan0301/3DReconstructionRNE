@@ -1,0 +1,10 @@
+AllPoints 
+BoundaryPoints
+CenterPoints
+DistMat
+Point.nearby 
+Point.normal
+vectorClusters
+stairClusters
+unicornClusters
+plane

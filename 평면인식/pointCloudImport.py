@@ -3,7 +3,7 @@ import numpy as np
 from plyfile import PlyData
 
 
-filepath = '/Users/jeewon/Library/CloudStorage/OneDrive-대구광역시교육청/지원/한과영/RnE/3D reconstruction/평면인식/pointclouddata/'
+filepath = '/Users/jeewon/Library/CloudStorage/OneDrive-대구광역시교육청/지원/한과영/RnE/3DReconstructionRNE/pointclouddata/'
 actualfile = 'medium_33091.ply'
 #actualfile = '5000points_2plane.ply'
 #actualfile = 'million_bestsayang.ply'
