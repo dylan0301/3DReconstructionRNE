@@ -21,10 +21,10 @@ class Point:
 
 class Hyperparameter:
     #여기있는건 realdata 기준 값들, 거리단위 m
-    def __init__(self, pointLeastDifference = 0.0001, numOfPoints = 5000, OutlierThreshold = 8, 
-                noiseR = 0.2, friend = 12, vectorRansacTrial = 20, vectorRansacThreshold = 0.15,
-                stdThreshold = 0.5, numOfCluster = 5, step_threshold = 0.3, planeRansacTrial = 20,
-                planeRansacThreshold = 0.15):
+    def __init__(self, pointLeastDifference = 0.0001, numOfPoints = 5000, OutlierThreshold = 10, 
+                noiseR = 0.05, friend = 16, vectorRansacTrial = 50, vectorRansacThreshold = 0.15, normalLeastNorm = 0.00001,
+                stdThreshold = 0.5, ransacErrorThreshold = 0.01, numOfCluster = 7, step_threshold = 0.0001, planeRansacTrial = 50,
+                planeRansacThreshold = 0.15, boundaryR = 0.07, boundaryOutlierThreshold = 10):
 
         #2 data
         self.pointLeastDifference = pointLeastDifference #각 좌표값 차이가 이거보다 가까이 있는 점 쌍은 하나로 취급
@@ -38,7 +38,10 @@ class Hyperparameter:
         self.friend = friend #nearby 크기 이만큼 짜름
         self.vectorRansacTrial = vectorRansacTrial #법선벡터구할때 랜색 시행횟수
         self.vectorRansacThreshold = vectorRansacThreshold #법선벡터구할때 랜색 오차허용범위
+        self.normalLeastNorm = normalLeastNorm #주변벡터 두개 외적한 벡터가 norm 이거보다 작으면 취급 x
         self.stdThreshold = stdThreshold #외적 벡터드표준편차 이거보다 크면 경계점
+
+        self.ransacErrorThreshold = ransacErrorThreshold #Error 방법으로 했을때 Error 이거보다 크면 경계점
         
         #5 vectorClustering
         self.numOfCluster = numOfCluster #벡터클러스터링할때 클러스터 개수 (곱하기2 안한것)
@@ -49,10 +52,11 @@ class Hyperparameter:
         #8 findPlane
         self.planeRansacTrial = planeRansacTrial #최종 평면 구할때 랜색 시행횟수
         self.planeRansacThreshold = planeRansacThreshold #최종적으로 평면 만들때 쓰는 랜색 오차허용범위
-
-
+        
         #9 boundaryRemoveNoise
         #여기서 OutlierThreshold랑 noiseR 다르게 설정 필요할듯
+        self.boundaryR = boundaryR
+        self.boundaryOutlierThreshold = boundaryOutlierThreshold
         
 
 

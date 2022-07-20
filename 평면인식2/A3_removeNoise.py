@@ -10,7 +10,7 @@ def removeNoise(AllPoints, hyperparameter):
 
     newDistMat = defaultdict(list)
     for i in range(size):
-        res = updateNearby(AllPoints[i], distMat)
+        res = updateNearby(AllPoints[i], distMat, True)
         newDistMat[i] = res
 
     #노이즈 제거
@@ -25,6 +25,7 @@ def removeNoise(AllPoints, hyperparameter):
         del AllPoints[j]
             
     for i in AllPoints.keys():
-        updateNearby(AllPoints[i], newDistMat, del_candidate)
+        updateNearby(AllPoints[i], newDistMat, False, del_candidate, hyperparameter)
+        
 
     return AllPoints

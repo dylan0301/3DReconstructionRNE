@@ -10,7 +10,7 @@ def vectorClustering(CenterPoints, hyperparameter):
     ac = AgglomerativeClustering(n_clusters=numOfCluster, affinity="euclidean", linkage="complete")
     labels = ac.fit_predict(Duplicatedvectors)
 
-    print(list(labels))
+    #print(list(labels))
     
     oppositeVector = []
     for i in range(len(CenterPoints)):

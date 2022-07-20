@@ -1,11 +1,13 @@
 import numpy as np
+from collections import defaultdict
 
-def divideCluster_stairmethod(Cluster, NewClusterPointMap, NewLabels,  hyperparameter):
+def divideCluster_stairmethod(Cluster, NewClusterPointMap, hyperparameter):
+    Newclusterpm = NewClusterPointMap
     avg = np.array([0,0,0])
     for p in Cluster:
         avg = avg + p.normal
-    avg.normalize()
-    print(avg)
+    avg /= np.linalg.norm(avg)
+    print('FirstCluster Avg:', avg)
 
     #점 p랑 ax+by+cz+d=0 수직거리. a,b,c는 avg벡터고 d=0
     def shortestDistance(p):
@@ -21,8 +23,8 @@ def divideCluster_stairmethod(Cluster, NewClusterPointMap, NewLabels,  hyperpara
 
     short_dis = [(shortestDistance(p),p) for p in Cluster]
     short_dis.sort(key = lambda x: x[0])
+    #print(short_dis)
     labels = [None] * len(Cluster)
-    step_threshold = hyperparameter.step_threshold
     
     
     label = 0
@@ -30,14 +32,21 @@ def divideCluster_stairmethod(Cluster, NewClusterPointMap, NewLabels,  hyperpara
         if i == 0: labels[Cluster.index(short_dis[i][1])] = label
         else:
             stepGap = abs(short_dis[i][0] - short_dis[i-1][0])
-            if stepGap > step_threshold:
+            if stepGap > hyperparameter.step_threshold:
                 label += 1
                 labels[Cluster.index(short_dis[i][1])] = label
             else:
                 labels[Cluster.index(short_dis[i][1])] = label        
            
-    clusterNow = len(NewClusterPointMap)
+    clusterNow = len(Newclusterpm)
     for i in range(len(Cluster)):
-        NewClusterPointMap[labels[i]+clusterNow].append(Cluster[i]) 
-        NewLabels.append(labels[i]+clusterNow)
+        Newclusterpm[labels[i]+clusterNow].append(Cluster[i]) 
+    #print(Newclusterpm)
+    return Newclusterpm
     
+
+def divideAllCluster(NewClusterPointMap, clusterPointMap, hyperparameter):
+    for Cluster in clusterPointMap.values():
+        temp = divideCluster_stairmethod(Cluster, NewClusterPointMap, hyperparameter)
+        NewClusterPointMap = temp
+    return NewClusterPointMap

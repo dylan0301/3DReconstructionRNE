@@ -80,8 +80,6 @@ def triPyramidClean():
     
     hyperparameter = Hyperparameter(
 
-
-
     )
     size = hyperparameter.numOfPoints
     for i in range(size-100):
@@ -118,7 +116,7 @@ def triPyramidClean():
 def cubeClean():
     random.seed(0)
     points = defaultdict(Point)
-    hyperparameter = Hyperparameter(0.0001, 3000, 8, 4, 12, 20, 3, 0.6, 3, 8, 20, 3)
+    hyperparameter = Hyperparameter()
     size = hyperparameter.numOfPoints
     for i in range(size-100):
         if i%6 == 0:
@@ -158,7 +156,7 @@ def cubeClean():
 def cubeDirty():
     random.seed(0)
     points = defaultdict(Point)
-    hyperparameter = Hyperparameter(0.0001, 2000, 8, 4, 12, 20, 3, 0.8, 3, 8, 20, 3)
+    hyperparameter = Hyperparameter(0.0001, 3000, 10, 4, 16, 30, 3, 0.0001, 0.8, 0.5, 3, 5, 30, 2, 3, 10)
     size = hyperparameter.numOfPoints
     for i in range(size-100):
         diff = 4*random.random()-2

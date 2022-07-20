@@ -1,10 +1,9 @@
 import numpy as np
 from A4_1_nearbyPlane import *
-import warnings
 
 #Input: point, Output: point의 Normal Vector 설정해줌. 리턴값은 없음, 표준편차방식        
 #BoundaryPoints, CenterPoints를 업데이트해줌
-def normalVectorizeSTD(point, hyperparameter, BoundaryPoints, CenterPoints):
+def normalVectorizeSTD(point, BoundaryPoints, CenterPoints, hyperparameter):
     neighborVectors = []
     #nearby에는 (distance, point) 가 들어있음
     for tup in point.nearby:
@@ -20,6 +19,9 @@ def normalVectorizeSTD(point, hyperparameter, BoundaryPoints, CenterPoints):
     for i in range(len(neighborVectors)):
         for j in range(i+1, len(neighborVectors)):
             neighborNormal = np.cross(neighborVectors[i], neighborVectors[j])
+            if np.linalg.norm(neighborNormal) < hyperparameter.normalLeastNorm: #외적한거 너무 작으면 취급 x
+                continue
+
             neighborNormal /= np.linalg.norm(neighborNormal)
 
             #주어진 평면 벡터와 비슷한 벡터를 골라줄거임 (directionFix)
@@ -49,5 +51,29 @@ def normalVectorizeSTD(point, hyperparameter, BoundaryPoints, CenterPoints):
     return BoundaryPoints, CenterPoints
 
 
-def normalVectorizeErrorRate(point, hyperparameter, BoundaryPoints, CenterPoints):
-    neighborVectors = []
+
+#Input: point, Output: point의 Normal Vector 설정해줌. 리턴값은 없음, Error가 일정 이상 넘으면 경계로 처리방식        
+#BoundaryPoints, CenterPoints를 업데이트해줌
+def normalVectorizeError(point, BoundaryPoints, CenterPoints, hyperparameter, BoundaryError, CenterError):
+    plane = nearbyRansacPlane(point, hyperparameter)
+    plane_normal = np.array([plane[0], plane[1], plane[2]])
+    plane_normal /= np.linalg.norm(plane_normal)
+
+    planeError = 0
+    for tup in point.nearby:
+        neighbor = tup[1]
+        planeError += sujikDistance(neighbor, plane) ** 2
+    planeError = np.sqrt(planeError/len(point.nearby))
+    #print(planeError)
+
+    
+    if planeError < hyperparameter.ransacErrorThreshold: #경계인 경우는 그대로 None
+        #point.normal = avg
+        point.normal = plane_normal #울퉁불퉁한거 하고나서 새로운 아이디어
+        CenterPoints.append(point)
+        CenterError.append(planeError)
+    else: 
+        BoundaryPoints.append(point)
+        BoundaryError.append(planeError)
+    return BoundaryPoints, CenterPoints, BoundaryError, CenterError
+    
