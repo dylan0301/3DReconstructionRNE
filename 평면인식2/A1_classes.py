@@ -23,7 +23,7 @@ class Hyperparameter:
     #여기있는건 realdata 기준 값들, 거리단위 m
     def __init__(self, pointLeastDifference = 0.0001, numOfPoints = 5000, OutlierThreshold = 10, 
                 noiseR = 0.05, friend = 16, vectorRansacTrial = 50, vectorRansacThreshold = 0.15, normalLeastNorm = 0.00001,
-                stdThreshold = 0.5, ransacErrorThreshold = 0.01, numOfCluster = 7, eps = 0.08, min_samples = 15, step_threshold = 0.0001, planeRansacTrial = 50,
+                stdThreshold = 0.5, ransacErrorThreshold = 0.01, numOfCluster = 7, eps = 0.07, min_samples = 13, step_threshold = 0.0001, planeRansacTrial = 50,
                 planeRansacThreshold = 0.15, boundaryR = 0.07, boundaryOutlierThreshold = 10):
 
         #2 data

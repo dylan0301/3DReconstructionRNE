@@ -34,20 +34,7 @@ def vectorDBSCAN(CenterPoints, hyperparameter):
     clustering = DBSCAN(eps = hyperparameter.eps, min_samples = hyperparameter.min_samples)
     labels = clustering.fit_predict(Duplicatedvectors)
 
-    # #label -1인거 지우기
-    # size = len(CenterPoints)
-    # negativeOneIndexes = set() #-1인 label들의 index
-    # for i in range(size):
-    #     if labels[i] == -1:
-    #         negativeOneIndexes.add(i)
     
-    # CenterPoints = []
-    # labels = []
-    # for i in range(size):
-    #     if i not in negativeOneIndexes:
-    #         CenterPoints.append(CenterPoints[i])
-    #         labels.append(labels[i])
-
     oppositeVector = []
     for i in range(len(CenterPoints)):
         if labels[i] != -1 and sorted([labels[i], labels[i+len(CenterPoints)]]) not in oppositeVector:
@@ -66,4 +53,19 @@ def vectorDBSCAN(CenterPoints, hyperparameter):
     for i in range(len(CenterPoints)):
         if newLabel[i] != -1:
             clusterPointMap[newLabel[i]].append(CenterPoints[i])
-    return CenterPoints, clusterPointMap, newLabel
+
+    #label -1인거 지우기
+    size = len(CenterPoints)
+    negativeOneIndexes = set() #-1인 label들의 index
+    for i in range(size):
+        if labels[i] == -1:
+            negativeOneIndexes.add(i)
+    
+    afterCenterPoints = []
+    afterLabel = []
+    for i in range(size):
+        if i not in negativeOneIndexes:
+            afterCenterPoints.append(CenterPoints[i])
+            afterLabel.append(newLabel[i])
+
+    return afterCenterPoints, clusterPointMap, afterLabel

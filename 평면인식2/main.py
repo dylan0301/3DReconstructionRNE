@@ -76,7 +76,7 @@ print('vectorClustering start')
 t = time.time()
 #CenterPoints, clusterPointMap, newLabel = vectorHierarchicalClustering(CenterPoints, hyperparameter)
 CenterPoints, clusterPointMap, newLabel = vectorDBSCAN(CenterPoints, hyperparameter)
-print(len(CenterPoints), 'points after vectorClustering')
+print(len(CenterPoints), 'CenterPoints after vectorClustering')
 print('vectorClustering time:', time.time()-t)
 print()
 
@@ -126,7 +126,7 @@ plt.show()
 
 #7 boundaryRemoveNoise
 print('boundaryRemoveNoise start')
-print(len(BoundaryPoints), 'points before boundaryRemoveNoise')
+print(len(BoundaryPoints), 'BoundaryPoints before boundaryRemoveNoise')
 t = time.time()
 BoundaryPoints = boundaryRemoveNoise(BoundaryPoints, hyperparameter)
 print(len(BoundaryPoints), 'points after boundaryRemoveNoise')
