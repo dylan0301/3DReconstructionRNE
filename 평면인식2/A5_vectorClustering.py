@@ -31,23 +31,25 @@ def vectorHierarchicalClustering(CenterPoints, hyperparameter):
 
 def vectorDBSCAN(CenterPoints, hyperparameter):
     Duplicatedvectors = np.array([p.normal for p in CenterPoints] + [(-1)*p.normal for p in CenterPoints])
-    clustering = DBSCAN(hyperparameter.eps, hyperparameter.min_samples)
+    clustering = DBSCAN(eps = hyperparameter.eps, min_samples = hyperparameter.min_samples)
     labels = clustering.fit_predict(Duplicatedvectors)
 
-    #label -1인거 지우기
-    size = len(CenterPoints)
-    negativeOneIndexes = set() #-1인 label들의 index
-    for i in range(size):
-        if labels[i] == -1:
-            negativeOneIndexes.add(i)
+    # #label -1인거 지우기
+    # size = len(CenterPoints)
+    # negativeOneIndexes = set() #-1인 label들의 index
+    # for i in range(size):
+    #     if labels[i] == -1:
+    #         negativeOneIndexes.add(i)
     
-    afterCenterPoints = []
-    afterlabels = []
-    for i in range(size):
-        if i not in negativeOneIndexes:
-            afterCenterPoints.append(CenterPoints[i])
-            afterlabels.append(labels[i])
+    # afterCenterPoints = []
+    # afterlabels = []
+    # for i in range(size):
+    #     if i not in negativeOneIndexes:
+    #         afterCenterPoints.append(CenterPoints[i])
+    #         afterlabels.append(labels[i])
 
+    afterCenterPoints = CenterPoints
+    afterlabels = labels
 
     oppositeVector = []
     for i in range(len(afterCenterPoints)):
