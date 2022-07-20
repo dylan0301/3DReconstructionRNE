@@ -41,29 +41,29 @@ def vectorDBSCAN(CenterPoints, hyperparameter):
     #     if labels[i] == -1:
     #         negativeOneIndexes.add(i)
     
-    # afterCenterPoints = []
-    # afterlabels = []
+    # CenterPoints = []
+    # labels = []
     # for i in range(size):
     #     if i not in negativeOneIndexes:
-    #         afterCenterPoints.append(CenterPoints[i])
-    #         afterlabels.append(labels[i])
-
-    afterCenterPoints = CenterPoints
-    afterlabels = labels
+    #         CenterPoints.append(CenterPoints[i])
+    #         labels.append(labels[i])
 
     oppositeVector = []
-    for i in range(len(afterCenterPoints)):
-        if sorted([afterlabels[i], afterlabels[i+len(afterCenterPoints)]]) not in oppositeVector:
-            oppositeVector.append(sorted([afterlabels[i], afterlabels[i+len(afterCenterPoints)]]))
+    for i in range(len(CenterPoints)):
+        if labels[i] != -1 and sorted([labels[i], labels[i+len(CenterPoints)]]) not in oppositeVector:
+            oppositeVector.append(sorted([labels[i], labels[i+len(CenterPoints)]]))
  
     del_target_vec = [oppositeVector[i][0] for i in range(len(oppositeVector))]
     
-    newLabel = [None] * len(afterCenterPoints)
-    for i in range(len(afterlabels)):
-        if afterlabels[i] not in del_target_vec:
-            newLabel[i%len(afterCenterPoints)] = afterlabels[i]
+    newLabel = [None] * len(CenterPoints)
+    for i in range(len(labels)):
+        if labels[i] not in del_target_vec:
+            newLabel[i%len(CenterPoints)] = labels[i]
+
+
 
     clusterPointMap = defaultdict(list) #index = cluster 번호, index 안에는 포인트
-    for i in range(len(afterCenterPoints)):
-        clusterPointMap[newLabel[i]].append(afterCenterPoints[i])
-    return afterCenterPoints, clusterPointMap, newLabel
+    for i in range(len(CenterPoints)):
+        if newLabel[i] != -1:
+            clusterPointMap[newLabel[i]].append(CenterPoints[i])
+    return CenterPoints, clusterPointMap, newLabel
