@@ -35,7 +35,7 @@ def importPly(absoluteFile):
 
 def _test_importPly():
     filepath = '/Users/jeewon/Library/CloudStorage/OneDrive-대구광역시교육청/지원/한과영/RnE/3DReconstructionRNE/pointclouddata/'
-    filename = '50000points_2plane.ply'
+    filename = 'box_5K.ply'
     AllPoints, hyperparameter = importPly(filepath+filename)
     print(len(AllPoints))
     for p in AllPoints.values():
@@ -51,6 +51,7 @@ def halfCubeClean(size):
 
 
     )
+    size = hyperparameter.numOfPoints
     for i in range(size-100):
         if i%3 == 0:
             x = 100*random.random()
@@ -73,14 +74,16 @@ def halfCubeClean(size):
 
 
 #100*100*100 직각삼각뿔, clean
-def triPyramidClean(size):
+def triPyramidClean():
     random.seed(0)
     points = defaultdict(Point)
+    
     hyperparameter = Hyperparameter(
 
 
 
     )
+    size = hyperparameter.numOfPoints
     for i in range(size-100):
         x,y,z = 100, 100, 100
         if i%4 == 0:
@@ -112,14 +115,11 @@ def triPyramidClean(size):
 
 
 #30*30*30 정육면체, clean
-def cubeClean(size):
+def cubeClean():
     random.seed(0)
     points = defaultdict(Point)
-    hyperparameter = Hyperparameter(
-
-
-
-    )
+    hyperparameter = Hyperparameter(0.0001, 3000, 8, 4, 12, 20, 3, 0.6, 3, 8, 20, 3)
+    size = hyperparameter.numOfPoints
     for i in range(size-100):
         if i%6 == 0:
             x = 30*random.random()
@@ -155,14 +155,11 @@ def cubeClean(size):
 
 
 #30*30*30 정육면체, dirty
-def cubeDirty(size):
+def cubeDirty():
     random.seed(0)
     points = defaultdict(Point)
-    hyperparameter = Hyperparameter(
-
-
-
-    )
+    hyperparameter = Hyperparameter(0.0001, 2000, 8, 4, 12, 20, 3, 0.8, 3, 8, 20, 3)
+    size = hyperparameter.numOfPoints
     for i in range(size-100):
         diff = 4*random.random()-2
         if i%6 == 0:

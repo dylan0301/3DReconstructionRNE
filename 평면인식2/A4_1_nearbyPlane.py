@@ -19,7 +19,7 @@ def nearbyRansacPlane(point, hyperparameter):
         res = abs(a*x+b*y+c*z+d)/np.sqrt(a**2+b**2+c**2)
         return res
     
-    #nearby에는 (distance, point) 가 들어있음
+
     #nearby에 자기자신도 있음
     pts = [tup[1] for tup in point.nearby]
 

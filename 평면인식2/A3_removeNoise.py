@@ -6,7 +6,7 @@ def removeNoise(AllPoints, hyperparameter):
     distMat = defaultdict(dict)
     for i in range(size):
         for j in range(size):
-            distMat[i][j] = (AllPoints[i].distance(AllPoints[j]),AllPoints[j]) 
+            distMat[i][j] = (AllPoints[i].distance(AllPoints[j]),AllPoints[j]) #2차원 딕셔너리, (dist, point)
 
     newDistMat = defaultdict(list)
     for i in range(size):
@@ -14,12 +14,14 @@ def removeNoise(AllPoints, hyperparameter):
         newDistMat[i] = res
 
     #노이즈 제거
-    del_candidate = set() #index들 리스트
+    del_candidate = set() #point들 집합
+    del_candidateIndex = set() #index들 집합
     for i in range(size):
         if AllPoints[i].nearby[hyperparameter.OutlierThreshold][0] > hyperparameter.noiseR:
             del_candidate.add(AllPoints[i])
-            
-    for j in list(del_candidate):
+            del_candidateIndex.add(i)
+
+    for j in del_candidateIndex:
         del AllPoints[j]
             
     for i in AllPoints.keys():

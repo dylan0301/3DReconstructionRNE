@@ -1,5 +1,8 @@
-from A4_2_findNormalSTD import normalVectorizeSTD
+from A4_2_onePointFindNormal import *
 
-def findNormalSTD(AllPoints, hyperparameter):
+def findNormalSTD(AllPoints, BoundaryPoints, CenterPoints, hyperparameter):
+    friend = hyperparameter.friend
     for p in AllPoints.values():
-        normalVectorizeSTD(p, hyperparameter)
+        p.nearby = p.nearby[:friend]
+        BoundaryPoints, CenterPoints = normalVectorizeSTD(p, hyperparameter, BoundaryPoints, CenterPoints)
+    return BoundaryPoints, CenterPoints

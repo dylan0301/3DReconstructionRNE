@@ -1,6 +1,6 @@
 import numpy as np
 from A4_1_nearbyPlane import *
-
+import warnings
 
 #Input: point, Output: point의 Normal Vector 설정해줌. 리턴값은 없음, 표준편차방식        
 #BoundaryPoints, CenterPoints를 업데이트해줌
@@ -14,6 +14,7 @@ def normalVectorizeSTD(point, hyperparameter, BoundaryPoints, CenterPoints):
    
     plane = nearbyRansacPlane(point, hyperparameter)
     plane_normal = np.array([plane[0], plane[1], plane[2]])
+    plane_normal /= np.linalg.norm(plane_normal)
 
     normalCandidates = []
     for i in range(len(neighborVectors)):
@@ -27,7 +28,7 @@ def normalVectorizeSTD(point, hyperparameter, BoundaryPoints, CenterPoints):
                 neighborNormal *= -1            
             normalCandidates.append(neighborNormal)
 
-    avg = np.array([0,0,0])
+    avg = np.array([float(0),float(0),float(0)])
     for neighborNormal in normalCandidates:
         avg += neighborNormal
     avg /= np.linalg.norm(avg)
@@ -37,6 +38,7 @@ def normalVectorizeSTD(point, hyperparameter, BoundaryPoints, CenterPoints):
     for neighborNormal in normalCandidates:
         standardDeviation += (np.linalg.norm(avg-neighborNormal))**2
     standardDeviation = np.sqrt(standardDeviation/len(normalCandidates))
+    
 
     if standardDeviation < hyperparameter.stdThreshold: #경계인 경우는 그대로 None
         #point.normal = avg
