@@ -33,8 +33,10 @@ print(len(AllPoints), 'points before removeNoise')
 t = time.time()
 AllPoints = removeNoise(AllPoints, hyperparameter)
 print(len(AllPoints), 'points after removeNoise')
+print('여기이후로 AllPoints는 안쓰인다. 만약 AllPoints 쓸려면 vectorClustering 바꾸거라.')
 print('removeNoise time:', time.time()-t)
 print()
+
 
 
 # #노이즈제거 이후 그냥 점들 출력
