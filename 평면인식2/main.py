@@ -39,12 +39,12 @@ print()
 
 
 
-# #노이즈제거 이후 그냥 점들 출력
-# fig = plt.figure(figsize=(6, 6))
-# ax = fig.add_subplot(111, projection='3d')
-# ap = np.array([[p.x, p.y, p.z] for p in AllPoints.values()])
-# ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[0] * len(AllPoints), marker='o', s=15, cmap='rainbow')
-# plt.show()
+#노이즈제거 이후 그냥 점들 출력
+fig = plt.figure(figsize=(6, 6))
+ax = fig.add_subplot(111, projection='3d')
+ap = np.array([[p.x, p.y, p.z] for p in AllPoints.values()])
+ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[0] * len(AllPoints), marker='o', s=15, cmap='rainbow')
+plt.show()
 
 
 

@@ -7,7 +7,7 @@ def divideCluster_stairmethod(Cluster, NewClusterPointMap, hyperparameter):
     for p in Cluster:
         avg = avg + p.normal
     avg /= np.linalg.norm(avg)
-    print('FirstCluster Avg:', avg)
+    print('Avg Before:', avg)
 
     #점 p랑 ax+by+cz+d=0 수직거리. a,b,c는 avg벡터고 d=0
     def shortestDistance(p):
