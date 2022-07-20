@@ -72,7 +72,8 @@ plt.show()
 #5 vectorClustering
 print('vectorClustering start')
 t = time.time()
-clusterPointMap, newLabel = vectorClustering(CenterPoints, hyperparameter)
+#CenterPoints, clusterPointMap, newLabel = vectorHierarchicalClustering(CenterPoints, hyperparameter)
+CenterPoints, clusterPointMap, newLabel = vectorDBSCAN(CenterPoints, hyperparameter)
 print('vectorClustering time:', time.time()-t)
 print()
 

@@ -1,4 +1,3 @@
-from email.errors import BoundaryError
 from A4_2_onePointFindNormal import *
 
 def findNormalSTD(AllPoints, BoundaryPoints, CenterPoints, hyperparameter):
