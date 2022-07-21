@@ -196,3 +196,102 @@ if __name__ == "__main__":
     _test_importPly()
     
     
+def unicorn_sample():
+    random.seed(132808)
+    points = defaultdict(Point)
+    hyperparameter = Hyperparameter()
+
+    size = hyperparameter.numOfPoints
+    for i in range(size):
+        diff = 2*random.random()-1
+        if i%12 == 0:
+            x = 30*random.random()
+            y = 30*random.random()
+            z = diff
+        if i%12 == 1:
+            x = 30*random.random()
+            y = diff
+            z = 30*random.random()
+        if i%12 == 2:
+            x = diff
+            y = 30*random.random()
+            z = 30*random.random()
+        if i%12 == 3:
+            x = 30*random.random()
+            y = 30*random.random()
+            z = 30+diff
+        if i%12 == 4:
+            x = 30*random.random()
+            y = 30+diff
+            z = 30*random.random()
+        if i%12 == 5:
+            x = 30+diff
+            y = 30*random.random()
+            z = 30*random.random()   
+        if i%12 == 6:
+            x = 30*random.random() + 40
+            y = diff
+            z = 30*random.random()
+        if i%12 == 7:
+            x = diff + 40
+            y = 30*random.random()
+            z = 30*random.random()
+        if i%12 == 8:
+            x = 30*random.random() + 40
+            y = 30*random.random()
+            z = 30+diff
+        if i%12 == 9:
+            x = 30*random.random() + 40
+            y = 30+diff
+            z = 30*random.random()
+        if i%12 == 10:
+            x = 30+diff + 40
+            y = 30*random.random()
+            z = 30*random.random()  
+        if i%12 == 11:
+            x = 30*random.random() + 40
+            y = 30*random.random()
+            z = diff    
+        p = Point(x,y,z,i)
+        points[i] = p
+    return points, hyperparameter
+
+def unicorn_sample2():
+    random.seed(132808)
+    points = defaultdict(Point)
+    hyperparameter = Hyperparameter(pointLeastDifference = 0.001, numOfPoints = 3000, OutlierThreshold = 10, 
+                noiseR = 5, friend = 16, vectorRansacTrial = 50, vectorRansacThreshold = 0.8, normalLeastNorm = 0.001,
+                stdThreshold = 0.5, ransacErrorThreshold = 0.7, numOfCluster = 3, eps_vector = 0.1, min_samples_vector = 9,
+                step_threshold = 2, eps_point = 4, min_samples_point = 10,  planeRansacTrial = 50,
+                planeRansacThreshold = 1, boundaryR = 4, boundaryOutlierThreshold = 6)
+
+    size = hyperparameter.numOfPoints
+    for i in range(size):
+        diff = 2*random.random()-1
+        if i%6 == 0:
+            x = 30*random.random()
+            y = 30*random.random()
+            z = diff
+        if i%6 == 1:
+            x = 30*random.random()
+            y = diff
+            z = 30*random.random()
+        if i%6 == 2:
+            x = diff
+            y = 30*random.random()
+            z = 30*random.random()
+        if i%6 == 3:
+            x = 30*random.random() + 40
+            y = 30*random.random()
+            z = diff
+        if i%6 == 4:
+            x = 30*random.random() + 40
+            y = diff
+            z = 30*random.random()
+        if i%6 == 5:
+            x = diff + 40
+            y = 30*random.random()
+            z = 30*random.random()   
+        p = Point(x,y,z,i)
+        points[i] = p
+    return points, hyperparameter

@@ -20,8 +20,8 @@ filepath = '/Users/jeewon/Library/CloudStorage/OneDrive-대구광ᄋ
 #filename = '50000points_2plane.ply'
 filename = 'box_5K.ply'
 
-AllPoints, hyperparameter = importPly(filepath+filename)
-#AllPoints, hyperparameter = cubeDirty()
+#AllPoints, hyperparameter = importPly(filepath+filename)
+AllPoints, hyperparameter = unicorn_sample2()
 print('bring data time: ', time.time()-t)
 print()
 #실제 데이터했으면 여기서 수동으로 hyperparameter 약간 수정 필요
