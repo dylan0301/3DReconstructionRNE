@@ -51,12 +51,12 @@ def removeNoise2(AllPoints, hyperparameter):
     for i in del_candidateIndex:
         del AllPoints[i]
 
-    for i in range(size):
+    for i in AllPoints.keys():
         newNearby = []
         for tup in AllPoints[i].nearby:
             if tup[1] not in del_candidate:
                 newNearby.append(tup)
-        AllPoints[i].nearby = newNearby[:]
+        AllPoints[i].nearby = newNearby
     
     return AllPoints
 

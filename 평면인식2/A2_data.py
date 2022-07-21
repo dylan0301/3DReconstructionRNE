@@ -21,6 +21,8 @@ def importPly(absoluteFile):
             if sortedPoints[i+1][1] - sortedPoints[i][1] < hyperparameter.pointLeastDifference:
                 if sortedPoints[i+1][2] - sortedPoints[i][2] < hyperparameter.pointLeastDifference:
                     continue
+        if sortedPoints[i][0] > 0.45 or sortedPoints[i][0] < -0.2 or sortedPoints[i][1] > -0.2:
+            continue
         p = Point(sortedPoints[i][0], sortedPoints[i][1], sortedPoints[i][2],
                 numOfPoints, sortedPoints[i][3], sortedPoints[i][4], sortedPoints[i][5]) #단위 m
         points[numOfPoints] = p
@@ -33,14 +35,19 @@ def importPly(absoluteFile):
 
     return points, hyperparameter
 
+
+    
+
 def _test_importPly():
     filepath = '/Users/jeewon/Library/CloudStorage/OneDrive-대구광역시교육청/지원/한과영/RnE/3DReconstructionRNE/pointclouddata/'
-    filename = 'box_5K.ply'
+    filename = 'Box25K.ply'
     AllPoints, hyperparameter = importPly(filepath+filename)
     print(len(AllPoints))
     for p in AllPoints.values():
         print(p)
-    
+
+if __name__ == "__main__":
+    _test_importPly()
 
 #100*100*100 큐브의 반쪽, clean
 def halfCubeClean(size):
@@ -192,9 +199,7 @@ def cubeDirty():
     return points, hyperparameter
 
 
-if __name__ == "__main__":
-    _test_importPly()
-    
+
     
 def unicorn_sample():
     random.seed(132808)

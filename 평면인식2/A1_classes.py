@@ -30,8 +30,8 @@ class Point:
 
 class Hyperparameter:
     #여기있는건 realdata 기준 값들, 거리단위 m
-    def __init__(self, pointLeastDifference = 0.0001, numOfPoints = 5000, OutlierThreshold =20, 
-                R = 0.05, friend = 16, vectorRansacTrial = 50, vectorRansacThreshold = 0.15, normalLeastNorm = 0.00001,
+    def __init__(self, pointLeastDifference = 0.0001, numOfPoints = 5000, OutlierThreshold = 12, 
+                R = 0.03, friend = 16, vectorRansacTrial = 50, vectorRansacThreshold = 0.15, normalLeastNorm = 0.00001,
                 stdThreshold = 0.5, ransacErrorThreshold = 0.01, numOfCluster = 7, eps_vector = 0.07, min_samples_vector = 9,
                 step_threshold = 0.001, eps_point = 0.1, min_samples_point = 12,  planeRansacTrial = 50,
                 planeRansacThreshold = 0.15, boundaryR = 0.057, boundaryOutlierThreshold = 9):
