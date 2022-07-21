@@ -3,7 +3,8 @@ import random
 from sklearn.linear_model import LinearRegression
 
 #Input: point, Output: nearby를 포함하는 평면, Method: Linear Regression
-def nearbyLinearRegressionPlane(point, hyperparameter):
+#근데 이거 안쓴다.
+def nearbyLinearRegressionPlane(point):
     pts = point.nearby
     XY = np.array([[p.x, p.y] for p in pts])
     Z = np.array([p.z for p in pts])
@@ -12,7 +13,7 @@ def nearbyLinearRegressionPlane(point, hyperparameter):
     a, b, d= coef[0], coef[1], reg.intercept_
     #z = ax+by+d
     c = -1
-    return (a, b, c, d)
+    return (a, b, c, d), reg
 
 
 #Input: point, Output: nearby를 포함하는 평면, Method: RANSAC
