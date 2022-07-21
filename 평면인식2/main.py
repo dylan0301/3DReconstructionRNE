@@ -17,7 +17,6 @@ print()
 print('bring data start')
 t = time.time()
 filepath = '/Users/jeewon/Library/CloudStorage/OneDrive-대구광역시교육청/지원/한과영/RnE/3DReconstructionRNE/pointclouddata/'
-#filename = '50000points_2plane.ply'
 filename = 'Box25K.ply'
 
 AllPoints, hyperparameter = importPly(filepath+filename)
@@ -74,7 +73,6 @@ plt.show()
 #5 vectorClustering
 print('vectorClustering start')
 t = time.time()
-#CenterPoints, clusterPointMap, newLabel = vectorHierarchicalClustering(CenterPoints, hyperparameter)
 CenterPoints, clusterPointMap, newLabel = vectorDBSCAN(CenterPoints, hyperparameter)
 print(len(CenterPoints), 'CenterPoints after vectorClustering')
 print('vectorClustering time:', time.time()-t)
@@ -94,7 +92,6 @@ plt.show()
 print('distanceStairClustering start')
 t = time.time()
 NewClusterPointMap = defaultdict(list)
-#NewClusterPointMap = divideAllCluster_stair(NewClusterPointMap, clusterPointMap, hyperparameter)
 NewClusterPointMap = divideAllCluster_DBSCAN(NewClusterPointMap, clusterPointMap, hyperparameter)
 print('distanceStairClustering time:', time.time()-t)
 print()

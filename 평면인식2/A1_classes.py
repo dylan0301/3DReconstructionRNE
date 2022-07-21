@@ -31,10 +31,10 @@ class Point:
 class Hyperparameter:
     #여기있는건 realdata 기준 값들, 거리단위 m
     def __init__(self, pointLeastDifference = 0.0001, numOfPoints = 5000, OutlierThreshold = 12, 
-                R = 0.03, friend = 16, vectorRansacTrial = 50, vectorRansacThreshold = 0.15, normalLeastNorm = 0.00001,
-                stdThreshold = 0.5, ransacErrorThreshold = 0.01, numOfCluster = 7, eps_vector = 0.07, min_samples_vector = 9,
-                step_threshold = 0.001, eps_point = 0.1, min_samples_point = 12,  planeRansacTrial = 50,
-                planeRansacThreshold = 0.15, boundaryR = 0.057, boundaryOutlierThreshold = 9):
+                R = 0.03, vectorRansacTrial = 50, vectorRansacThreshold = 0.15, normalLeastNorm = 0.00001,
+                ransacErrorThreshold = 0.01, eps_vector = 0.07, min_samples_vector = 9,
+                eps_point = 0.05, min_samples_point = 12,  planeRansacTrial = 50,
+                planeRansacThreshold = 0.15, boundaryR = 0.057, boundaryOutlierThreshold = 10):
 
         #2 data
         self.pointLeastDifference = pointLeastDifference #각 좌표값 차이가 이거보다 가까이 있는 점 쌍은 하나로 취급
@@ -46,23 +46,17 @@ class Hyperparameter:
 
         
         #4 findNormal
-        self.friend = friend #nearby 크기 이만큼 짜름
         self.vectorRansacTrial = vectorRansacTrial #법선벡터구할때 랜색 시행횟수
         self.vectorRansacThreshold = vectorRansacThreshold #법선벡터구할때 랜색 오차허용범위
         self.normalLeastNorm = normalLeastNorm #주변벡터 두개 외적한 벡터가 norm 이거보다 작으면 취급 x
-        self.stdThreshold = stdThreshold #외적 벡터드표준편차 이거보다 크면 경계점
 
         self.ransacErrorThreshold = ransacErrorThreshold #Error 방법으로 했을때 Error 이거보다 크면 경계점
         
         #5 vectorClustering
-        self.numOfCluster = numOfCluster #벡터클러스터링할때 클러스터 개수 (곱하기2 안한것)
-        
         self.eps_vector = eps_vector #vector DBSCAN eps
         self.min_samples_vector = min_samples_vector #vector DBSCAN min_samples
 
         #6 distanceStairClustering
-        self.step_threshold = step_threshold #stair 클러스터링에서 이값보다 더많이 점프하면 다른평면
-
         self.eps_point = eps_point #point DBSCAN eps
         self.min_samples_point = min_samples_point #point DBSCAN min_samples
         

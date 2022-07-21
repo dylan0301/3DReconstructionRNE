@@ -1,6 +1,18 @@
 import numpy as np
 import random
+from sklearn.linear_model import LinearRegression
 
+#Input: point, Output: nearby를 포함하는 평면, Method: Linear Regression
+def nearbyLinearRegressionPlane(point, hyperparameter):
+    pts = point.nearby
+    XY = np.array([[p.x, p.y] for p in pts])
+    Z = np.array([p.z for p in pts])
+    reg = LinearRegression().fit(XY, Z) 
+    coef = reg.coef_
+    a, b, d= coef[0], coef[1], reg.intercept_
+    #z = ax+by+d
+    c = -1
+    return (a, b, c, d)
 
 
 #Input: point, Output: nearby를 포함하는 평면, Method: RANSAC
@@ -19,7 +31,7 @@ def nearbyRansacPlane(point, hyperparameter):
     
 
     #nearby에 자기자신도 있음
-    pts = [tup[1] for tup in point.nearby]
+    pts = point.nearby
 
     numOfpts = len(pts)
     maxScore = 0
@@ -51,3 +63,4 @@ def sujikDistance(p, plane):
     x, y, z = p.x, p.y, p.z
     res = abs(a*x+b*y+c*z+d)/np.sqrt(a**2+b**2+c**2)
     return res
+
