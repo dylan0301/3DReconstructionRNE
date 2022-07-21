@@ -77,44 +77,43 @@ def normalVectorizeError(point, BoundaryPoints, CenterPoints, hyperparameter, Bo
         BoundaryError.append(planeError)
     return BoundaryPoints, CenterPoints, BoundaryError, CenterError
 
-
-#Input: point, Output: point의 Normal Vector 설정해줌. 리턴값은 없음, 삼중곱 크기 방식      
-#BoundaryPoints, CenterPoints를 업데이트해줌
-def normalVectorizeTriple(point, BoundaryPoints, CenterPoints, hyperparameter):
-    neighborVectors = []
-    #nearby에는 (distance, point) 가 들어있음
-    for tup in point.nearby:
-        neighbor = tup[1]
-        v = np.array([neighbor.x-point.x, neighbor.y-point.y, neighbor.z-point.z])
-        neighborVectors.append(v)   
+# #Input: point, Output: point의 Normal Vector 설정해줌. 리턴값은 없음, 삼중곱 크기 방식      
+# #BoundaryPoints, CenterPoints를 업데이트해줌
+# def normalVectorizeTriple(point, BoundaryPoints, CenterPoints, hyperparameter):
+#     neighborVectors = []
+#     #nearby에는 (distance, point) 가 들어있음
+#     for tup in point.nearby:
+#         neighbor = tup[1]
+#         v = np.array([neighbor.x-point.x, neighbor.y-point.y, neighbor.z-point.z])
+#         neighborVectors.append(v)   
    
-    plane = nearbyRansacPlane(point, hyperparameter)
-    plane_normal = np.array([plane[0], plane[1], plane[2]])
-    plane_normal /= np.linalg.norm(plane_normal)
+#     plane = nearbyRansacPlane(point, hyperparameter)
+#     plane_normal = np.array([plane[0], plane[1], plane[2]])
+#     plane_normal /= np.linalg.norm(plane_normal)
 
     
-    for i in range(len(neighborVectors)):
-        for j in range(i+1, len(neighborVectors)):
-            for k in range(j+1, len(neighborVectors)):
-                tripled = np.dot(neighborVectors[i], np.cross(neighborVectors[j], neighborVectors[k]))
+#     for i in range(len(neighborVectors)):
+#         for j in range(i+1, len(neighborVectors)):
+#             for k in range(j+1, len(neighborVectors)):
+#                 tripled = np.dot(neighborVectors[i], np.cross(neighborVectors[j], neighborVectors[k]))
          
 
-    avg = np.array([float(0),float(0),float(0)])
-    for neighborNormal in normalCandidates:
-        avg += neighborNormal
-    avg /= np.linalg.norm(avg)
+#     avg = np.array([float(0),float(0),float(0)])
+#     for neighborNormal in normalCandidates:
+#         avg += neighborNormal
+#     avg /= np.linalg.norm(avg)
     
 
-    standardDeviation = 0
-    for neighborNormal in normalCandidates:
-        standardDeviation += (np.linalg.norm(avg-neighborNormal))**2
-    standardDeviation = np.sqrt(standardDeviation/len(normalCandidates))
+#     standardDeviation = 0
+#     for neighborNormal in normalCandidates:
+#         standardDeviation += (np.linalg.norm(avg-neighborNormal))**2
+#     standardDeviation = np.sqrt(standardDeviation/len(normalCandidates))
     
 
-    if standardDeviation < hyperparameter.stdThreshold: #경계인 경우는 그대로 None
-        #point.normal = avg
-        point.normal = plane_normal #울퉁불퉁한거 하고나서 새로운 아이디어
-        CenterPoints.append(point)
-    else: 
-        BoundaryPoints.append(point)
-    return BoundaryPoints, CenterPoints
+#     if standardDeviation < hyperparameter.stdThreshold: #경계인 경우는 그대로 None
+#         #point.normal = avg
+#         point.normal = plane_normal #울퉁불퉁한거 하고나서 새로운 아이디어
+#         CenterPoints.append(point)
+#     else: 
+#         BoundaryPoints.append(point)
+#     return BoundaryPoints, CenterPoints
