@@ -1,7 +1,7 @@
 from collections import defaultdict
 
 #실제 데이터는 del candidate가 없어서 비는 문제 발생해서 noisy 넣음
-def updateNearby(point, distMat, noisy, del_set = set(), hyperparameter = None):
+def updateNearby(point, distMat, noisy, hyperparameter = None, del_set = set()):
     l = distMat[point.idx]
     if noisy:
         sorteddisMat = sorted(l.values(), key=lambda x: x[0])

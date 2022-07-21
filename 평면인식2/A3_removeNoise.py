@@ -25,7 +25,21 @@ def removeNoise(AllPoints, hyperparameter):
         del AllPoints[j]
             
     for i in AllPoints.keys():
-        updateNearby(AllPoints[i], newDistMat, False, del_candidate, hyperparameter)
+        updateNearby(AllPoints[i], newDistMat, False, hyperparameter, del_candidate)
         
 
     return AllPoints
+
+# def findNearby_noNoise(AllPoints, hyperparameter):
+#     size = len(AllPoints)
+#     distMat = defaultdict(dict)
+#     for i in range(size):
+#         for j in range(size):
+#             distMat[i][j] = (AllPoints[i].distance(AllPoints[j]),AllPoints[j]) #2차원 딕셔너리, (dist, point)
+
+#     newDistMat = defaultdict(list)
+#     for i in range(size):
+#         res = updateNearby(AllPoints[i], distMat, False, hyperparameter)
+#         newDistMat[i] = res
+        
+#     return AllPoints
