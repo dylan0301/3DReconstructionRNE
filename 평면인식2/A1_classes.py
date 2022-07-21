@@ -23,7 +23,8 @@ class Hyperparameter:
     #여기있는건 realdata 기준 값들, 거리단위 m
     def __init__(self, pointLeastDifference = 0.0001, numOfPoints = 5000, OutlierThreshold = 10, 
                 noiseR = 0.05, friend = 16, vectorRansacTrial = 50, vectorRansacThreshold = 0.15, normalLeastNorm = 0.00001,
-                stdThreshold = 0.5, ransacErrorThreshold = 0.01, numOfCluster = 7, eps = 0.07, min_samples = 9, step_threshold = 0.001, planeRansacTrial = 50,
+                stdThreshold = 0.5, ransacErrorThreshold = 0.01, numOfCluster = 7, eps_vector = 0.07, min_samples_vector = 9,
+                step_threshold = 0.001, eps_point = 0.1, min_samples_point = 12,  planeRansacTrial = 50,
                 planeRansacThreshold = 0.15, boundaryR = 0.057, boundaryOutlierThreshold = 9):
 
         #2 data
@@ -46,11 +47,14 @@ class Hyperparameter:
         #5 vectorClustering
         self.numOfCluster = numOfCluster #벡터클러스터링할때 클러스터 개수 (곱하기2 안한것)
         
-        self.eps = eps
-        self.min_samples = min_samples
+        self.eps_vector = eps_vector #vector DBSCAN eps
+        self.min_samples_vector = min_samples_vector #vector DBSCAN min_samples
 
         #6 distanceStairClustering
         self.step_threshold = step_threshold #stair 클러스터링에서 이값보다 더많이 점프하면 다른평면
+
+        self.eps_point = eps_point #point DBSCAN eps
+        self.min_samples_point = min_samples_point #point DBSCAN min_samples
         
         #8 findPlane
         self.planeRansacTrial = planeRansacTrial #최종 평면 구할때 랜색 시행횟수

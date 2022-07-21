@@ -156,7 +156,7 @@ def cubeClean():
 def cubeDirty():
     random.seed(0)
     points = defaultdict(Point)
-    hyperparameter = Hyperparameter(0.0001, 3000, 10, 4, 16, 30, 3, 0.0001, 0.8, 1.5, 3, 5, 30, 2, 3, 10) #DBSCAN 추가 안함
+    hyperparameter = Hyperparameter()
     size = hyperparameter.numOfPoints
     for i in range(size-100):
         diff = 4*random.random()-2
@@ -194,3 +194,5 @@ def cubeDirty():
 
 if __name__ == "__main__":
     _test_importPly()
+    
+    

@@ -31,7 +31,7 @@ def vectorHierarchicalClustering(CenterPoints, hyperparameter):
 
 def vectorDBSCAN(CenterPoints, hyperparameter):
     Duplicatedvectors = np.array([p.normal for p in CenterPoints] + [(-1)*p.normal for p in CenterPoints])
-    clustering = DBSCAN(eps = hyperparameter.eps, min_samples = hyperparameter.min_samples)
+    clustering = DBSCAN(eps = hyperparameter.eps_vector, min_samples = hyperparameter.min_samples_vector)
     labels = clustering.fit_predict(Duplicatedvectors)
 
     
