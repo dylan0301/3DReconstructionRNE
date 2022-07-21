@@ -1,3 +1,5 @@
+import numpy as np
+
 class Point:
     def __init__(self, X, Y, Z, idx, R = None, G = None, B = None):
         self.x = X 
@@ -15,9 +17,10 @@ class Point:
         return "x: " + str(self.x) + ", y: " + str(self.y) + ", z: " + str(self.z)
     
     def distance(self, p):
-        def sqsbt(a,b):
-            return (a-b)**2
-        return ((sqsbt(self.x, p.x)+sqsbt(self.y, p.y)+sqsbt(self.z, p.z)))**(0.5)
+        a = np.array([self.x, self.y, self.z])
+        b = np.array([p.x, p.y, p.z])
+        return np.sqrt(np.dot(a, a) - 2 * np.dot(a, b) + np.dot(b, b))
+
 
 class Hyperparameter:
     #여기있는건 realdata 기준 값들, 거리단위 m

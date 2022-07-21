@@ -1,5 +1,7 @@
 from A3_1_nearby import updateNearby
 from collections import defaultdict
+from sklearn.metrics.pairwise import euclidean_distances
+
 
 def removeNoise(AllPoints, hyperparameter):
     size = len(AllPoints)
@@ -30,16 +32,7 @@ def removeNoise(AllPoints, hyperparameter):
 
     return AllPoints
 
-# def findNearby_noNoise(AllPoints, hyperparameter):
-#     size = len(AllPoints)
-#     distMat = defaultdict(dict)
-#     for i in range(size):
-#         for j in range(size):
-#             distMat[i][j] = (AllPoints[i].distance(AllPoints[j]),AllPoints[j]) #2차원 딕셔너리, (dist, point)
 
-#     newDistMat = defaultdict(list)
-#     for i in range(size):
-#         res = updateNearby(AllPoints[i], distMat, False, hyperparameter)
-#         newDistMat[i] = res
-        
-#     return AllPoints
+def removeNoise2(AllPoints, hyperparameter):
+    #nearby에는 (dist, point) 가 들어있음
+    pass
