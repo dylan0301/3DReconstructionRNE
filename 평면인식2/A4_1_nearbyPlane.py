@@ -16,6 +16,7 @@ def nearbyLinearRegressionPlane(point):
     return (a, b, c, d), reg
 
 
+#느리다. A4_2 에 모듈써서 그냥 빠르게 해놓음
 #Input: point, Output: nearby를 포함하는 평면, Method: RANSAC
 def nearbyRansacPlane(point, hyperparameter):
     random.seed(0)

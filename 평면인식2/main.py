@@ -52,7 +52,7 @@ print('findNormal start')
 t = time.time()
 BoundaryPoints = []
 CenterPoints = []
-BoundaryPoints, CenterPoints = findNormalError(AllPoints, BoundaryPoints, CenterPoints, hyperparameter)
+BoundaryPoints, CenterPoints = findNormal(AllPoints, BoundaryPoints, CenterPoints, hyperparameter)
 print(len(BoundaryPoints), 'BoundaryPoints')
 print(len(CenterPoints), 'CenterPoints')
 print('findNormal time:', time.time()-t)
