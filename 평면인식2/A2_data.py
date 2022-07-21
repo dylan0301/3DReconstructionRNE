@@ -263,7 +263,7 @@ def unicorn_sample2():
                 R = 5, friend = 16, vectorRansacTrial = 50, vectorRansacThreshold = 0.15, normalLeastNorm = 0.001,
                 stdThreshold = 0.5, ransacErrorThreshold = 1, numOfCluster = 3, eps_vector = 0.1, min_samples_vector = 9,
                 step_threshold = 2, eps_point = 4, min_samples_point = 10,  planeRansacTrial = 50,
-                planeRansacThreshold = 1, boundaryR = 4, boundaryOutlierThreshold = 8)
+                planeRansacThreshold = 1, boundaryR = 4, boundaryOutlierThreshold = 10)
 
     size = hyperparameter.numOfPoints
     for i in range(size):

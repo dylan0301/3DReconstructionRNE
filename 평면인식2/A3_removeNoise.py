@@ -44,7 +44,7 @@ def removeNoise2(AllPoints, hyperparameter):
         for j in range(size):
             if distMat[i][j] <= hyperparameter.R:
                 AllPoints[i].nearby.append((distMat[i][j], AllPoints[j])) #자기자신도 포함
-        if len(AllPoints[i].nenarby) < hyperparameter.OutlierThreshold:
+        if len(AllPoints[i].nearby) < hyperparameter.OutlierThreshold:
             del_candidate.add(AllPoints[i])
             del_candidateIndex.add(i)
     
