@@ -18,10 +18,10 @@ print('bring data start')
 t = time.time()
 filepath = '/Users/jeewon/Library/CloudStorage/OneDrive-대구광역시교육청/지원/한과영/RnE/3DReconstructionRNE/pointclouddata/'
 #filename = '50000points_2plane.ply'
-filename = 'box_5K.ply'
+filename = 'Box25K.ply'
 
-#AllPoints, hyperparameter = importPly(filepath+filename)
-AllPoints, hyperparameter = unicorn_sample2()
+AllPoints, hyperparameter = importPly(filepath+filename)
+#AllPoints, hyperparameter = unicorn_sample2()
 print('bring data time: ', time.time()-t)
 print()
 #실제 데이터했으면 여기서 수동으로 hyperparameter 약간 수정 필요

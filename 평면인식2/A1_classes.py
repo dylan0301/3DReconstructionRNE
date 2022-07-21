@@ -17,15 +17,21 @@ class Point:
         return "x: " + str(self.x) + ", y: " + str(self.y) + ", z: " + str(self.z)
     
     def distance(self, p):
-        a = np.array([self.x, self.y, self.z])
-        b = np.array([p.x, p.y, p.z])
-        return np.sqrt(np.dot(a, a) - 2 * np.dot(a, b) + np.dot(b, b))
+        def sqsbt(a,b):
+            return (a-b)**2
+        return (sqsbt(self.x,p.x)+sqsbt(self.y,p.y)+sqsbt(self.z,p.z))**0.5
+
+
+    # def distance(self, p):
+    #     a = np.array([self.x, self.y, self.z])
+    #     b = np.array([p.x, p.y, p.z])
+    #     return np.sqrt(np.dot(a, a) - 2 * np.dot(a, b) + np.dot(b, b))
 
 
 class Hyperparameter:
     #여기있는건 realdata 기준 값들, 거리단위 m
-    def __init__(self, pointLeastDifference = 0.0001, numOfPoints = 5000, OutlierThreshold = 10, 
-                noiseR = 0.05, friend = 16, vectorRansacTrial = 50, vectorRansacThreshold = 0.15, normalLeastNorm = 0.00001,
+    def __init__(self, pointLeastDifference = 0.0001, numOfPoints = 5000, OutlierThreshold =20, 
+                R = 0.05, friend = 16, vectorRansacTrial = 50, vectorRansacThreshold = 0.15, normalLeastNorm = 0.00001,
                 stdThreshold = 0.5, ransacErrorThreshold = 0.01, numOfCluster = 7, eps_vector = 0.07, min_samples_vector = 9,
                 step_threshold = 0.001, eps_point = 0.1, min_samples_point = 12,  planeRansacTrial = 50,
                 planeRansacThreshold = 0.15, boundaryR = 0.057, boundaryOutlierThreshold = 9):
@@ -36,7 +42,8 @@ class Hyperparameter:
 
         #3 removeNoise
         self.OutlierThreshold = OutlierThreshold #noiseR 이내에 outlier 보다 적게있으면 이상점
-        self.noiseR = noiseR #이상점걸러내기용 R
+        self.R = R #이상점걸러내기용 R, nearbyR
+
         
         #4 findNormal
         self.friend = friend #nearby 크기 이만큼 짜름
