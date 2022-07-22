@@ -17,18 +17,27 @@ print()
 print('bring data start')
 t = time.time()
 filepath = '/Users/jeewon/Library/CloudStorage/OneDrive-대구광역시교육청/지원/한과영/RnE/3DReconstructionRNE/pointclouddata/'
-filename = 'Box25K.ply'
+filename = 'movable_desk.ply'
 
-#AllPoints, hyperparameter = importPly(filepath+filename)
+#AllPoints, hyperparameter = importPly(filepath, filename)
 AllPoints, hyperparameter = unicorn_sample2()
 print('bring data time: ', time.time()-t)
+print(len(AllPoints), 'points')
 print()
 #실제 데이터했으면 여기서 수동으로 hyperparameter 약간 수정 필요
+
+#노이즈제거 전 점들 출력
+fig = plt.figure(figsize=(6, 6))
+ax = fig.add_subplot(111, projection='3d')
+ap = np.array([[p.x, p.y, p.z] for p in AllPoints.values()])
+ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[i for i in range(len(AllPoints))], marker='o', s=15, cmap='rainbow')
+plt.show()
+
 
 
 #3 removeNoise
 print('removeNoise start')
-print(len(AllPoints), 'points before removeNoise')
+
 t = time.time()
 AllPoints = removeNoise2(AllPoints, hyperparameter)
 print(len(AllPoints), 'points after removeNoise')
@@ -38,11 +47,11 @@ print()
 
 
 
-#노이즈제거 이후 그냥 점들 출력
+#노이즈제거 이후 점들 출력
 fig = plt.figure(figsize=(6, 6))
 ax = fig.add_subplot(111, projection='3d')
 ap = np.array([[p.x, p.y, p.z] for p in AllPoints.values()])
-ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[0] * len(AllPoints), marker='o', s=15, cmap='rainbow')
+ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[i for i in range(len(AllPoints))], marker='o', s=15, cmap='rainbow')
 plt.show()
 
 

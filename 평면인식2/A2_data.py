@@ -6,10 +6,10 @@ import random
 #현재 hyperparameter 설정이 덜됐음
 
 
-def importPly(absoluteFile):
+def importPly(filepath, filename):
     hyperparameter = Hyperparameter()
     
-    rawPoints = read_ply_xyzrgb(absoluteFile)
+    rawPoints = read_ply_xyzrgb(filepath+filename)
     sortedPoints = sorted(rawPoints, key = lambda x: (x[0],x[1],x[2]))
 
     points = defaultdict(Point)
@@ -21,10 +21,19 @@ def importPly(absoluteFile):
             if sortedPoints[i+1][1] - sortedPoints[i][1] < hyperparameter.pointLeastDifference:
                 if sortedPoints[i+1][2] - sortedPoints[i][2] < hyperparameter.pointLeastDifference:
                     continue
-        if absoluteFile == '/Users/jeewon/Library/CloudStorage/OneDrive-대구광역시교육청/지원/한과영/RnE/3DReconstructionRNE/pointclouddata/Box25K.ply':
-            if sortedPoints[i][0] > 0.45 or sortedPoints[i][0] < -0.2 or sortedPoints[i][1] > -0.2:
+        
+        x = sortedPoints[i][0]
+        y = sortedPoints[i][1]
+        z = sortedPoints[i][2]
+
+        if filename == 'Box25K.ply':
+            if x > 0.45 or x < -0.2 or y > -0.2:
                 continue
-        p = Point(sortedPoints[i][0], sortedPoints[i][1], sortedPoints[i][2],
+        if filename == 'movable_desk.ply':
+            if x < -0.8 or y > -0.5 or z < -3.5:
+                continue
+
+        p = Point(x, y, z,
                 numOfPoints, sortedPoints[i][3], sortedPoints[i][4], sortedPoints[i][5]) #단위 m
         points[numOfPoints] = p
         numOfPoints += 1
