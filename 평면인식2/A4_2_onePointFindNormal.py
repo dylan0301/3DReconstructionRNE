@@ -25,13 +25,13 @@ from sklearn.linear_model import LinearRegression, RANSACRegressor
 #     return BoundaryPoints, CenterPoints, BoundaryError, CenterError
 
 
-def normalVectorizeR2score(point, BoundaryPoints, CenterPoints, hyperparameter, BoundaryError, CenterError):
+def normalVectorizeR2Score(point, BoundaryPoints, CenterPoints, hyperparameter, BoundaryError, CenterError):
     pts = point.nearby
     XY = np.array([[p.x, p.y] for p in pts])
     Z = np.array([p.z for p in pts])
-    reg = LinearRegression().fit(XY, Z) 
-    coef = reg.coef_
-    a, b, c, d = coef[0], coef[1], -1, reg.intercept_
+    reg = LinearRegression().fit(XY, Z)
+    coef = reg.estimator_.coef_
+    a, b, c, d = coef[0], coef[1], -1, reg.estimator_.intercept_
     #z = ax+by+d
 
     plane_normal = np.array([a, b, c])
@@ -56,7 +56,15 @@ def normalVectorizeRansacScore(point, BoundaryPoints, CenterPoints, hyperparamet
     pts = point.nearby
     XY = np.array([[p.x, p.y] for p in pts])
     Z = np.array([p.z for p in pts])
-    reg = RANSACRegressor().fit(XY, Z)
+    reg = RANSACRegressor(
+        LinearRegression(),
+        max_trials=hyperparameter.vectorRansacTrial,
+        min_samples=3,
+        loss='squared_error',
+        residual_threshold = hyperparameter.vectorRansacThreshold,
+
+
+    ).fit(XY, Z)
     coef = reg.estimator_.coef_
     a, b, c, d = coef[0], coef[1], -1, reg.estimator_.intercept_
 
