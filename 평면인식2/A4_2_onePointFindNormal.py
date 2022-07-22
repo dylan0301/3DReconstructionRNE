@@ -25,30 +25,30 @@ from sklearn.linear_model import LinearRegression, RANSACRegressor
 #     return BoundaryPoints, CenterPoints, BoundaryError, CenterError
 
 
-# def normalVectorizeR2score(point, BoundaryPoints, CenterPoints, hyperparameter, BoundaryError, CenterError):
-#     pts = point.nearby
-#     XY = np.array([[p.x, p.y] for p in pts])
-#     Z = np.array([p.z for p in pts])
-#     reg = LinearRegression().fit(XY, Z) 
-#     coef = reg.coef_
-#     a, b, c, d = coef[0], coef[1], -1, reg.intercept_
-#     #z = ax+by+d
+def normalVectorizeR2score(point, BoundaryPoints, CenterPoints, hyperparameter, BoundaryError, CenterError):
+    pts = point.nearby
+    XY = np.array([[p.x, p.y] for p in pts])
+    Z = np.array([p.z for p in pts])
+    reg = LinearRegression().fit(XY, Z) 
+    coef = reg.coef_
+    a, b, c, d = coef[0], coef[1], -1, reg.intercept_
+    #z = ax+by+d
 
-#     plane_normal = np.array([a, b, c])
-#     plane_normal /= np.linalg.norm(plane_normal)
+    plane_normal = np.array([a, b, c])
+    plane_normal /= np.linalg.norm(plane_normal)
 
-#     score = reg.score(XY, Z)
-#     #print(score)
+    score = reg.score(XY, Z)
+    #print(score)
 
     
-#     if score > 0.3:
-#         point.normal = plane_normal 
-#         CenterPoints.append(point)
-#         CenterError.append(score)
-#     else: 
-#         BoundaryPoints.append(point)
-#         BoundaryError.append(score)
-#     return BoundaryPoints, CenterPoints, BoundaryError, CenterError
+    if score > hyperparameter.R2ScoreThreshold:
+        point.normal = plane_normal 
+        CenterPoints.append(point)
+        CenterError.append(score)
+    else: 
+        BoundaryPoints.append(point)
+        BoundaryError.append(score)
+    return BoundaryPoints, CenterPoints, BoundaryError, CenterError
 
 
 
@@ -67,7 +67,7 @@ def normalVectorizeRansacScore(point, BoundaryPoints, CenterPoints, hyperparamet
     score = reg.score(XY, Z)
     #print(score)
     
-    if score > 0.1: #hyperparameter 세팅 필요
+    if score > hyperparameter.ransacScoreThreshold: #hyperparameter 세팅 필요
         point.normal = plane_normal 
         CenterPoints.append(point)
         CenterError.append(score)

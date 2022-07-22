@@ -267,7 +267,7 @@ def unicorn_sample2():
     points = defaultdict(Point)
     hyperparameter = Hyperparameter(pointLeastDifference = 0.001, numOfPoints = 3000,
     OutlierThreshold = 10, R = 5, vectorRansacTrial = 50, vectorRansacThreshold = 0.15,
-    normalLeastNorm = 0.001, ransacErrorThreshold = 1, eps_vector = 0.1, min_samples_vector = 9,
+    R2ScoreThreshold = 0.1, ransacScoreThreshold = -0.5, ransacErrorThreshold = 1, eps_vector = 0.1, min_samples_vector = 9,
     eps_point = 4, min_samples_point = 10, planeRansacTrial = 50, planeRansacThreshold = 1,
     boundaryR = 4, boundaryOutlierThreshold = 10)
 
@@ -298,6 +298,23 @@ def unicorn_sample2():
             x = diff + 40
             y = 30*random.random()
             z = 30*random.random()   
+        p = Point(x,y,z,i)
+        points[i] = p
+    return points, hyperparameter
+
+def Octahedron():
+    random.seed(8)
+    points = defaultdict(Point)
+    hyperparameter = Hyperparameter()
+    size = hyperparameter.numOfPoints
+    for i in range(size):
+        x = 60*(random.random()-0.5)
+        y = 60*(random.random()-0.5)
+        z = random.choice([-1,1])*(30-abs(x)-abs(y))
+        while abs(x) + abs(y) > 30:
+            x = 60*(random.random()-0.5)
+            y = 60*(random.random()-0.5)
+            z = random.choice([-1,1])*(30-abs(x)-abs(y))
         p = Point(x,y,z,i)
         points[i] = p
     return points, hyperparameter
