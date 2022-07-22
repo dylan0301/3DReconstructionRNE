@@ -30,11 +30,11 @@ class Point:
 
 class Hyperparameter:
     #여기있는건 realdata 기준 값들, 거리단위 m
-    def __init__(self, pointLeastDifference = 0.0001, numOfPoints = 5000, OutlierThreshold = 12, 
-                R = 0.03, vectorRansacTrial = 50, vectorRansacThreshold = 0.15, normalLeastNorm = 0.001, R2ScoreThreshold = 0.5, ransacScoreThreshold = -0.5,
+    def __init__(self, pointLeastDifference = 0.0001, numOfPoints = 5000, OutlierThreshold = 20, 
+                R = 0.04, vectorRansacTrial = 50, vectorRansacThreshold = 0.15, normalLeastNorm = 0.0001, R2ScoreThreshold = 0.5, ransacScoreThreshold = -0.5,
                 ransacErrorThreshold = 0.01, eps_vector = 0.04, min_samples_vector = 12,
                 eps_point = 0.05, min_samples_point = 12,  planeRansacTrial = 50,
-                planeRansacThreshold = 0.15, boundaryR = 0.06, boundaryOutlierThreshold = 9):
+                planeRansacThreshold = 0.15, boundaryR = 0.06, boundaryOutlierThreshold = 15):
 
         #2 data
         self.pointLeastDifference = pointLeastDifference #각 좌표값 차이가 이거보다 가까이 있는 점 쌍은 하나로 취급

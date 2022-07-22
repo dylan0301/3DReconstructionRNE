@@ -32,6 +32,9 @@ def importPly(filepath, filename):
         if filename == 'movable_desk.ply':
             if x < -0.8 or y > -0.5 or z < -3.5:
                 continue
+        if filename == 'highBox.ply':
+            if x < -0.5 or x > 0.5 or z < -0.55 or z > -0.12:
+                continue
 
         p = Point(x, y, z,
                 numOfPoints, sortedPoints[i][3], sortedPoints[i][4], sortedPoints[i][5]) #단위 m

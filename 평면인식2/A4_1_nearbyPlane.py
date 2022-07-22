@@ -25,16 +25,16 @@ def nearbyRansacPlane(point, hyperparameter):
     maxScore = 0
     bestPlane = None
     for trial in range(hyperparameter.vectorRansacTrial):
-        i1 = random.randrange(0,numOfpts)
-        i2 = random.randrange(0,numOfpts)
-        while i1 == i2:
+        plane = None
+        while plane == None:
+            i1 = random.randrange(0,numOfpts)
             i2 = random.randrange(0,numOfpts)
-        i3 = random.randrange(0,numOfpts)
-        while i1 == i3 or i2 == i3:
+            while i1 == i2:
+                i2 = random.randrange(0,numOfpts)
             i3 = random.randrange(0,numOfpts)
-        plane = findPlane(pts[i1], pts[i2], pts[i3])
-        if plane == None:
-            continue
+            while i1 == i3 or i2 == i3:
+                i3 = random.randrange(0,numOfpts)
+            plane = findPlane(pts[i1], pts[i2], pts[i3])
         score = 0
         for p in pts:
             d = sujikDistance(p, plane)
