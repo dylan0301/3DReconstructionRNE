@@ -5,7 +5,7 @@ def findNormal(AllPoints, BoundaryPoints, CenterPoints, hyperparameter):
     BoundaryError = []
     CenterError = []
     for p in AllPoints.values():
-        BoundaryPoints, CenterPoints, BoundaryError, CenterError = normalVectorizeError(p, BoundaryPoints, CenterPoints, hyperparameter, BoundaryError, CenterError)
+        BoundaryPoints, CenterPoints, BoundaryError, CenterError = normalVectorizeRatio(p, BoundaryPoints, CenterPoints, hyperparameter, BoundaryError, CenterError)
     print('BoundaryError')
     print(BoundaryError[:100])
     print('CenterError')

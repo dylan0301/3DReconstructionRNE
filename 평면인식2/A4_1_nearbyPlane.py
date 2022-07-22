@@ -43,7 +43,7 @@ def nearbyRansacPlane(point, hyperparameter):
         if score > maxScore:
             maxScore = score #이거 넣는걸 깜빡해서 문제가 좀 생겼음. 근데 정육면체데이터는 괜찮았네? 아무거나 평면 잡아도 다 거기서거기라 그런듯
             bestPlane = plane
-    return bestPlane
+    return bestPlane, maxScore
 
 #점 p랑 ax+by+cz+d=0 수직거리
 def sujikDistance(p, plane):

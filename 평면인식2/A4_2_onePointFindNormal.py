@@ -5,7 +5,7 @@ from A4_1_nearbyPlane import *
 #Input: point, Output: point의 Normal Vector 설정해줌. 리턴값은 없음, Error가 일정 이상 넘으면 경계로 처리방식        
 #BoundaryPoints, CenterPoints를 업데이트해줌
 def normalVectorizeError(point, BoundaryPoints, CenterPoints, hyperparameter, BoundaryError, CenterError):
-    plane = nearbyRansacPlane(point, hyperparameter)
+    plane, maxScore = nearbyRansacPlane(point, hyperparameter)
     plane_normal = np.array([plane[0], plane[1], plane[2]])
     plane_normal /= np.linalg.norm(plane_normal)
 
@@ -24,6 +24,31 @@ def normalVectorizeError(point, BoundaryPoints, CenterPoints, hyperparameter, Bo
         BoundaryPoints.append(point)
         BoundaryError.append(planeError)
     return BoundaryPoints, CenterPoints, BoundaryError, CenterError
+
+
+
+def normalVectorizeRatio(point, BoundaryPoints, CenterPoints, hyperparameter, BoundaryError, CenterError):
+    plane, maxScore = nearbyRansacPlane(point, hyperparameter)
+    plane_normal = np.array([plane[0], plane[1], plane[2]])
+    plane_normal /= np.linalg.norm(plane_normal)
+
+    planeRatio = maxScore / len(point.nearby)
+
+    #print(planeError)
+
+    
+    if planeRatio > 0.9: #경계인 경우는 그대로 None
+        point.normal = plane_normal #울퉁불퉁한거 하고나서 새로운 아이디어
+        CenterPoints.append(point)
+        CenterError.append(planeRatio)
+    else: 
+        BoundaryPoints.append(point)
+        BoundaryError.append(planeRatio)
+    return BoundaryPoints, CenterPoints, BoundaryError, CenterError
+
+
+
+
 
 
 def normalVectorizeR2Score(point, BoundaryPoints, CenterPoints, hyperparameter, BoundaryError, CenterError):
