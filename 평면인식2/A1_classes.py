@@ -32,7 +32,7 @@ class Hyperparameter:
     #여기있는건 realdata 기준 값들, 거리단위 m
     def __init__(self, pointLeastDifference = 0.0001, numOfPoints = 5000, OutlierThreshold = 20, 
                 R = 0.04, vectorRansacTrial = 50, vectorRansacThreshold = 0.008, normalLeastNorm = 0.0001,
-                R2ScoreThreshold = 0.5, ransacScoreThreshold = -0.5, ransacErrorThreshold = 0.002,
+                ransacErrorThreshold = 0.002,
                 ratioThreshold = 0.8, eps_vector = 0.04, min_samples_vector = 12,
                 eps_point = 0.05, min_samples_point = 12,  planeRansacTrial = 50,
                 planeRansacThreshold = 0.15, boundaryR = 0.06, boundaryOutlierThreshold = 15):
@@ -51,8 +51,7 @@ class Hyperparameter:
         self.vectorRansacThreshold = vectorRansacThreshold #법선벡터구할때 랜색 오차허용범위
         self.normalLeastNorm = normalLeastNorm #법선벡터 최소 노름
 
-        self.R2ScoreThreshold = R2ScoreThreshold
-        self.ransacScoreThreshold = ransacScoreThreshold #ransac Score 이거보다 크면 내부점
+
         self.ransacErrorThreshold = ransacErrorThreshold #Error 방법으로 했을때 Error 이거보다 크면 경계점
         
         self.ratioThreshold = ratioThreshold #ratio 방법으로 했을때 ratio 이거보다 크면 내부점
