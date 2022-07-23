@@ -47,7 +47,7 @@ class Hyperparameter:
         
         #4 findNormal
         self.vectorRansacTrial = vectorRansacTrial #법선벡터구할때 랜색 시행횟수
-        self.vectorRansacThreshold = vectorRansacThreshold #법선벡터구할때 랜색 오차허용범위
+        self.vectorRansacThreshold = vectorRansacThreshold #법선벡터구할때 랜색 오차허용범위 = H
         self.normalLeastNorm = normalLeastNorm #법선벡터 최소 노름
         
         self.ratioThreshold = ratioThreshold #ratio 방법으로 했을때 ratio 이거보다 크면 내부점

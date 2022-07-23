@@ -35,14 +35,17 @@ def importPly(filepath, filename):
         if filename == 'highBox.ply':
             if x < -0.5 or x > 0.5 or z < -0.55 or z > -0.12:
                 continue
+        if filename == 'twoBooksAndBox.ply':
+            if y > -0.6 or z < -1.5 or z > -0.5 or x < -0.8 or x > 0.5:
+                continue
 
         p = Point(x, y, z,
                 numOfPoints, sortedPoints[i][3], sortedPoints[i][4], sortedPoints[i][5]) #단위 m
         points[numOfPoints] = p
         numOfPoints += 1
-    p = Point(sortedPoints[-1][0], sortedPoints[-1][1], sortedPoints[-1][2],
-                numOfPoints, sortedPoints[-1][3], sortedPoints[-1][4], sortedPoints[-1][5])
-    points[numOfPoints] = p #마지막점 추가해주기
+    # p = Point(sortedPoints[-1][0], sortedPoints[-1][1], sortedPoints[-1][2],
+    #             numOfPoints, sortedPoints[-1][3], sortedPoints[-1][4], sortedPoints[-1][5])
+    # points[numOfPoints] = p #마지막점 추가해주기
     
     hyperparameter.numOfPoints = numOfPoints
 
@@ -278,9 +281,9 @@ def unicorn_sample2():
     random.seed(132808)
     points = defaultdict(Point)
     hyperparameter = Hyperparameter(pointLeastDifference = 0.001, numOfPoints = 4000,
-    OutlierThreshold = 10, R = 5, vectorRansacTrial = 50, vectorRansacThreshold = 0.15, normalLeastNorm = 0.001,
-    ransacErrorThreshold = 1.3, eps_vector = 0.1, min_samples_vector = 9,
-    eps_point = 4, min_samples_point = 10, planeRansacTrial = 50, planeRansacThreshold = 1,
+    OutlierThreshold = 10, R = 5, vectorRansacTrial = 50, vectorRansacThreshold = 0.2, normalLeastNorm = 0.001,
+    ratioThreshold = 0.8, eps_vector = 0.1, min_samples_vector = 9,
+    eps_point = 4, min_samples_point = 10, planeRansacTrial = 50, planeRansacThreshold = 0.15,
     boundaryR = 4, boundaryOutlierThreshold = 9)
 
     size = hyperparameter.numOfPoints
@@ -317,16 +320,48 @@ def unicorn_sample2():
 def Octahedron():
     random.seed(8)
     points = defaultdict(Point)
-    hyperparameter = Hyperparameter()
+    
+    hyperparameter = Hyperparameter(pointLeastDifference = 0.001, numOfPoints = 4000,
+    OutlierThreshold = 15, R = 6, vectorRansacTrial = 50, vectorRansacThreshold = 0.2, normalLeastNorm = 0.001,
+    ratioThreshold = 0.6, eps_vector = 0.1, min_samples_vector = 9,
+    eps_point = 4, min_samples_point = 10, planeRansacTrial = 50, planeRansacThreshold = 0.15,
+    boundaryR = 4, boundaryOutlierThreshold = 9)
+
     size = hyperparameter.numOfPoints
     for i in range(size):
+        diff = 0.5*(random.random()-0.5)
         x = 60*(random.random()-0.5)
         y = 60*(random.random()-0.5)
-        z = random.choice([-1,1])*(30-abs(x)-abs(y))
+        z = random.choice([-1,1])*(30-abs(x)-abs(y)) + diff
         while abs(x) + abs(y) > 30:
+            diff = 2*random.random()-1
             x = 60*(random.random()-0.5)
             y = 60*(random.random()-0.5)
-            z = random.choice([-1,1])*(30-abs(x)-abs(y))
+            z = random.choice([-1,1])*(30-abs(x)-abs(y)) + diff
         p = Point(x,y,z,i)
+        points[i] = p
+    return points, hyperparameter
+
+def Sphere():
+    import math as mt
+    random.seed(8)
+    points = defaultdict(Point)
+
+    hyperparameter = Hyperparameter(pointLeastDifference = 0.001, numOfPoints = 4000,
+    OutlierThreshold = 10, R = 5, vectorRansacTrial = 50, vectorRansacThreshold = 0.2, normalLeastNorm = 0.001,
+    ratioThreshold = 0.8, eps_vector = 0.1, min_samples_vector = 9,
+    eps_point = 4, min_samples_point = 10, planeRansacTrial = 50, planeRansacThreshold = 0.15,
+    boundaryR = 4, boundaryOutlierThreshold = 9)
+
+    size = hyperparameter.numOfPoints
+    r = 30
+
+    for i in range(size):
+        theta = 4*mt.pi*(random.random()-0.5)
+        phi =  2*mt.pi*(random.random()-0.5)
+        x = r * mt.cos(phi) * mt.cos(theta)
+        y = r * mt.cos(phi) * mt.sin(theta)
+        z = r * mt.sin(phi)
+        p = Point(x, y, z, i)
         points[i] = p
     return points, hyperparameter

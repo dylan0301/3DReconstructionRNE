@@ -26,7 +26,7 @@ def normalVectorizeError(point, BoundaryPoints, CenterPoints, hyperparameter, Bo
     return BoundaryPoints, CenterPoints, BoundaryError, CenterError
 
 
-
+#이거 최종 사용으로 채택
 def normalVectorizeRatio(point, BoundaryPoints, CenterPoints, hyperparameter, BoundaryError, CenterError):
     plane, maxScore = nearbyRansacPlane(point, hyperparameter)
     plane_normal = np.array([plane[0], plane[1], plane[2]])
