@@ -37,7 +37,7 @@ def normalVectorizeRatio(point, BoundaryPoints, CenterPoints, hyperparameter, Bo
     #print(planeError)
 
     
-    if planeRatio > 0.9: #경계인 경우는 그대로 None
+    if planeRatio > hyperparameter.ratioThreshold: #경계인 경우는 그대로 None
         point.normal = plane_normal #울퉁불퉁한거 하고나서 새로운 아이디어
         CenterPoints.append(point)
         CenterError.append(planeRatio)

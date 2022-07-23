@@ -31,9 +31,6 @@ def boundaryRemoveNoise(BoundaryPoints, hyperparameter):
     distMat = defaultdict(dict)
 
 
-
-
-
     size = len(BoundaryPoints)
     for i in range(size):
         for j in range(size):
