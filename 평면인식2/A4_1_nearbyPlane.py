@@ -25,6 +25,8 @@ def nearbyRansacPlane(point, hyperparameter):
     maxScore = 0
     bestPlane = None
     for trial in range(hyperparameter.vectorRansacTrial):
+        #문제점: 무한반복걸릴수도있다.
+        #친구들이 다 죽었으니 얘도 죽여야 한다.
         plane = None
         while plane == None:
             i1 = random.randrange(0,numOfpts)

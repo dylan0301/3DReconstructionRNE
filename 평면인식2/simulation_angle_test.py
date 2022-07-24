@@ -5,7 +5,7 @@ x = [0.001*i for i in range(1000)]
 y = []
 r = 1
 h = 0.05
-alpha = mt.pi/5
+alpha = mt.pi/3
 
 
 def integration(x):

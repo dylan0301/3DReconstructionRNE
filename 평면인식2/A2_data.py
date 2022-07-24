@@ -36,7 +36,7 @@ def importPly(filepath, filename):
             if x < -0.5 or x > 0.5 or z < -0.55 or z > -0.12:
                 continue
         if filename == 'twoBooksAndBox.ply':
-            if y > -0.6 or z < -1.5 or z > -0.5 or x < -0.8 or x > 0.5:
+            if y > -0.6 or y < -1 or (x < -0.3 and y < -0.96) or (x<0.2 and y<-0.98) or z < -1.5 or z > -0.55 or x < -0.8 or x > 0.5:
                 continue
 
         p = Point(x, y, z,
