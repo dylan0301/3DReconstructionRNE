@@ -1,7 +1,7 @@
 #boundarypoint들을 위치를 기준으로 DBSCAN함.
 #같은 클러스터로 분류된 boundarypoint들을 같은 물체로 분류
 
-#같은 물체로 분류된 boundarypoint들에 대해서
+#같은 물체로 분류된 boundarypoint 들에 대해서
     #각 boundarypoint와 거리 r 이내에 있는 centerpoint들에 대해서
         #그 centerpoint의 평면 클러스터를 확인하고
         #만약 지금까지 이 boundarypoint를 기준으로 측정한 centerpoint 중 그 평면 클러스터가 없었다면

@@ -17,7 +17,7 @@ print()
 print('bring data start')
 t = time.time()
 filepath = '/Users/jeewon/Library/CloudStorage/OneDrive-대구광역시교육청/지원/한과영/RnE/3DReconstructionRNE/pointclouddata/'
-filename = 'twoBooksAndBox.ply'
+filename = 'twoBoxes.ply'
 
 AllPoints, hyperparameter = importPly(filepath, filename)
 #AllPoints, hyperparameter = Sphere()
