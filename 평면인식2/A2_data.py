@@ -2,6 +2,7 @@ from A1_classes import Point, Hyperparameter
 from A2_1_importPointCloud import read_ply_xyzrgb
 from collections import defaultdict
 import random
+import numpy as np
 
 #현재 hyperparameter 설정이 덜됐음
 
@@ -366,6 +367,28 @@ def Sphere():
         x = r * mt.cos(phi) * mt.cos(theta)
         y = r * mt.cos(phi) * mt.sin(theta)
         z = r * mt.sin(phi)
+        p = Point(x, y, z, i)
+        points[i] = p
+    return points, hyperparameter
+
+
+
+
+def butterfly(R = 20, alpha = np.pi/3, size=2000):
+    random.seed(0)
+    points = defaultdict(Point)
+
+    hyperparameter = Hyperparameter(numOfPoints=size)
+
+    for i in range(size):
+        if i % 2 == 0:
+            x = 2*R*(random.random()-0.5)
+            y = -np.sqrt(R**2-x**2)*random.random()
+            z = 0
+        if i % 2 == 1:
+            x = 2*R*(random.random()-0.5)
+            y = np.sqrt((R**2-x**2)*np.cos(alpha)**2)*random.random()
+            z = np.tan(alpha)*y
         p = Point(x, y, z, i)
         points[i] = p
     return points, hyperparameter
