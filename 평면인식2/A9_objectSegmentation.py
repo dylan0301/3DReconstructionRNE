@@ -47,10 +47,23 @@ def oneObjBoundary(BoundaryCluster, NewAllPoints, NewLabel, hyperparameter):
     return planeClusterConnectMap, ObjectPlanes
 
 #input: graph, 2차원 defaultdict(dict)
-#D: list, D[i] = list of planes. (newCluster indexes로 표현됨.)
+#D = Object_Planes: list, D[i] = list of planes. (newCluster indexes로 표현됨.)
 
 #output: graph를 잘 조작해서 구멍을 채워서 점을 생성한다.
-def holeFill():
+
+def holeFill(graph, Object_Planes, hyperparameter):
+    #각 평면이 어느 오브젝트들에 들어있는지 표시
+    Plane_Objects = defaultdict(list)
+    for obj in Object_Planes:
+        for plane in obj:
+            Plane_Objects[plane].append(obj)
+    
+    for plane in Plane_Objects.keys():
+        if len(Plane_Objects[plane]) > 1:
+            disconnect(plane)
+    
+    def disconnect(plane):
+        pass
     
     
     
@@ -70,7 +83,7 @@ def ObjectSegmentation(BoundaryPoints, NewAllPoints, NewLabel, hyperparameter):
                 Graph[i][j] = Graph[i][j] or planeClusterConnectMap[i][j]
         Object_Planes.append(ObjectPlanes)
     
-    
+    NewGraph = holeFill(graph, Object_Planes, hyperparameter)
     
             
 #각각의 평면 클러스터를 버텍스로 하고, 그 연결 관계를 edge로 하는 그래프를 그린다
