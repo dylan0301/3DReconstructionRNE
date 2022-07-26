@@ -1,3 +1,5 @@
+import numpy as np
+
 #점 3개지나는 평면의 방정식 abcd 튜플로 리턴
 def findPlane(p1, p2, p3):
     v12 = np.array([p1.x-p2.x, p1.y-p2.y, p1.z-p2.z])

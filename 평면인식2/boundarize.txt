@@ -1,34 +1,6 @@
 #boundarypoint들을 위치를 기준으로 DBSCAN함.
 #같은 클러스터로 분류된 boundarypoint들을 같은 물체로 분류
-import numpy as np
-from collections import defaultdict
-from sklearn.cluster import DBSCAN
 
-def boundaryClustering(BoundaryPoints, hyperparameter):
-    boundary_points_np = np.array([[p.x, p.y, p.z] for p in BoundaryPoints])
-    clustering = DBSCAN(eps = hyperparameter.eps_point, min_samples = hyperparameter.min_samples_point)
-    labels = clustering.fit_predict(boundary_points_np)
-    BoundaryCluster = defaultdict(list)
-    
-    for i in range(len(BoundaryPoints)):
-        BoundaryCluster[labels[i]].append(BoundaryPoints[i])
-    
-    return BoundaryCluster
-
-def oneObjBoundary(Boundarypoints, NewAllPoints, NewLabel, hyperparameter):
-    planeClusterConnectMap = []
-    for p in Boundarypoints:
-        planeNearP = []
-        for i in range(len(NewAllPoints)):
-            q = NewAllPoints[i]
-            if p.distance(q) < hyperparameter.eps_point:
-                if NewLabel[i] not in planeNearP:
-                    planeNearP.append(NewLabel[i])
-        if len(planeNearP) == 2:
-            
-
-            
-    
 #같은 물체로 분류된 boundarypoint 들에 대해서
     #각 boundarypoint와 거리 r 이내에 있는 centerpoint들에 대해서
         #그 centerpoint의 평면 클러스터를 확인하고

@@ -82,7 +82,7 @@ plt.show()
 #5 vectorClustering
 print('vectorClustering start')
 t = time.time()
-CenterPoints, clusterPointMap, newLabel = vectorDBSCAN(CenterPoints, hyperparameter)
+CenterPoints, clusterPointMap,  newLabel= vectorDBSCAN(CenterPoints, hyperparameter)
 print(len(CenterPoints), 'CenterPoints after vectorClustering')
 print('vectorClustering time:', time.time()-t)
 print()
@@ -146,3 +146,10 @@ ax = fig.add_subplot(111, projection='3d')
 ap = np.array([[p.x, p.y, p.z] for p in BoundaryPoints])
 ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[0] * len(BoundaryPoints), marker='o', s=15, cmap='rainbow')
 plt.show()
+
+#8 FindPlane
+
+
+
+#9 Boundarize
+
