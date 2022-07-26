@@ -18,7 +18,10 @@ def boundaryClustering(BoundaryPoints, hyperparameter):
 def oneObjBoundary(BoundaryCluster, NewAllPoints, NewLabel, hyperparameter):
     ObjectPlanes = []
     size = max(NewLabel) + 1
-    planeClusterConnectMap = [[0] * size for i in range(size)]
+    planeClusterConnectMap = defaultdict(dict())
+    for i in range(size):
+        for j in range(size):
+            planeClusterConnectMap[i][j] = 0
     for p in BoundaryCluster:
         planeNearP = []
         for i in range(len(NewAllPoints)):
@@ -42,17 +45,33 @@ def oneObjBoundary(BoundaryCluster, NewAllPoints, NewLabel, hyperparameter):
             else: 
                 planeClusterConnectMap[i][j] = 0
     return planeClusterConnectMap, ObjectPlanes
-    
-def makeGraph(planeClusterConnectMap):
-    pass 
-    
-    
+
+#input: graph, 2차원 defaultdict(dict)
+#D: list, D[i] = list of planes. (newCluster indexes로 표현됨.)
+
+#output: graph를 잘 조작해서 구멍을 채워서 점을 생성한다.
 def holeFill():
-    pass
+    
+    
+    
     
 def ObjectSegmentation(BoundaryPoints, NewAllPoints, NewLabel, hyperparameter):
     BoundaryCluster = boundaryClustering(BoundaryPoints, hyperparameter)
-    planeClusterConnectMap, ObjectPlanes = oneObjBoundary(BoundaryCluster, NewAllPoints, )
+    Object_Planes = []
+    size = max(NewLabel) + 1
+    Graph = defaultdict(dict)
+    for i in range(size):
+        for j in range(size):
+            Graph[i][j] = 0 
+    for k in range(len(BoundaryCluster)):
+        planeClusterConnectMap, ObjectPlanes = oneObjBoundary(BoundaryCluster[k], NewAllPoints, NewLabel, hyperparameter)
+        for i in range(size):
+            for j in range(size):
+                Graph[i][j] = Graph[i][j] or planeClusterConnectMap[i][j]
+        Object_Planes.append(ObjectPlanes)
+    
+    
+    
             
 #각각의 평면 클러스터를 버텍스로 하고, 그 연결 관계를 edge로 하는 그래프를 그린다
 #만약 버텍스(v)가 여러 D_i에 속한다면 v를 제거한다. 얘네가 바닥이나 벽, 책상
@@ -65,6 +84,12 @@ def ObjectSegmentation(BoundaryPoints, NewAllPoints, NewLabel, hyperparameter):
             #v 평면에 그 직선을 projection 시킴
             #이렇게 모두 projection시키면 v평면에 내부 구역이 생긴다. 그게 구멍임.
             #점으로 메꾼다.
+
+            #아래 상자 찾는법:
+                #v가 속한 각 D_i에 대해서 centerpoint들이 D_i boundary 내부에 있는지 본다.
+                #구멍들은 D_i boundary 내부에 centerpoint 거의 없을거고,
+                #아래 상자는 거의다 있을거다.
+
 #이러면 이제 component들이 object가 될 예정
 
 #문제점: 물체가 하나밖에 없이 바닥 위에 놓여있다면 제거가 안된다.
