@@ -15,9 +15,11 @@ def boundaryClustering(BoundaryPoints, hyperparameter):
     
     return BoundaryCluster
 
-def oneObjBoundary(Boundarypoints, NewAllPoints, NewLabel, hyperparameter):
-    planeClusterConnectMap = []
-    for p in Boundarypoints:
+def oneObjBoundary(BoundaryCluster, NewAllPoints, NewLabel, hyperparameter):
+    ObjectPlanes = []
+    size = max(NewLabel) + 1
+    planeClusterConnectMap = [[0] * size for i in range(size)]
+    for p in BoundaryCluster:
         planeNearP = []
         for i in range(len(NewAllPoints)):
             q = NewAllPoints[i]
@@ -25,21 +27,33 @@ def oneObjBoundary(Boundarypoints, NewAllPoints, NewLabel, hyperparameter):
                 if NewLabel[i] not in planeNearP:
                     planeNearP.append(NewLabel[i])
         if len(planeNearP) == 2:
+            planeNearP.sort()
+            planeClusterConnectMap[planeNearP[0]][planeNearP[1]] += 1
             
-
-            
+    requiredConnectnum = 10
+    for i in range(size):
+        for j in range(size):
+            if planeClusterConnectMap[i][j] / requiredConnectnum >= 1:
+                planeClusterConnectMap[i][j] = 1
+                if i not in ObjectPlanes:
+                    ObjectPlanes.append(i)
+                if j not in ObjectPlanes:
+                    ObjectPlanes.append(i)
+            else: 
+                planeClusterConnectMap[i][j] = 0
+    return planeClusterConnectMap, ObjectPlanes
     
-#같은 물체로 분류된 boundarypoint 들에 대해서
-    #각 boundarypoint와 거리 r 이내에 있는 centerpoint들에 대해서
-        #그 centerpoint의 평면 클러스터를 확인하고
-        #만약 지금까지 이 boundarypoint를 기준으로 측정한 centerpoint 중 그 평면 클러스터가 없었다면
-            #리스트에 그 평면 클러스터를 추가한다
-    #만약 리스트의 길이가 2라면 (한 boundarypoint를 기준으로 측정한 cluster가 2개라면)
-        #그 2개의 평면 클러스터 쌍 연결 가능성을 1 증가시킨다.
-#클러스터 쌍에 대해서 평면 클러스터 쌍 연결 가능성이 일정 수 이상이면 그 2개를 연결시킨다.
-#또한, 이 boundarypoint 클러스터 안에서 찾은 각각의 평면 클러스터들을 D_i 리스트에 추가한다. 
-#하나의 D_i는 하나의 boundarypoints DBSCAN 덩어리에서 찾은 평면들의 집합임
-
+def makeGraph(planeClusterConnectMap):
+    pass 
+    
+    
+def holeFill():
+    pass
+    
+def ObjectSegmentation(BoundaryPoints, NewAllPoints, NewLabel, hyperparameter):
+    BoundaryCluster = boundaryClustering(BoundaryPoints, hyperparameter)
+    planeClusterConnectMap, ObjectPlanes = oneObjBoundary(BoundaryCluster, NewAllPoints, )
+            
 #각각의 평면 클러스터를 버텍스로 하고, 그 연결 관계를 edge로 하는 그래프를 그린다
 #만약 버텍스(v)가 여러 D_i에 속한다면 v를 제거한다. 얘네가 바닥이나 벽, 책상
 #v를 원소로 가지는 모든 D_i들에 대해서

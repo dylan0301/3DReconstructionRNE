@@ -5,8 +5,11 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from A2_data import butterfly
 
+R = 10
+alpha = np.pi/4
+size = 500
 
-AllPoints, hyperparameter = butterfly(R = 7, alpha = np.pi/2, size = 2000)
+AllPoints, hyperparameter = butterfly(R = R, alpha = alpha, size = size)
 
 hyperparameter.vectorRansacTrial=1000
 hyperparameter.vectorRansacThreshold=1
@@ -82,7 +85,11 @@ def isSatisfied(p):
         return 1
     return 0
 
-print(maxScore, maxScore/len(AllPoints))
+print()
+print('R =', R, '/ H =', hyperparameter.vectorRansacThreshold, '/ alpha =', alpha)
+print(maxScore,'out of', len(AllPoints))
+print('ratio:', maxScore/len(AllPoints))
+print()
 
 fig = plt.figure(figsize=(6, 6))
 ax = fig.add_subplot(111, projection='3d')

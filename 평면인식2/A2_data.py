@@ -285,15 +285,15 @@ def unicorn_sample():
 def unicorn_sample2():
     random.seed(132808)
     points = defaultdict(Point)
-    hyperparameter = Hyperparameter(pointLeastDifference = 0.001, numOfPoints = 4000,
-    OutlierThreshold = 10, R = 5, vectorRansacTrial = 50, vectorRansacThreshold = 0.2, normalLeastNorm = 0.001,
-    ratioThreshold = 0.8, eps_vector = 0.1, min_samples_vector = 9,
+    hyperparameter = Hyperparameter(pointLeastDifference = 0.001, numOfPoints = 3000,
+    OutlierThreshold = 10, R = 7, vectorRansacTrial = 100, vectorRansacThreshold = 0.4, normalLeastNorm = 0.001,
+    ratioThreshold = 0.6, eps_vector = 0.1, min_samples_vector = 9,
     eps_point = 4, min_samples_point = 10, planeRansacTrial = 50, planeRansacThreshold = 0.15,
     boundaryR = 4, boundaryOutlierThreshold = 9)
 
     size = hyperparameter.numOfPoints
     for i in range(size):
-        diff = 2*random.random()-1
+        diff = random.random()-0.5
         if i%6 == 0:
             x = 30*random.random()
             y = 30*random.random()
