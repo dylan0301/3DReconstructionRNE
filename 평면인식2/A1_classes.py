@@ -71,11 +71,18 @@ class Hyperparameter:
         
 
 
-class plane:
-    def __init__(self, polygon, equation):
+class Plane:
+    def __init__(self, label, interiorPoints,  equation = None):
+        self.label = label
+       
+        self.interiorPoints = interiorPoints
+
         self.equation = equation #(a,b,c,d)
-        self.polygon = polygon
         
-    def __str__(self):
-        return self.polygon
         
+    
+
+class Object:
+    def __init__(self, idx):
+        self.idx = idx
+        self.BoundaryPoints        
