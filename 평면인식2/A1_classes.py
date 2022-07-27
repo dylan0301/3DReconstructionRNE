@@ -72,17 +72,20 @@ class Hyperparameter:
 
 
 class Plane:
-    def __init__(self, label, interiorPoints,  equation = None):
+    def __init__(self, label, interiorPoints):
         self.label = label
-       
         self.interiorPoints = interiorPoints
+        self.connected = set()
+        self.containedObj = set()
+        self.equation = None #(a,b,c,d)
 
-        self.equation = equation #(a,b,c,d)
+        
+        
+class Object:
+    def __init__(self, idx, planes):
+        self.idx = idx
+        self.BoundaryPoints = []     
+        self.planes = planes # Plane형
         
         
     
-
-class Object:
-    def __init__(self, idx):
-        self.idx = idx
-        self.BoundaryPoints        
