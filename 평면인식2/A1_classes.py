@@ -1,4 +1,5 @@
 import numpy as np
+from collections import defaultdict
 
 class Point:
     def __init__(self, X, Y, Z, idx, R = None, G = None, B = None):
@@ -75,17 +76,19 @@ class Plane:
     def __init__(self, label, interiorPoints):
         self.label = label
         self.interiorPoints = interiorPoints
-        self.connected = set()
+        self.connected = defaultdict(list) 
+        #key는 다른 plane, (연결된 plane만 있음)
+        # value는 그 plane과 사이에 있는 boundarypoints. 
         self.containedObj = set()
         self.equation = None #(a,b,c,d)
 
         
         
 class Object:
-    def __init__(self, idx, planes):
+    def __init__(self, idx, BoundaryPoints):
         self.idx = idx
-        self.BoundaryPoints = []     
-        self.planes = planes # Plane형
+        self.BoundaryPoints = BoundaryPoints  
+        self.planes = [] # Plane형
         
         
     

@@ -105,6 +105,10 @@ NewClusterPointMap = divideAllCluster_DBSCAN(NewClusterPointMap, clusterPointMap
 print('distanceStairClustering time:', time.time()-t)
 print()
 
+planeList = []
+for i, points in NewClusterPointMap.item():
+    plane = Plane(i, points)
+    planeList.append(plane)
 
 NewAllPoints = []
 for k in NewClusterPointMap.keys():

@@ -3,34 +3,40 @@
 import numpy as np
 from collections import defaultdict
 from sklearn.cluster import DBSCAN
+from A1_classes import *
 
 def boundaryClustering(BoundaryPoints, hyperparameter):
     boundary_points_np = np.array([[p.x, p.y, p.z] for p in BoundaryPoints])
     clustering = DBSCAN(eps = hyperparameter.eps_point, min_samples = hyperparameter.min_samples_point)
     labels = clustering.fit_predict(boundary_points_np)
-    BoundaryCluster = defaultdict(list)
+    BoundaryCluster = defaultdict(list())
+    objList = []
     
     for i in range(len(BoundaryPoints)):
         BoundaryCluster[labels[i]].append(BoundaryPoints[i])
     
-    return BoundaryCluster
+    for i, points in BoundaryCluster.item():
+        obj = Object(i, points)
+        objList.append(obj)
+            
+    return objList
 
-def oneObjBoundary(ObjBoundaryCluster, NewAllPoints, NewLabel, hyperparameter):
+def findOneObjPlanes(obj, planeList, hyperparameter):
     ObjectPlanes = []
     ObjectBoundary = defaultdict(list)
-    size = max(NewLabel) + 1
-    planeClusterConnectMap = defaultdict(dict())
+    size = len(planeList)
+    planeClusterConnectMap = defaultdict(dict)
     for i in range(size):
         for j in range(size):
             planeClusterConnectMap[i][j] = 0
 
-    for p in ObjBoundaryCluster:
+    for p in obj.BoundaryPoints:
         planeNearP = []
-        for i in range(len(NewAllPoints)):
-            q = NewAllPoints[i]
-            if p.distance(q) < hyperparameter.eps_point:
-                if NewLabel[i] not in planeNearP:
-                    planeNearP.append(NewLabel[i])
+        for i in range(len(planeList)):
+            for q in planeList[i].interiorPoints:
+                if p.distance(q) < hyperparameter.eps_point:
+                    if planeList[i] not in planeNearP:
+                        planeNearP.append(planeList[i])
     
         if len(planeNearP) == 2:
             planeNearP.sort()
@@ -79,16 +85,16 @@ def processGraph(graph, Object_Info, hyperparameter):
             def isSpecial()
             pass           
     
-def ObjectSegmentation(BoundaryPoints, NewClusterPointMap, NewAllPoints, NewLabel, hyperparameter):
-    BoundaryCluster = boundaryClustering(BoundaryPoints, hyperparameter)
+def ObjectSegmentation(BoundaryPoints, planeList, hyperparameter):
+    objList = boundaryClustering(BoundaryPoints, hyperparameter)
     Object_Info = []
-    size = max(NewLabel) + 1
+    size = len(planeList)
     Graph = defaultdict(dict)
     for i in range(size):
         for j in range(size):
             Graph[i][j] = 0 
-    for k in range(len(BoundaryCluster)):
-        planeClusterConnectMap, ObjectPlanes, ObjectBoundary = oneObjBoundary(BoundaryCluster[k], NewAllPoints, NewLabel, hyperparameter)
+    for k in range(len(objList)):
+        planeClusterConnectMap, ObjectPlanes, ObjectBoundary = findOneObjPlanes(objList[k], planeList, hyperparameter)
         for i in range(size):
             for j in range(size):
                 Graph[i][j] = Graph[i][j] or planeClusterConnectMap[i][j]
