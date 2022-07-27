@@ -1,6 +1,5 @@
 from A4_2_onePointFindNormal import *
 
-
 def findNormal(AllPoints, BoundaryPoints, CenterPoints, hyperparameter):
     BoundaryError = []
     CenterError = []

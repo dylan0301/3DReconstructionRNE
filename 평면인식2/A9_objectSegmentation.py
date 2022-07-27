@@ -4,10 +4,11 @@ import numpy as np
 from collections import defaultdict
 from sklearn.cluster import DBSCAN
 from A1_classes import *
+import random
 
 def boundaryClustering(BoundaryPoints, hyperparameter):
     boundary_points_np = np.array([[p.x, p.y, p.z] for p in BoundaryPoints])
-    clustering = DBSCAN(eps = hyperparameter.eps_point, min_samples = hyperparameter.min_samples_point)
+    clustering = DBSCAN(eps = hyperparameter.eps_point2, min_samples = hyperparameter.min_samples_point2)
     labels = clustering.fit_predict(boundary_points_np)
     BoundaryCluster = defaultdict(list())
     objList = []
@@ -63,10 +64,10 @@ def processGraph(planeList, hyperparameter):
             def edgeRansac(edgePoints):
                 def findLine(p1, p2):
                     direction = np.array([p1.x-p2.x, p1.y-p2.y, p1.z-p2.z])
-                    return direction, p2
+                    return (direction, p2)
                 
                 #p에서 line까지 거리
-                def PointLineDistance(p, direction, p2):
+                def pointLineDistance(p, direction, p2):
                     PA = np.array([p.x-p2.x, p.y-p2.y, p.z-p2.z])
                     res = np.linalg.norm(np.cross(PA, direction))/np.linalg.norm(direction)
                     return res
@@ -75,37 +76,33 @@ def processGraph(planeList, hyperparameter):
 
                 numOfpts = len(pts)
                 maxScore = 0
-                bestPlane = None
-                for trial in range(hyperparameter.vectorRansacTrial):
-                    plane = None
-                    while plane == None:
+                bestLine = None
+                for trial in range(hyperparameter.edgeRansacTrial):
+                    line = None
+                    while line == None:
                         i1 = random.randrange(0,numOfpts)
                         i2 = random.randrange(0,numOfpts)
                         while i1 == i2:
                             i2 = random.randrange(0,numOfpts)
-                        i3 = random.randrange(0,numOfpts)
-                        while i1 == i3 or i2 == i3:
-                            i3 = random.randrange(0,numOfpts)
-                        plane = findPlane(pts[i1], pts[i2], pts[i3])
+                        line = findLine(pts[i1], pts[i2])
                     score = 0
                     for p in pts:
-                        d = sujikDistance(p, plane)
-                        if d < hyperparameter.vectorRansacThreshold:
+                        d = pointLineDistance(p, line)
+                        if d < hyperparameter.edgeRansacThreshold:
                             score +=1
                     if score > maxScore:
                         maxScore = score
-                        bestPlane = plane
-
-                return edgeVector, startPoint #
-                
+                        bestLine = line
+                return bestLine[0], bestLine[1] #방향벡터, 그위의 점   
             
+            projectedLines = []
+
             for plane2 in obj:
                 if plane2 not in plane.connected.keys():
                     continue
                 edgePoints = plane.connected[plane2] # Boundary btwn plane and plane2
                 edgeVector, startPoint = edgeRansac(edgePoints)
  
-    
 def ObjectSegmentation(BoundaryPoints, planeList, hyperparameter):
     objList = boundaryClustering(BoundaryPoints, hyperparameter)
     for i in range(len(objList)):

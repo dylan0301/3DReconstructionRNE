@@ -34,8 +34,9 @@ class Hyperparameter:
     def __init__(self, pointLeastDifference = 0.0001, numOfPoints = 5000, OutlierThreshold = 10, 
                 R = 0.05, vectorRansacTrial = 50, vectorRansacThreshold = 0.01, normalLeastNorm = 0.0001,
                 ratioThreshold = 0.85, eps_vector = 0.05, min_samples_vector = 10,
-                eps_point = 0.05, min_samples_point = 10,  planeRansacTrial = 50,
-                planeRansacThreshold = 0.15, boundaryR = 0.06, boundaryOutlierThreshold = 15):
+                eps_point = 0.05, min_samples_point = 10, boundaryR = 0.06, boundaryOutlierThreshold = 15,
+                planeRansacTrial = 50, planeRansacThreshold = 0.01, eps_point2 = 0.05, min_samples_point2 = 8,
+                edgeRansacTrial = 50, edgeRansacThreshold = 0.01, pointDensity = 10000):
 
         #2 data
         self.pointLeastDifference = pointLeastDifference #각 좌표값 차이가 이거보다 가까이 있는 점 쌍은 하나로 취급
@@ -58,17 +59,24 @@ class Hyperparameter:
         self.min_samples_vector = min_samples_vector #vector DBSCAN min_samples
 
         #6 distanceStairClustering
-        self.eps_point = eps_point #point DBSCAN eps
-        self.min_samples_point = min_samples_point #point DBSCAN min_samples
+        self.eps_point = eps_point #centerpoint DBSCAN eps
+        self.min_samples_point = min_samples_point #centerpoint DBSCAN min_samples
+
+        #7 boundaryRemoveNoise
+        self.boundaryR = boundaryR
+        self.boundaryOutlierThreshold = boundaryOutlierThreshold
         
         #8 findPlane
         self.planeRansacTrial = planeRansacTrial #최종 평면 구할때 랜색 시행횟수
         self.planeRansacThreshold = planeRansacThreshold #최종적으로 평면 만들때 쓰는 랜색 오차허용범위
+
+        #9 objectSegmentation
+        self.eps_point2 = eps_point2 #boundarypoint DBSCAN eps
+        self.min_samples_point2 = min_samples_point2 #boundarypoint DBSCAN min_samples
+        self.edgeRansacTrial = edgeRansacTrial #edge 지나는 직선 구할때 랜색 시행횟수
+        self.edgeRansacThreshold = edgeRansacThreshold #edge 지나는 직선 만들때 쓰는 랜색 오차허용범위
+        self.pointDensity = pointDensity #1*1에 점 몇개있나?
         
-        #9 boundaryRemoveNoise
-        #여기서 OutlierThreshold랑 noiseR 다르게 설정 필요할듯
-        self.boundaryR = boundaryR
-        self.boundaryOutlierThreshold = boundaryOutlierThreshold
         
 
 

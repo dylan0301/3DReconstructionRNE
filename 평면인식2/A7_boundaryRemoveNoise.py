@@ -2,6 +2,7 @@ from collections import defaultdict
 from A1_classes import *
 from sklearn.metrics.pairwise import euclidean_distances
 
+
 def boundaryRemoveNoise(BoundaryPoints, hyperparameter):
     size = len(BoundaryPoints)
     pointxyz = [[p.x, p.y, p.z] for p in BoundaryPoints]

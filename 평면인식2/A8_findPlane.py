@@ -28,7 +28,7 @@ def RANSACPlane2(planeList, hyperparameter):
         numOfpts = len(pts)
         maxScore = 0
         bestPlane = None
-        for trial in range(hyperparameter.vectorRansacTrial):
+        for trial in range(hyperparameter.planeRansacTrial):
             plane = None
             while plane == None:
                 i1 = random.randrange(0,numOfpts)
@@ -42,7 +42,7 @@ def RANSACPlane2(planeList, hyperparameter):
             score = 0
             for p in pts:
                 d = sujikDistance(p, plane)
-                if d < hyperparameter.vectorRansacThreshold:
+                if d < hyperparameter.planeRansacThreshold:
                     score +=1
             if score > maxScore:
                 maxScore = score

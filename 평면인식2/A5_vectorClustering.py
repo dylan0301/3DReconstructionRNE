@@ -3,6 +3,7 @@ from sklearn.cluster import AgglomerativeClustering, DBSCAN
 
 from collections import defaultdict
 
+
 def vectorHierarchicalClustering(CenterPoints, hyperparameter):
     numOfCluster = 2*hyperparameter.numOfCluster
 

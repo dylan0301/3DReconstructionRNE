@@ -2,6 +2,7 @@ import numpy as np
 from collections import defaultdict
 from sklearn.cluster import DBSCAN
 
+
 def divideCluster_DBSCAN(cluster, NewClusterPointMap, hyperparameter):
     Newclusterpm = NewClusterPointMap
     cluster_Points = np.array([[p.x, p.y, p.z] for p in cluster])
@@ -18,7 +19,6 @@ def divideCluster_DBSCAN(cluster, NewClusterPointMap, hyperparameter):
             del Newclusterpm[i + clusterNow]
             
     return Newclusterpm
-
 
 def divideAllCluster_DBSCAN(NewClusterPointMap, clusterPointMap, hyperparameter):
     for Cluster in clusterPointMap.values():
