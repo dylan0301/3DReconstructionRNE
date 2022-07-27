@@ -5,6 +5,7 @@ from A4_findNormal import *
 from A5_vectorClustering import *
 from A6_distanceStairClustering import *
 from A7_boundaryRemoveNoise import *
+from A8_findPlane import *
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -106,7 +107,7 @@ print('distanceStairClustering time:', time.time()-t)
 print()
 
 planeList = []
-for i, points in NewClusterPointMap.item():
+for i, points in NewClusterPointMap.items():
     plane = Plane(i, points)
     planeList.append(plane)
 
@@ -151,9 +152,14 @@ ap = np.array([[p.x, p.y, p.z] for p in BoundaryPoints])
 ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[0] * len(BoundaryPoints), marker='o', s=15, cmap='rainbow')
 plt.show()
 
-#8 FindPlane
+#8 findPlane
+print('findPlane start')
+t = time.time()
+RANSACPlane2(planeList, hyperparameter)
+print('findPlane time:', time.time()-t)
+print()
 
 
 
-#9 Boundarize
+#9 objectSegmentation
 

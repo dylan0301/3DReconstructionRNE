@@ -59,8 +59,18 @@ def processGraph(planeList, hyperparameter):
             holeFill(plane, obj)
         
         def holeFill(plane, obj):
+            def edgeRansac(edgePoints):
+
+
+                return edgeVector, startPoint #
+                
             
-            
+            for plane2 in obj:
+                if plane2 not in plane.connected.keys():
+                    continue
+                edgePoints = plane.connected[plane2] # Boundary btwn plane and plane2
+                edgeVector, startPoint = edgeRansac(edgePoints)
+                
             def isSpecial():
                 pass           
     
