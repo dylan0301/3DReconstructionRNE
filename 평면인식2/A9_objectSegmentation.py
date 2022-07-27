@@ -22,87 +22,55 @@ def boundaryClustering(BoundaryPoints, hyperparameter):
     return objList
 
 def findOneObjPlanes(obj, planeList, hyperparameter):
-    ObjectPlanes = []
-    ObjectBoundary = defaultdict(list)
-    size = len(planeList)
-    planeClusterConnectMap = defaultdict(dict)
-    for i in range(size):
-        for j in range(size):
-            planeClusterConnectMap[i][j] = 0
+    numOfPlanes = len(planeList)
 
     for p in obj.BoundaryPoints:
         planeNearP = []
-        for i in range(len(planeList)):
+        for i in range(numOfPlanes):
             for q in planeList[i].interiorPoints:
                 if p.distance(q) < hyperparameter.eps_point:
                     if planeList[i] not in planeNearP:
                         planeNearP.append(planeList[i])
     
         if len(planeNearP) == 2:
-            planeNearP.sort()
-            planeClusterConnectMap[planeNearP[0]][planeNearP[1]] += 1
-            ObjectBoundary[(planeNearP[0], planeNearP[1])].append(p)
-           
-    requiredConnectnum = 10
-    for i in range(size):
-        for j in range(size):
-            if planeClusterConnectMap[i][j] / requiredConnectnum >= 1:
-                planeClusterConnectMap[i][j] = 1
-                if i not in ObjectPlanes:
-                    ObjectPlanes.append(i)
-                if j not in ObjectPlanes:
-                    ObjectPlanes.append(j)
-            else: 
-                planeClusterConnectMap[i][j] = 0
-    return planeClusterConnectMap, ObjectPlanes, ObjectBoundary
+            planeNearP[0].connected[planeNearP[1]].append(p)
+            planeNearP[1].connected[planeNearP[0]].append(p)
+            planeNearP[0].containedObj.add(obj)
+            planeNearP[1].containedObj.add(obj)
+            obj.planes.add(planeNearP[0])
+            obj.planes.add(planeNearP[1])
+            
 
 #input: graph, 2차원 defaultdict(dict)
 #D = Object_Planes: list, D[i] = list of planes. (newCluster indexes로 표현됨.)
 
 #output: graph를 잘 조작해서 구멍을 채워서 점을 생성한다.
 
-def processGraph(graph, Object_Info, hyperparameter):
+def processGraph(planeList, hyperparameter):
     #각 평면이 어느 오브젝트들에 들어있는지 표시
-    Plane_Objects = defaultdict(list)
-    Object_Planes, ObjectBoundary = Object_Info
-    for obj in Object_Planes:
-        for plane in obj:
-            Plane_Objects[plane].append(obj)
     
-    for plane in Plane_Objects.keys():
-        if len(Plane_Objects[plane]) > 1:
-            disconnect(graph, plane)
+    for plane in planeList:
+        if len(plane.containedObj) > 1:
+            disconnect(plane)
     
-    def disconnect(graph, plane):
-        #plane과 연결된 D_i
-        contained_obj = Plane_Objects[plane]
-        for D_i in contained_obj.values():
-            holeFill(D_i, plane)
+    def disconnect(plane):
+        #plane과 연결된 obj들에 대해서
+        for obj in plane.containedObj:
+            holeFill(plane, obj)
         
-        def holeFill(D_i, plane):
+        def holeFill(plane, obj):
             
             
-            def isSpecial()
-            pass           
+            def isSpecial():
+                pass           
     
 def ObjectSegmentation(BoundaryPoints, planeList, hyperparameter):
     objList = boundaryClustering(BoundaryPoints, hyperparameter)
-    Object_Info = []
-    size = len(planeList)
-    Graph = defaultdict(dict)
-    for i in range(size):
-        for j in range(size):
-            Graph[i][j] = 0 
-    for k in range(len(objList)):
-        planeClusterConnectMap, ObjectPlanes, ObjectBoundary = findOneObjPlanes(objList[k], planeList, hyperparameter)
-        for i in range(size):
-            for j in range(size):
-                Graph[i][j] = Graph[i][j] or planeClusterConnectMap[i][j]
-        Object_Info.append((ObjectPlanes, ObjectBoundary))
-    
-    NewGraph = processGraph(Graph, Object_Info, hyperparameter)
-    
-            
+    for i in range(len(objList)):
+        findOneObjPlanes(objList[i], planeList, hyperparameter)
+
+    processGraph(planeList, hyperparameter)
+
 #각각의 평면 클러스터를 버텍스로 하고, 그 연결 관계를 edge로 하는 그래프를 그린다
 #만약 버텍스(v)가 여러 D_i에 속한다면 v를 제거한다. 얘네가 바닥이나 벽, 책상
 #v를 원소로 가지는 모든 D_i들에 대해서

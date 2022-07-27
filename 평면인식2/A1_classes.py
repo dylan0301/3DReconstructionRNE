@@ -88,7 +88,7 @@ class Object:
     def __init__(self, idx, BoundaryPoints):
         self.idx = idx
         self.BoundaryPoints = BoundaryPoints  
-        self.planes = [] # Plane형
+        self.planes = set() # Plane형
         
         
     
