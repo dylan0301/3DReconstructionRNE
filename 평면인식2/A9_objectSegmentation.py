@@ -59,8 +59,42 @@ def processGraph(planeList, hyperparameter):
             holeFill(plane, obj)
         
         def holeFill(plane, obj):
+            #edgePoints 주어지면 그거 이루는 ransac 직선 나옴
             def edgeRansac(edgePoints):
+                def findLine(p1, p2):
+                    direction = np.array([p1.x-p2.x, p1.y-p2.y, p1.z-p2.z])
+                    return direction, p2
+                
+                #p에서 line까지 거리
+                def PointLineDistance(p, direction, p2):
+                    PA = np.array([p.x-p2.x, p.y-p2.y, p.z-p2.z])
+                    res = np.linalg.norm(np.cross(PA, direction))/np.linalg.norm(direction)
+                    return res
 
+                pts = edgePoints
+
+                numOfpts = len(pts)
+                maxScore = 0
+                bestPlane = None
+                for trial in range(hyperparameter.vectorRansacTrial):
+                    plane = None
+                    while plane == None:
+                        i1 = random.randrange(0,numOfpts)
+                        i2 = random.randrange(0,numOfpts)
+                        while i1 == i2:
+                            i2 = random.randrange(0,numOfpts)
+                        i3 = random.randrange(0,numOfpts)
+                        while i1 == i3 or i2 == i3:
+                            i3 = random.randrange(0,numOfpts)
+                        plane = findPlane(pts[i1], pts[i2], pts[i3])
+                    score = 0
+                    for p in pts:
+                        d = sujikDistance(p, plane)
+                        if d < hyperparameter.vectorRansacThreshold:
+                            score +=1
+                    if score > maxScore:
+                        maxScore = score
+                        bestPlane = plane
 
                 return edgeVector, startPoint #
                 
@@ -70,9 +104,7 @@ def processGraph(planeList, hyperparameter):
                     continue
                 edgePoints = plane.connected[plane2] # Boundary btwn plane and plane2
                 edgeVector, startPoint = edgeRansac(edgePoints)
-                
-            def isSpecial():
-                pass           
+ 
     
 def ObjectSegmentation(BoundaryPoints, planeList, hyperparameter):
     objList = boundaryClustering(BoundaryPoints, hyperparameter)

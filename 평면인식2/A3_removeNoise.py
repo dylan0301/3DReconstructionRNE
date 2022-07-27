@@ -1,5 +1,6 @@
 from collections import defaultdict
 from sklearn.metrics.pairwise import euclidean_distances
+from numba import jit
 
 #removenoise 하고 nearby까지 찾아줌
 def removeNoise2(AllPoints, hyperparameter):

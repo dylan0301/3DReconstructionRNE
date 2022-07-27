@@ -392,3 +392,68 @@ def butterfly(R = 20, alpha = np.pi/3, size=2000):
         p = Point(x, y, z, i)
         points[i] = p
     return points, hyperparameter
+
+
+def bang_simple():
+    import math as mt
+    random.seed(8)
+    points = defaultdict(Point)
+
+    hyperparameter = Hyperparameter(pointLeastDifference = 0.001, numOfPoints = 10000,
+    OutlierThreshold = 10, R = 7, vectorRansacTrial = 100, vectorRansacThreshold = 0.4, normalLeastNorm = 0.001,
+    ratioThreshold = 0.6, eps_vector = 0.1, min_samples_vector = 9,
+    eps_point = 4, min_samples_point = 10, planeRansacTrial = 50, planeRansacThreshold = 0.15,
+    boundaryR = 4, boundaryOutlierThreshold = 9)
+
+    size = hyperparameter.numOfPoints
+    
+    r = 30
+
+    for i in range(size):
+        diff = 0.5*(random.random()-0.5)
+        if i < 7000:
+            x = r * random.random()
+            y = r * random.random()
+            z = 0
+            if 10 <= x and x <= 20 and 10 <= y and y <= 20:
+                z = 10
+            if 13 <= x and x <= 16 and 13 <= y and y <= 16:
+                z = 13
+        elif i < 9500:
+            if i % 4 == 0:
+                x = 10 + 10 * random.random()
+                y = 10
+                z = 10 * random.random()
+            elif i % 4 == 1:
+                x = 10 
+                y = 10 + 10 * random.random()
+                z = 10 * random.random()
+            elif i % 4 == 2:
+                x = 10 + 10 * random.random()
+                y = 20
+                z = 10 * random.random()
+            elif i % 4 == 3:
+                x = 20
+                y = 10 + 10 * random.random()
+                z = 10 * random.random()
+        else:
+            if i % 4 == 0:
+                x = 13 + 3 * random.random()
+                y = 13
+                z = 10 + 3 * random.random()
+            elif i % 4 == 1:
+                x = 13
+                y = 13 + 3 * random.random()
+                z = 10 + 3 * random.random()
+            elif i % 4 == 2:
+                x = 13 + 3 * random.random()
+                y = 16
+                z = 10 + 3 * random.random()
+            elif i % 4 == 3:
+                x = 16 
+                y = 13 + 3 * random.random()
+                z = 10 + 3 * random.random()  
+        z += diff
+        p = Point(x, y, z, i)
+        points[i] = p
+    return points, hyperparameter
