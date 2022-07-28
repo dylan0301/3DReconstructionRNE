@@ -64,40 +64,7 @@ def processGraph(planeList, hyperparameter):
             holeFill(plane, obj)
         
         def holeFill(plane, obj):
-            #edgePoints 주어지면 그거 이루는 ransac 직선 나옴
-            def edgeRansac(edgePoints):
-                def findLine(p1, p2):
-                    direction = np.array([p1.x-p2.x, p1.y-p2.y, p1.z-p2.z])
-                    return (direction, p2)
-                
-                #p에서 line까지 거리
-                def pointLineDistance(p, direction, p2):
-                    PA = np.array([p.x-p2.x, p.y-p2.y, p.z-p2.z])
-                    res = np.linalg.norm(np.cross(PA, direction))/np.linalg.norm(direction)
-                    return res
-
-                pts = edgePoints
-
-                numOfpts = len(pts)
-                maxScore = 0
-                bestLine = None
-                for trial in range(hyperparameter.edgeRansacTrial):
-                    line = None
-                    while line == None:
-                        i1 = random.randrange(0,numOfpts)
-                        i2 = random.randrange(0,numOfpts)
-                        while i1 == i2:
-                            i2 = random.randrange(0,numOfpts)
-                        line = findLine(pts[i1], pts[i2])
-                    score = 0
-                    for p in pts:
-                        d = pointLineDistance(p, line)
-                        if d < hyperparameter.edgeRansacThreshold:
-                            score +=1
-                    if score > maxScore:
-                        maxScore = score
-                        bestLine = line
-                return bestLine[0], bestLine[1] #방향벡터, 그위의 점   
+              
             
             projectedLines = []
 

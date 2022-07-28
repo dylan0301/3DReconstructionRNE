@@ -15,12 +15,13 @@ def importPly(filepath, filename):
 
     points = defaultdict(Point)
     numOfPoints = 0
+    pointLeastDifference = 0.00001
 
     #중복점제거하면서 포인트 추가
     for i in range(len(sortedPoints)-1):
-        if sortedPoints[i+1][0] - sortedPoints[i][0] < hyperparameter.pointLeastDifference:
-            if sortedPoints[i+1][1] - sortedPoints[i][1] < hyperparameter.pointLeastDifference:
-                if sortedPoints[i+1][2] - sortedPoints[i][2] < hyperparameter.pointLeastDifference:
+        if sortedPoints[i+1][0] - sortedPoints[i][0] < pointLeastDifference:
+            if sortedPoints[i+1][1] - sortedPoints[i][1] < pointLeastDifference:
+                if sortedPoints[i+1][2] - sortedPoints[i][2] < pointLeastDifference:
                     continue
         
         x = sortedPoints[i][0]
@@ -285,9 +286,9 @@ def unicorn_sample():
 def unicorn_sample2():
     random.seed(132808)
     points = defaultdict(Point)
-    hyperparameter = Hyperparameter(pointLeastDifference = 0.001, numOfPoints = 3000,
-    OutlierThreshold = 10, R = 7, vectorRansacTrial = 100, vectorRansacThreshold = 0.4, normalLeastNorm = 0.001,
-    ratioThreshold = 0.6, eps_vector = 0.1, min_samples_vector = 9,
+    hyperparameter = Hyperparameter(numOfPoints = 3000,
+    OutlierThreshold1 = 70, R1 = 7, H1 = 0.4,
+    ratioThreshold1 = 0.5, eps_vector = 0.1, min_samples_vector = 9,
     eps_point = 4, min_samples_point = 10, planeRansacTrial = 50, planeRansacThreshold = 0.15,
     boundaryR = 4, boundaryOutlierThreshold = 9)
 

@@ -1,10 +1,10 @@
 from A1_classes import *
 from A2_data import *
-from A3_removeNoise import *
+from A3_allFindNearby import *
 from A4_findNormal import *
 from A5_vectorClustering import *
 from A6_distanceStairClustering import *
-from A7_boundaryRemoveNoise import *
+from A7_boundaryFindNearby import *
 from A8_findPlane import *
 import numpy as np
 import matplotlib.pyplot as plt
@@ -36,24 +36,13 @@ plt.show()
 
 
 
-#3 removeNoise
-print('removeNoise start')
-
+#3 allFindNearby
+print('allFindNearby start')
 t = time.time()
-AllPoints = removeNoise2(AllPoints, hyperparameter)
-print(len(AllPoints), 'points after removeNoise')
+allFindNearby(AllPoints, hyperparameter)
 print('여기이후로 AllPoints는 안쓰인다. 만약 AllPoints 쓸려면 vectorDBSCAN 바꾸거라.')
-print('removeNoise time:', time.time()-t)
+print('allFindNearby time:', time.time()-t)
 print()
-
-
-
-#노이즈제거 이후 점들 출력
-fig = plt.figure(figsize=(6, 6))
-ax = fig.add_subplot(111, projection='3d')
-ap = np.array([[p.x, p.y, p.z] for p in AllPoints.values()])
-ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[i for i in range(len(AllPoints))], marker='o', s=15, cmap='rainbow')
-plt.show()
 
 
 
@@ -136,30 +125,14 @@ ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[0] * len(BoundaryPoints), marker='o'
 plt.show()
 
 
-#7 boundaryRemoveNoise
-print('boundaryRemoveNoise start')
+#7 boundaryFindNearby
+print('boundaryFindNearby start')
 print(len(BoundaryPoints), 'BoundaryPoints before boundaryRemoveNoise')
 t = time.time()
-BoundaryPoints = boundaryRemoveNoise(BoundaryPoints, hyperparameter)
-print(len(BoundaryPoints), 'points after boundaryRemoveNoise')
+boundaryFindNearby(BoundaryPoints, hyperparameter)
 print('boundaryRemoveNoise time:', time.time()-t)
 print()
 
-#BoundaryPoints after boundaryRemoveNoise
-fig = plt.figure(figsize=(6, 6))
-ax = fig.add_subplot(111, projection='3d')
-ap = np.array([[p.x, p.y, p.z] for p in BoundaryPoints])
-ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[0] * len(BoundaryPoints), marker='o', s=15, cmap='rainbow')
-plt.show()
-
-#8 findPlane
-print('findPlane start')
-t = time.time()
-RANSACPlane2(planeList, hyperparameter)
-print('findPlane time:', time.time()-t)
-print()
 
 
-
-#9 objectSegmentation
 

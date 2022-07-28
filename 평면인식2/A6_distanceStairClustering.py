@@ -15,7 +15,7 @@ def divideCluster_DBSCAN(cluster, NewClusterPointMap, hyperparameter):
             Newclusterpm[labels[i]+clusterNow].append(cluster[i]) 
 
     for i in range(max(labels) + 1):
-        if len(Newclusterpm[i + clusterNow]) <= 15:
+        if len(Newclusterpm[i + clusterNow]) <= 10:
             del Newclusterpm[i + clusterNow]
             
     return Newclusterpm
