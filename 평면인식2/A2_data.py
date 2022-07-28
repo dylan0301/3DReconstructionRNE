@@ -288,9 +288,12 @@ def unicorn_sample2():
     points = defaultdict(Point)
     hyperparameter = Hyperparameter(numOfPoints = 3000,
     R1 = 5, OutlierThreshold1 = 35, H1 = 0.3, ratioThreshold1 = 0.65,
-    eps_vector = 0.1, min_samples_vector = 9,
-    eps_point = 4, min_samples_point = 10,
+    eps_normal = 0.1, min_samples_normal = 9,
+    eps_centerPoint = 4, min_samples_centerPoint = 8,
     R2 = 7, OutlierThreshold2 = 7, H2 = 1, ratioThreshold2 = 0.3,
+    eps_direction = 0.1, min_samples_direction = 6,
+    eps_edgePoint = 5, min_samples_edgePoint = 5,
+    eps_vertexPoint = 2,  min_samples_vertexPoint = 2,
     planeRansacThreshold = 1, edgeRansacThreshold = 4
     )
 

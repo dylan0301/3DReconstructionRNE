@@ -6,7 +6,7 @@ from sklearn.cluster import DBSCAN
 def dividePlane_DBSCAN(cluster, NewClusterPointMap, hyperparameter):
     Newclusterpm = NewClusterPointMap
     cluster_Points = np.array([[p.x, p.y, p.z] for p in cluster])
-    clustering = DBSCAN(eps = hyperparameter.eps_point, min_samples = hyperparameter.min_samples_point)
+    clustering = DBSCAN(eps = hyperparameter.eps_centerPoint, min_samples = hyperparameter.min_samples_centerPoint)
     labels = clustering.fit_predict(cluster_Points)
 
     clusterNow = len(Newclusterpm)

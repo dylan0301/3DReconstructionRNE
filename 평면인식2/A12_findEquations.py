@@ -1,19 +1,19 @@
 import numpy as np
 import random
 
-planeList = []
-for i, points in NewClusterPointMap.items():
-    plane = Plane(i, points)
-    planeList.append(plane)
+# planeList = []
+# for i, points in NewClusterPointMap.items():
+#     plane = Plane(i, points)
+#     planeList.append(plane)
 
-EdgeList = []
-for i, points in NewEdgePointMap.items():
-    edge = Edge(i, points)
-    EdgeList.append(edge)
+# EdgeList = []
+# for i, points in NewEdgePointMap.items():
+#     edge = Edge(i, points)
+#     EdgeList.append(edge)
     
 
 
-def RANSACFinalPlane(planeList, hyperparameter):
+def planeRANSACFinal(planeList, hyperparameter):
     random.seed(0)
     
     #점 3개지나는 평면의 방정식 abcd 튜플로 리턴
@@ -26,7 +26,7 @@ def RANSACFinalPlane(planeList, hyperparameter):
 
 
     #점 p랑 ax+by+cz+d=0 수직거리
-    def sujikDistance(p, plane):
+    def pointPlaneDistance(p, plane):
         a, b, c, d = plane[0], plane[1], plane[2], plane[3]
         x, y, z = p.x, p.y, p.z
         res = abs(a*x+b*y+c*z+d)/np.sqrt(a**2+b**2+c**2)
@@ -52,7 +52,7 @@ def RANSACFinalPlane(planeList, hyperparameter):
                 plane = findPlane(pts[i1], pts[i2], pts[i3])
             score = 0
             for p in pts:
-                d = sujikDistance(p, plane)
+                d = pointPlaneDistance(p, plane)
                 if d < hyperparameter.planeRansacThreshold:
                     score +=1
             if score > maxScore:
@@ -62,7 +62,7 @@ def RANSACFinalPlane(planeList, hyperparameter):
 
 
 #edgePoints 주어지면 그거 이루는 ransac 직선 나옴
-def edgeRansac(edgePoints, hyperparameter):
+def edgeRansacFinal(edgePoints, hyperparameter):
     def findLine(p1, p2):
         direction = np.array([p1.x-p2.x, p1.y-p2.y, p1.z-p2.z])
         return (direction, p2)

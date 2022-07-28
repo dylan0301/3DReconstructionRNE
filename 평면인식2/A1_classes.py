@@ -14,9 +14,9 @@ class Point:
         self.nearby2 = [] #BoundaryPoints에서 가까운 point들이 들어감
         self.normal = None #평면 법선벡터
         self.direction = None #직선 방향벡터
-        # self.planeCluster = None
-        # self.edgeClutser = None
-        # self.vertexCluster = None
+        self.planeClass = None
+        self.edgeClass = None
+        self.vertexClass = None
        
     def __str__(self):
         return "x: " + str(self.x) + ", y: " + str(self.y) + ", z: " + str(self.z)
@@ -37,9 +37,12 @@ class Hyperparameter:
     #여기있는건 realdata 기준 값들, 거리단위 m
     def __init__(self, numOfPoints = 5000, 
                 R1 = 0.05, OutlierThreshold1 = 40, H1 = 0.01, ratioThreshold1 = 0.8,
-                eps_vector = 0.05, min_samples_vector = 10,
-                eps_point = 0.05, min_samples_point = 10,
+                eps_normal = 0.05, min_samples_normal = 10,
+                eps_centerPoint = 0.05, min_samples_centerPoint = 10,
                 R2 = 0.06, OutlierThreshold2 = 15, H2 = 0.01, ratioThreshold2 = 0.8,
+                eps_direction = 0.05, min_samples_direction = 7,
+                eps_edgePoint = 0.05, min_samples_edgePoint = 7,
+                eps_vertexPoint = 0.03,  min_samples_vertexPoint = 3,
                 planeRansacThreshold = 0.01, edgeRansacThreshold = 0.01,
                 eps_point2 = 0.05, min_samples_point2 = 8):
 
@@ -55,12 +58,12 @@ class Hyperparameter:
         self.ratioThreshold1 = ratioThreshold1 #ratio 방법으로 했을때 ratio 이거보다 크면 내부점
 
         #5 vectorClustering
-        self.eps_vector = eps_vector #vector DBSCAN eps
-        self.min_samples_vector = min_samples_vector #vector DBSCAN min_samples
+        self.eps_normal = eps_normal #vector DBSCAN eps
+        self.min_samples_normal = min_samples_normal #vector DBSCAN min_samples
 
-        #6 distanceStairClustering
-        self.eps_point = eps_point #centerpoint DBSCAN eps
-        self.min_samples_point = min_samples_point #centerpoint DBSCAN min_samples
+        #6 3DdistanceStairClustering
+        self.eps_centerPoint = eps_centerPoint #centerpoint DBSCAN eps
+        self.min_samples_centerPoint = min_samples_centerPoint #centerpoint DBSCAN min_samples
 
         #7 boundaryFindNearby
         self.R2 = R2
@@ -68,14 +71,25 @@ class Hyperparameter:
         #8 findDirection
         self.OutlierThreshold2 = OutlierThreshold2
         self.H2 = H2 #법선벡터구할때 랜색 오차허용범위 = H
-        self.ratioThreshold2 = ratioThreshold2 #ratio 방법으로 했을때 ratio 이거보다 크면 내부점
+        self.ratioThreshold2 = ratioThreshold2 #ratio 방법으로 했을때 ratio 이거보다 크면 edge
         
+        #9 directionClustering
+        self.eps_direction = eps_direction 
+        self.min_samples_direction = min_samples_direction
+
+        #10 2DdistanceStairClustering
+        self.eps_edgePoint = eps_edgePoint 
+        self.min_samples_edgePoint = min_samples_edgePoint
+
+        #11 vertexPointsClustering
+        self.eps_vertexPoint = eps_vertexPoint 
+        self.min_samples_vertexPoint = min_samples_vertexPoint
         
-        #10 findEquations
+        #12 findEquations
         self.planeRansacThreshold = planeRansacThreshold #최종적으로 평면 만들때 쓰는 랜색 오차허용범위
         self.edgeRansacThreshold = edgeRansacThreshold #edge 지나는 직선 만들때 쓰는 랜색 오차허용범위
 
-        #11 objectSegmentation
+        #13 objectSegmentation
         self.eps_point2 = eps_point2 #boundarypoint DBSCAN eps
         self.min_samples_point2 = min_samples_point2 #boundarypoint DBSCAN min_samples
     
@@ -107,6 +121,7 @@ class Vertex:
     def __init__(self, label, dotPoints):
         self.label = label
         self.dotPoints = dotPoints
+        self.edges = []
 
         
         

@@ -6,7 +6,7 @@ from sklearn.cluster import DBSCAN
 def divideEdge_DBSCAN(Edge, NewEdgePointMap, hyperparameter):
     NewEdgepm = NewEdgePointMap
     cluster_Points = np.array([[p.x, p.y, p.z] for p in Edge])
-    clustering = DBSCAN(eps = hyperparameter.eps_point, min_samples = hyperparameter.min_samples_point)
+    clustering = DBSCAN(eps = hyperparameter.eps_edgePoint, min_samples = hyperparameter.min_samples_edgePoint)
     labels = clustering.fit_predict(cluster_Points)
 
     clusterNow = len(NewEdgepm)

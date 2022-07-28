@@ -5,7 +5,7 @@ from collections import defaultdict
 
 def directionDBSCAN(EdgePoints, hyperparameter):
     Duplicatedvectors = np.array([p.direction for p in EdgePoints] + [(-1)*p.direction for p in EdgePoints])
-    clustering = DBSCAN(eps = hyperparameter.eps_vector, min_samples = hyperparameter.min_samples_vector)
+    clustering = DBSCAN(eps = hyperparameter.eps_direction, min_samples = hyperparameter.min_samples_direction)
     edgelabels = clustering.fit_predict(Duplicatedvectors)
 
     

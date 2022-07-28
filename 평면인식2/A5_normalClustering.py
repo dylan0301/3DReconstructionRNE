@@ -5,7 +5,7 @@ from collections import defaultdict
 
 def normalDBSCAN(CenterPoints, hyperparameter):
     Duplicatedvectors = np.array([p.normal for p in CenterPoints] + [(-1)*p.normal for p in CenterPoints])
-    clustering = DBSCAN(eps = hyperparameter.eps_vector, min_samples = hyperparameter.min_samples_vector)
+    clustering = DBSCAN(eps = hyperparameter.eps_normal, min_samples = hyperparameter.min_samples_normal)
     labels = clustering.fit_predict(Duplicatedvectors)
 
     
