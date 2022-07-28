@@ -5,7 +5,7 @@ from A4_findNormal import *
 from A5_vectorClustering import *
 from A6_distanceStairClustering import *
 from A7_boundaryFindNearby import *
-from A8_findPlane import *
+from A8_findDirection import *
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -130,9 +130,26 @@ print('boundaryFindNearby start')
 print(len(BoundaryPoints), 'BoundaryPoints before boundaryRemoveNoise')
 t = time.time()
 boundaryFindNearby(BoundaryPoints, hyperparameter)
-print('boundaryRemoveNoise time:', time.time()-t)
+print('boundaryFindNearby time:', time.time()-t)
 print()
 
 
 
+#8 findDirection
+print('findDirection start')
+t = time.time()
+EdgePoints = []
+VertexPoints = []
+VertexPoints, EdgePoints = findDirection(BoundaryPoints, EdgePoints, VertexPoints, hyperparameter)
+print(len(VertexPoints), 'VertexPoints')
+print(len(EdgePoints), 'EdgePoints')
+print('findNormal time:', time.time()-t)
+print()
 
+
+#방향벡터들 출력
+fig = plt.figure(figsize=(6, 6))
+ax = fig.add_subplot(111, projection='3d')
+ap = np.array([list(p.direction) for p in EdgePoints])
+ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[0] * len(EdgePoints), marker='o', s=15, cmap='rainbow')
+plt.show()

@@ -1,88 +1,74 @@
 import numpy as np
 import random
 
-#Input: point, Output: nearby를 포함하는 평면, Method: RANSAC
-def nearbyRansacPlane(point, hyperparameter):
-    random.seed(0)
+#Input: point, Output: nearby2를 포함하는 직선, Method: RANSAC
+def nearbyRansacLine(point, hyperparameter):
+    def findLine(p1, p2):
+        direction = np.array([p1.x-p2.x, p1.y-p2.y, p1.z-p2.z])
+        return (direction, p2)
     
-    #점 3개지나는 평면의 방정식 abcd 튜플로 리턴
-    def findPlane(p1, p2, p3):
-        v12 = np.array([p1.x-p2.x, p1.y-p2.y, p1.z-p2.z])
-        v13 = np.array([p1.x-p3.x, p1.y-p3.y, p1.z-p3.z])
-        normal = np.cross(v12,v13)
-        if np.linalg.norm(normal) < 0.0001:
-            return None
-        d = -(normal[0]*p1.x + normal[1]*p1.y + normal[2]*p1.z)
-        return (normal[0], normal[1], normal[2], d)
-    
-    #점 p랑 ax+by+cz+d=0 수직거리
-    def pointPlaneDistance(p, plane):
-        a, b, c, d = plane[0], plane[1], plane[2], plane[3]
-        x, y, z = p.x, p.y, p.z
-        res = abs(a*x+b*y+c*z+d)/np.sqrt(a**2+b**2+c**2)
+    #p에서 line까지 거리
+    def pointLineDistance(p, direction, p2):
+        PA = np.array([p.x-p2.x, p.y-p2.y, p.z-p2.z])
+        res = np.linalg.norm(np.cross(PA, direction))/np.linalg.norm(direction)
         return res
 
-    #nearby에 자기자신도 있음
-    pts = point.nearby1
+    pts = point.nearby2
 
     numOfpts = len(pts)
     maxScore = 0
-    bestPlane = None
+    bestLine = None
     for trial in range(50):
-        plane = None
-        while plane == None:
+        line = None
+        while line == None:
             i1 = random.randrange(0,numOfpts)
             i2 = random.randrange(0,numOfpts)
             while i1 == i2:
                 i2 = random.randrange(0,numOfpts)
-            i3 = random.randrange(0,numOfpts)
-            while i1 == i3 or i2 == i3:
-                i3 = random.randrange(0,numOfpts)
-            plane = findPlane(pts[i1], pts[i2], pts[i3])
+            line = findLine(pts[i1], pts[i2])
         score = 0
         for p in pts:
-            d = pointPlaneDistance(p, plane)
-            if d < hyperparameter.H1: 
+            d = pointLineDistance(p, line[0], line[1])
+            if d < hyperparameter.H2:
                 score +=1
         if score > maxScore:
             maxScore = score
-            bestPlane = plane
-    return bestPlane, maxScore
+            bestLine = line
+    return bestLine[0], maxScore #방향벡터, 점수 
 
 
 
-def normalVectorizeRatio(point, BoundaryPoints, CenterPoints, hyperparameter, BoundaryRatio, CenterRatio):
-    if len(point.nearby1) < hyperparameter.OutlierThreshold1:
-        BoundaryPoints.append(point)
-        BoundaryRatio.append(None)
-        return BoundaryPoints, CenterPoints, BoundaryRatio, CenterRatio
-    plane, maxScore = nearbyRansacPlane(point, hyperparameter)
-    plane_normal = np.array([plane[0], plane[1], plane[2]])
-    plane_normal /= np.linalg.norm(plane_normal)
+def directionVectorizeRatio(point, VertexPoints, EdgePoints, hyperparameter, VertexRatio, EdgeRatio):
+    if len(point.nearby2) < hyperparameter.OutlierThreshold2:
+        VertexPoints.append(point)
+        VertexRatio.append(None)
+        return VertexPoints, EdgePoints, VertexRatio, EdgeRatio
+    directionVector, maxScore = nearbyRansacLine(point, hyperparameter)
+    directionVector /= np.linalg.norm(directionVector)
 
-    planeRatio = maxScore / len(point.nearby1)
+    lineRatio = maxScore / len(point.nearby2)
 
     
-    if planeRatio > hyperparameter.ratioThreshold1: #경계인 경우는 그대로 None
-        point.normal = plane_normal
-        CenterPoints.append(point)
-        CenterRatio.append(planeRatio)
+    if lineRatio > hyperparameter.ratioThreshold2:
+        point.direction = directionVector
+        EdgePoints.append(point)
+        EdgeRatio.append(lineRatio)
     else: 
-        BoundaryPoints.append(point)
-        BoundaryRatio.append(planeRatio)
-    return BoundaryPoints, CenterPoints, BoundaryRatio, CenterRatio
+        VertexPoints.append(point)
+        VertexRatio.append(lineRatio)
+    return VertexPoints, EdgePoints, VertexRatio, EdgeRatio
 
     
 
 
 
-def findNormal(AllPoints, BoundaryPoints, CenterPoints, hyperparameter):
-    BoundaryRatio = []
-    CenterRatio = []
-    for p in AllPoints.values():
-        BoundaryPoints, CenterPoints, BoundaryRatio, CenterRatio = normalVectorizeRatio(p, BoundaryPoints, CenterPoints, hyperparameter, BoundaryRatio, CenterRatio)
-    print('BoundaryRatio')
-    print(BoundaryRatio[:100])
-    print('CenterRatio')
-    print(CenterRatio[:100])
-    return BoundaryPoints, CenterPoints
+def findDirection(BoundaryPoints, EdgePoints, VertexPoints, hyperparameter):
+    EdgeRatio = []
+    VertexRatio = []
+    for p in BoundaryPoints:
+        VertexPoints, EdgePoints, VertexRatio, EdgeRatio = directionVectorizeRatio(p, VertexPoints, EdgePoints, hyperparameter, VertexRatio, EdgeRatio)
+    print('VertexRatio')
+    print(VertexRatio[:100])
+    print('EdgeRatio')
+    print(EdgeRatio[:100])
+    return VertexPoints, EdgePoints

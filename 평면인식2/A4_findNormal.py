@@ -1,7 +1,7 @@
 import numpy as np
 import random
 
-#Input: point, Output: nearby를 포함하는 평면, Method: RANSAC
+#Input: point, Output: nearby1을 포함하는 평면, Method: RANSAC
 def nearbyRansacPlane(point, hyperparameter):
     random.seed(0)
     
