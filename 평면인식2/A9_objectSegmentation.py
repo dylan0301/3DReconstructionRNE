@@ -40,6 +40,10 @@ def findOneObjPlanes(obj, planeList, hyperparameter):
             planeNearP[1].containedObj.add(obj)
             obj.planes.add(planeNearP[0])
             obj.planes.add(planeNearP[1])
+        if len(planeNearP) >= 2:
+            pass
+
+
             
 
 #input: graph, 2차원 defaultdict(dict)

@@ -86,7 +86,10 @@ class Plane:
         self.interiorPoints = interiorPoints
         self.connected = defaultdict(list) 
         #key는 다른 plane, (연결된 plane만 있음)
-        # value는 그 plane과 사이에 있는 boundarypoints. 
+        #value는 그 plane과 사이에 있는 boundarypoints. 
+        self.connectedVertex = defaultdict(list)
+        #key는 다른 plane, (연결된 plane만 있음)
+        #value는 그 plane과 연결된 edge의 vertex 2개
         self.containedObj = set()
         self.equation = None #(a,b,c,d)
 
