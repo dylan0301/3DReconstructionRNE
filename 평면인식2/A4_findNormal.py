@@ -1,8 +1,8 @@
 import numpy as np
 import random
 
-#Input: point, Output: nearby1을 포함하는 평면, Method: RANSAC
-def nearbyRansacPlane(point, hyperparameter):
+#Input: pts, Output: pts를 포함하는 평면, Method: RANSAC
+def nearbyRansacPlane(pts, hyperparameter):
     random.seed(0)
     
     #점 3개지나는 평면의 방정식 abcd 튜플로 리턴
@@ -22,8 +22,6 @@ def nearbyRansacPlane(point, hyperparameter):
         res = abs(a*x+b*y+c*z+d)/np.sqrt(a**2+b**2+c**2)
         return res
 
-    #nearby에 자기자신도 있음
-    pts = point.nearby1
 
     numOfpts = len(pts)
     maxScore = 0
@@ -56,7 +54,8 @@ def normalVectorizeRatio(point, BoundaryPoints, CenterPoints, hyperparameter, Bo
         BoundaryPoints.append(point)
         BoundaryRatio.append(None)
         return BoundaryPoints, CenterPoints, BoundaryRatio, CenterRatio
-    plane, maxScore = nearbyRansacPlane(point, hyperparameter)
+    
+    plane, maxScore = nearbyRansacPlane(point.nearby1, hyperparameter)
     plane_normal = np.array([plane[0], plane[1], plane[2]])
     plane_normal /= np.linalg.norm(plane_normal)
 

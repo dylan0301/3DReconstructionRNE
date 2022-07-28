@@ -1,8 +1,8 @@
 import numpy as np
 import random
 
-#Input: point, Output: nearby2를 포함하는 직선, Method: RANSAC
-def nearbyRansacLine(point, hyperparameter):
+#Input: pts, Output: pts를 포함하는 직선, Method: RANSAC
+def nearbyRansacLine(pts, hyperparameter):
     def findLine(p1, p2):
         direction = np.array([p1.x-p2.x, p1.y-p2.y, p1.z-p2.z])
         return (direction, p2)
@@ -13,7 +13,6 @@ def nearbyRansacLine(point, hyperparameter):
         res = np.linalg.norm(np.cross(PA, direction))/np.linalg.norm(direction)
         return res
 
-    pts = point.nearby2
 
     numOfpts = len(pts)
     maxScore = 0
@@ -41,7 +40,8 @@ def directionVectorizeRatio(point, VertexPoints, EdgePoints, hyperparameter, Ver
         VertexPoints.append(point)
         VertexRatio.append(None)
         return VertexPoints, EdgePoints, VertexRatio, EdgeRatio
-    directionVector, maxScore = nearbyRansacLine(point, hyperparameter)
+
+    directionVector, maxScore = nearbyRansacLine(point.nearby2, hyperparameter)
     directionVector /= np.linalg.norm(directionVector)
 
     lineRatio = maxScore / len(point.nearby2)

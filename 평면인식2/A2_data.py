@@ -287,19 +287,20 @@ def unicorn_sample2():
     random.seed(0)
     points = defaultdict(Point)
     hyperparameter = Hyperparameter(numOfPoints = 3000,
-    R1 = 5, OutlierThreshold1 = 35, H1 = 0.3, ratioThreshold1 = 0.65,
+    R1 = 5, OutlierThreshold1 = 37, H1 = 0.5, ratioThreshold1 = 0.7,
     eps_normal = 0.1, min_samples_normal = 9,
     eps_centerPoint = 4, min_samples_centerPoint = 8,
-    R2 = 7, OutlierThreshold2 = 7, H2 = 1, ratioThreshold2 = 0.3,
+    R2 = 7, OutlierThreshold2 = 7, H2 = 0.7, ratioThreshold2 = 0.3,
     eps_direction = 0.1, min_samples_direction = 6,
     eps_edgePoint = 5, min_samples_edgePoint = 5,
     eps_vertexPoint = 2,  min_samples_vertexPoint = 2,
-    planeRansacThreshold = 1, edgeRansacThreshold = 4
+    planeRansacThreshold = 1,
+    eps_finalBoundaryPoint = 5, min_samples_finalBoundaryPoint = 5
     )
 
     size = hyperparameter.numOfPoints
     for i in range(size):
-        diff = 0.3*(random.random()-0.5)
+        diff = 0.2*(random.random()-0.5)
         if i%6 == 0:
             x = 30*random.random()
             y = 30*random.random()

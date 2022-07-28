@@ -27,11 +27,6 @@ class Point:
         return (sqsbt(self.x,p.x)+sqsbt(self.y,p.y)+sqsbt(self.z,p.z))**0.5
 
 
-    # def distance(self, p):
-    #     a = np.array([self.x, self.y, self.z])
-    #     b = np.array([p.x, p.y, p.z])
-    #     return np.sqrt(np.dot(a, a) - 2 * np.dot(a, b) + np.dot(b, b))
-
 
 class Hyperparameter:
     #여기있는건 realdata 기준 값들, 거리단위 m
@@ -43,8 +38,8 @@ class Hyperparameter:
                 eps_direction = 0.05, min_samples_direction = 7,
                 eps_edgePoint = 0.05, min_samples_edgePoint = 7,
                 eps_vertexPoint = 0.03,  min_samples_vertexPoint = 3,
-                planeRansacThreshold = 0.01, edgeRansacThreshold = 0.01,
-                eps_point2 = 0.05, min_samples_point2 = 8):
+                planeRansacThreshold = 0.01,
+                eps_finalBoundaryPoint = 0.05, min_samples_finalBoundaryPoint = 8):
 
         #2 data
         self.numOfPoints = numOfPoints #generatepoint 점개수
@@ -86,12 +81,13 @@ class Hyperparameter:
         self.min_samples_vertexPoint = min_samples_vertexPoint
         
         #12 findEquations
-        self.planeRansacThreshold = planeRansacThreshold #최종적으로 평면 만들때 쓰는 랜색 오차허용범위
-        self.edgeRansacThreshold = edgeRansacThreshold #edge 지나는 직선 만들때 쓰는 랜색 오차허용범위
+        #self.planeRansacThreshold = planeRansacThreshold
+        #최종적으로 평면 만들때 쓰는 랜색 오차허용범위
+        #이건 그냥 H1 쓰자
 
         #13 objectSegmentation
-        self.eps_point2 = eps_point2 #boundarypoint DBSCAN eps
-        self.min_samples_point2 = min_samples_point2 #boundarypoint DBSCAN min_samples
+        self.eps_finalBoundaryPoint = eps_finalBoundaryPoint #boundarypoint DBSCAN eps
+        self.min_samples_finalBoundaryPoint2= min_samples_finalBoundaryPoint #boundarypoint DBSCAN min_samples
     
         
         
@@ -114,7 +110,7 @@ class Edge:
         self.label = label
         self.linePoints = linePoints
         self.vertex = []
-        self.midpoint = None
+        self.midPoint = None
 
 
 class Vertex:
@@ -122,6 +118,7 @@ class Vertex:
         self.label = label
         self.dotPoints = dotPoints
         self.edges = []
+        self.mainPoint = None
 
         
         
