@@ -18,14 +18,12 @@ def nearbyRansacLine(point, hyperparameter):
     numOfpts = len(pts)
     maxScore = 0
     bestLine = None
-    for trial in range(50):
-        line = None
-        while line == None:
-            i1 = random.randrange(0,numOfpts)
+    for trial in range(25):
+        i1 = random.randrange(0,numOfpts)
+        i2 = random.randrange(0,numOfpts)
+        while i1 == i2:
             i2 = random.randrange(0,numOfpts)
-            while i1 == i2:
-                i2 = random.randrange(0,numOfpts)
-            line = findLine(pts[i1], pts[i2])
+        line = findLine(pts[i1], pts[i2])
         score = 0
         for p in pts:
             d = pointLineDistance(p, line[0], line[1])

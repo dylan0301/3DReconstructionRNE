@@ -3,9 +3,13 @@ from A2_data import *
 from A3_allFindNearby import *
 from A4_findNormal import *
 from A5_vectorClustering import *
-from A6_distanceStairClustering import *
+from A6_3DdistanceStairClustering import *
 from A7_boundaryFindNearby import *
 from A8_findDirection import *
+from A9_directionClustering import *
+from A10_2DdistanceStairClustering import *
+from A11_findEquations import *
+from A12_objectSegmentation import *
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -72,7 +76,7 @@ plt.show()
 #5 vectorClustering
 print('vectorClustering start')
 t = time.time()
-CenterPoints, clusterPointMap,  newLabel= vectorDBSCAN(CenterPoints, hyperparameter)
+CenterPoints, clusterPointMap,  newLabel= normalDBSCAN(CenterPoints, hyperparameter)
 print(len(CenterPoints), 'CenterPoints after vectorClustering')
 print('vectorClustering time:', time.time()-t)
 print()
@@ -87,12 +91,12 @@ ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=newLabel, marker='o', s=15, cmap='rai
 plt.show()
 
 
-#6 distanceStairClustering
-print('distanceStairClustering start')
+#6 3DdistanceStairClustering
+print('3DdistanceStairClustering start')
 t = time.time()
 NewClusterPointMap = defaultdict(list)
-NewClusterPointMap = divideAllCluster_DBSCAN(NewClusterPointMap, clusterPointMap, hyperparameter)
-print('distanceStairClustering time:', time.time()-t)
+NewClusterPointMap = divideAllPlane_DBSCAN(NewClusterPointMap, clusterPointMap, hyperparameter)
+print('3DdistanceStairClustering time:', time.time()-t)
 print()
 
 planeList = []
@@ -143,7 +147,7 @@ VertexPoints = []
 VertexPoints, EdgePoints = findDirection(BoundaryPoints, EdgePoints, VertexPoints, hyperparameter)
 print(len(VertexPoints), 'VertexPoints')
 print(len(EdgePoints), 'EdgePoints')
-print('findNormal time:', time.time()-t)
+print('findDirection time:', time.time()-t)
 print()
 
 
@@ -152,4 +156,55 @@ fig = plt.figure(figsize=(6, 6))
 ax = fig.add_subplot(111, projection='3d')
 ap = np.array([list(p.direction) for p in EdgePoints])
 ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[0] * len(EdgePoints), marker='o', s=15, cmap='rainbow')
+plt.show()
+
+#9 directionClustering
+print('distanceClustering start')
+t = time.time()
+afterEdgePoints, edgePointMap, afterLabel= directionDBSCAN(EdgePoints, hyperparameter)
+print(len(EdgePoints), 'EdgePoints after #9 directionClustering')
+print('#9 directionClustering time:', time.time()-t)
+print()
+
+fig = plt.figure(figsize=(6, 6))
+ax = fig.add_subplot(111, projection='3d')
+ap = np.array([[p.x, p.y, p.z] for p in afterEdgePoints])
+ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=afterLabel, marker='o', s=15, cmap='rainbow')
+plt.show()
+
+#10 2DdistanceStairClustering
+print('2DdistanceStairClustering start')
+t = time.time()
+NewEdgePointMap = defaultdict(list)
+NewEdgePointMap = divideAllEdge_DBSCAN(NewEdgePointMap, edgePointMap, hyperparameter)
+print('2DdistanceStairClustering time:', time.time()-t)
+print()
+
+EdgeList = []
+for i, points in NewEdgePointMap.items():
+    edge = Edge(i, points)
+    EdgeList.append(edge)
+    
+NewEdgePoints = []
+for k in NewEdgePointMap.keys():
+    NewEdgePoints.extend(NewEdgePointMap[k])
+# NewAllPoints.extend(BoundaryPoints)
+
+NewEdgeLabels = []
+for k in NewEdgePointMap.keys():
+    NewEdgeLabels += [k] * len(NewEdgePointMap[k])
+# NewLabels += [max(NewLabels) + 1] * len(BoundaryPoints) 
+
+#distanceStairClustering 이후 EdgePoints
+fig = plt.figure(figsize=(6, 6))
+ax = fig.add_subplot(111, projection='3d')
+ap = np.array([[p.x, p.y, p.z] for p in NewEdgePoints])
+ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=NewEdgeLabels, marker='o', s=15, cmap='rainbow')
+plt.show()
+
+#VertexPoints
+fig = plt.figure(figsize=(6, 6))
+ax = fig.add_subplot(111, projection='3d')
+ap = np.array([[p.x, p.y, p.z] for p in VertexPoints])
+ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[0] * len(VertexPoints), marker='o', s=15, cmap='rainbow')
 plt.show()

@@ -1,8 +1,19 @@
 import numpy as np
 import random
 
+planeList = []
+for i, points in NewClusterPointMap.items():
+    plane = Plane(i, points)
+    planeList.append(plane)
 
-def RANSACPlane2(planeList, hyperparameter):
+EdgeList = []
+for i, points in NewEdgePointMap.items():
+    edge = Edge(i, points)
+    EdgeList.append(edge)
+    
+
+
+def RANSACFinalPlane(planeList, hyperparameter):
     random.seed(0)
     
     #점 3개지나는 평면의 방정식 abcd 튜플로 리턴

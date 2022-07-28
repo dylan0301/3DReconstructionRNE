@@ -3,7 +3,7 @@ from sklearn.cluster import DBSCAN
 
 from collections import defaultdict
 
-def vectorDBSCAN(CenterPoints, hyperparameter):
+def normalDBSCAN(CenterPoints, hyperparameter):
     Duplicatedvectors = np.array([p.normal for p in CenterPoints] + [(-1)*p.normal for p in CenterPoints])
     clustering = DBSCAN(eps = hyperparameter.eps_vector, min_samples = hyperparameter.min_samples_vector)
     labels = clustering.fit_predict(Duplicatedvectors)

@@ -3,7 +3,7 @@ from collections import defaultdict
 from sklearn.cluster import DBSCAN
 
 
-def divideCluster_DBSCAN(cluster, NewClusterPointMap, hyperparameter):
+def dividePlane_DBSCAN(cluster, NewClusterPointMap, hyperparameter):
     Newclusterpm = NewClusterPointMap
     cluster_Points = np.array([[p.x, p.y, p.z] for p in cluster])
     clustering = DBSCAN(eps = hyperparameter.eps_point, min_samples = hyperparameter.min_samples_point)
@@ -20,8 +20,8 @@ def divideCluster_DBSCAN(cluster, NewClusterPointMap, hyperparameter):
             
     return Newclusterpm
 
-def divideAllCluster_DBSCAN(NewClusterPointMap, clusterPointMap, hyperparameter):
+def divideAllPlane_DBSCAN(NewClusterPointMap, clusterPointMap, hyperparameter):
     for Cluster in clusterPointMap.values():
-        temp = divideCluster_DBSCAN(Cluster, NewClusterPointMap, hyperparameter)
+        temp = dividePlane_DBSCAN(Cluster, NewClusterPointMap, hyperparameter)
         NewClusterPointMap = temp
     return NewClusterPointMap

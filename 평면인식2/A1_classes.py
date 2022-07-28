@@ -96,13 +96,17 @@ class Plane:
 
 
 class Edge:
-    def __init__(self, label, edgePoints):
+    def __init__(self, label, linePoints):
         self.label = label
+        self.linePoints = linePoints
+        self.vertex = []
+        self.midpoint = None
 
 
 class Vertex:
-    def __init__(self, label, vertexPoints):
-        pass
+    def __init__(self, label, dotPoints):
+        self.label = label
+        self.dotPoints = dotPoints
 
         
         
