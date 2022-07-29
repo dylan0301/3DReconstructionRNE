@@ -454,7 +454,7 @@ def bang_moresimple():
     points = defaultdict(Point)
 
     hyperparameter = Hyperparameter(numOfPoints = 3000,
-    R1 = 3, OutlierThreshold1 = 55, H1 = 0.3, ratioThreshold1 = 0.66,
+    R1 = 5, OutlierThreshold1 = 85, H1 = 0.25, ratioThreshold1 = 0.6,
     eps_normal = 0.1, min_samples_normal = 9,
     eps_centerPoint = 4, min_samples_centerPoint = 30,
     eps_finalBoundaryPoint = 3, min_samples_finalBoundaryPoint = 10
@@ -466,6 +466,7 @@ def bang_moresimple():
 
     for i in range(size):
         diff = 0.2*(random.random()-0.5)
+        diff = 0
         if i < 2000:
             x = r * random.random()
             y = r * random.random()
@@ -492,4 +493,49 @@ def bang_moresimple():
         z += diff
         p = Point(x, y, z, i)
         points[i] = p
+    return points, hyperparameter
+
+def bang_muchsimple():
+    points = defaultdict(Point)
+
+    hyperparameter = Hyperparameter(numOfPoints = 2900,
+    R1 = 5, OutlierThreshold1 = 70, H1 = 0.5, ratioThreshold1 = 0.7,
+    eps_normal = 0.1, min_samples_normal = 9,
+    eps_centerPoint = 4, min_samples_centerPoint = 30,
+    eps_finalBoundaryPoint = 3, min_samples_finalBoundaryPoint = 10
+    )
+    
+    r = 30
+    cnt = -1    
+    for i in range(50):
+        for j in range(50):
+            cnt += 1
+            x = r * i/50
+            y = r * j/50
+            z = 0
+            if 10 <= x and x <= 20 and 10 <= y and y <= 20:
+                z = 10
+            p = Point(x, y, z, cnt)
+            points[cnt] = p
+    
+    for i in range(400):
+        if i < 100:
+            x = 10 + i % 10
+            y = 10
+            z = i // 10
+        elif i < 200:
+            x = 10 
+            y = 10 + (i-100) % 10
+            z = (i-100) // 10
+        elif i < 300:
+            x = 10 + (i-200) % 10
+            y = 20
+            z = (i-200) % 10
+        else:
+            x = 20
+            y = 10 + (i-300) % 10
+            z = (i-300) % 10
+        p = Point(x, y, z, i)
+        points[i] = p
+    
     return points, hyperparameter

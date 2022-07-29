@@ -63,10 +63,6 @@ class Hyperparameter:
         self.min_samples_finalBoundaryPoint= min_samples_finalBoundaryPoint #boundarypoint DBSCAN min_samples
     
         
-        
-
-
-
 class Plane:
     def __init__(self, label, interiorPoints):
         self.label = label
@@ -78,13 +74,11 @@ class Plane:
         self.equation = None #(a,b,c,d)
         self.polygon = [] #vertices를 순서에 맞게 배열한것
 
-
 class Edge:
     def __init__(self, label, linePoints):
         self.label = label
         self.linePoints = linePoints
         self.vertex = set() #len = 2일거임
-
 
 class Vertex:
     def __init__(self, label, dotPoints):
@@ -92,9 +86,7 @@ class Vertex:
         self.dotPoints = dotPoints
         self.edges = set()
         self.mainPoint = None #point class 아니라 그냥 길이 3짜리 Numpy array임
-
-        
-        
+  
 class Object:
     def __init__(self, idx, BoundaryPoints):
         self.idx = idx

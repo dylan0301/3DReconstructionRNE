@@ -32,13 +32,14 @@ def proccessOneObj(obj, availableEdgeLabel, availableVertexLabel):
     #value: connected vertices points set
 
     for p in obj.BoundaryPoints:
-        planeNearP = []
+        planeNearP = set()
         
         for q in p.nearby1:
             if q.planeClass:
-                planeNearP.append(q.planeClass)
+                planeNearP.add(q.planeClass)
         
         if len(planeNearP) == 2:
+            planeNearP = list(planeNearP)
             planeNearP.sort(key=lambda x: x.label)
             planeNearP = tuple(planeNearP)
             planeListEdgeMap[planeNearP].add(p)
@@ -63,10 +64,11 @@ def proccessOneObj(obj, availableEdgeLabel, availableVertexLabel):
         obj.edges.add(newEdge)
 
     for p in localVerticesPoints:
-        edgeNearP = []
+        edgeNearP = set()
         for q in p.nearby1:
             if q.edgeClass:
-                edgeNearP.append(q.edgeClass)
+                edgeNearP.add(q.edgeClass)
+        edgeNearP = list(edgeNearP)
         edgeNearP.sort(key=lambda x: x.label)
         edgeNearP = tuple(edgeNearP)
         edgeListVerticesMap[edgeNearP].add(p)
@@ -119,7 +121,7 @@ def processGraph(planeSet):
             newPlane.equation = plane.equation
             polygonEdges = set()
             polygonVertices = set()
-            for plane2 in obj.planes:
+            for plane2 in obj.planes: # !!!!!!! 여기서 문제 됨 !!!!!!!!!!!!!! 이거 한 edge당 꼭짓점이 하나두개가 아닌것같은데 어떡하지
                 if plane2 in plane.planeEdgeDict.keys():
                     newPlane.planeEdgeDict[plane2] = plane.planeEdgeDict[plane2]
                     plane2.planeEdgeDict[newPlane] = plane2.planeEdgeDict[plane]
@@ -139,5 +141,6 @@ def ObjectSegmentation(BoundaryPoints, planeSet, hyperparameter):
     availableVertexLabel = 0
     for i in range(len(objList)):
         availableEdgeLabel, availableVertexLabel = proccessOneObj(objList[i], availableEdgeLabel, availableVertexLabel)
+    
     processGraph(planeSet)
     return objList
