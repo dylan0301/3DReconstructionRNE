@@ -4,12 +4,7 @@ from A3_allFindNearby import *
 from A4_findNormal import *
 from A5_normalClustering import *
 from A6_3DdistanceStairClustering import *
-from A7_boundaryFindNearby import *
-from A8_findDirection import *
-from A9_directionClustering import *
-from A10_2DdistanceStairClustering import *
-from A11_vertexPointsClustering import *
-from A12_make3classes import *
+
 #from A13_objectSegmentation import *
 import numpy as np
 import matplotlib.pyplot as plt
