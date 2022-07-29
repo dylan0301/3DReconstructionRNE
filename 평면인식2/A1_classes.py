@@ -11,9 +11,7 @@ class Point:
         self.G = G
         self.B = B
         self.nearby1 = [] #AllPoints에서 가까운 point들이 들어감
-        self.nearby2 = [] #BoundaryPoints에서 가까운 point들이 들어감
         self.normal = None #평면 법선벡터
-        self.direction = None #직선 방향벡터
         self.planeClass = None
         self.edgeClass = None
         self.vertexClass = None
@@ -59,27 +57,6 @@ class Hyperparameter:
         #6 3DdistanceStairClustering
         self.eps_centerPoint = eps_centerPoint #centerpoint DBSCAN eps
         self.min_samples_centerPoint = min_samples_centerPoint #centerpoint DBSCAN min_samples
-
-        #7 boundaryFindNearby
-        self.R2 = R2
-
-        #8 findDirection
-        self.OutlierThreshold2 = OutlierThreshold2
-        self.H2 = H2 #법선벡터구할때 랜색 오차허용범위 = H
-        self.ratioThreshold2 = ratioThreshold2 #ratio 방법으로 했을때 ratio 이거보다 크면 edge
-        
-        #9 directionClustering
-        self.eps_direction = eps_direction 
-        self.min_samples_direction = min_samples_direction
-
-        #10 2DdistanceStairClustering
-        self.eps_edgePoint = eps_edgePoint 
-        self.min_samples_edgePoint = min_samples_edgePoint
-
-        #11 vertexPointsClustering
-        self.eps_vertexPoint = eps_vertexPoint 
-        self.min_samples_vertexPoint = min_samples_vertexPoint
-        
         #12 findEquations
         #self.planeRansacThreshold = planeRansacThreshold
         #최종적으로 평면 만들때 쓰는 랜색 오차허용범위
@@ -87,7 +64,7 @@ class Hyperparameter:
 
         #13 objectSegmentation
         self.eps_finalBoundaryPoint = eps_finalBoundaryPoint #boundarypoint DBSCAN eps
-        self.min_samples_finalBoundaryPoint2= min_samples_finalBoundaryPoint #boundarypoint DBSCAN min_samples
+        self.min_samples_finalBoundaryPoint= min_samples_finalBoundaryPoint #boundarypoint DBSCAN min_samples
     
         
         
@@ -100,23 +77,23 @@ class Plane:
         self.interiorPoints = interiorPoints
         self.planeEdgeDict = defaultdict(list) 
         #key는 다른 plane, (연결된 plane만 있음)
-        #value는 그 plane과 사이에 있는 boundarypoints. 
+        #value는 그 plane과 사이에 있는 edge class. 
         self.containedObj = set()
         self.equation = None #(a,b,c,d)
 
 
 class Edge:
-    def __init__(self, label, linePoints):
+    def __init__(self, label):
         self.label = label
-        self.linePoints = linePoints
+        self.linePoints = set()
         self.vertex = []
         self.midPoint = None
 
 
 class Vertex:
-    def __init__(self, label, dotPoints):
+    def __init__(self, label):
         self.label = label
-        self.dotPoints = dotPoints
+        self.dotPoints = set()
         self.edges = []
         self.mainPoint = None
 
@@ -127,6 +104,8 @@ class Object:
         self.idx = idx
         self.BoundaryPoints = BoundaryPoints  
         self.planes = set() # Plane형
+        self.edges = set()
+        self.vertices = set()
         
         
     

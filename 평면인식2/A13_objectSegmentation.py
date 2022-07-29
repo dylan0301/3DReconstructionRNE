@@ -4,11 +4,10 @@ import numpy as np
 from collections import defaultdict
 from sklearn.cluster import DBSCAN
 from A1_classes import *
-import random
 
 def boundaryClustering(BoundaryPoints, hyperparameter):
     boundary_points_np = np.array([[p.x, p.y, p.z] for p in BoundaryPoints])
-    clustering = DBSCAN(eps = hyperparameter.eps_point2, min_samples = hyperparameter.min_samples_point2)
+    clustering = DBSCAN(eps = hyperparameter.eps_finalBoundaryPoint, min_samples = hyperparameter.min_samples_finalBoundaryPoint)
     labels = clustering.fit_predict(boundary_points_np)
     BoundaryCluster = defaultdict(list())
     objList = []
@@ -22,27 +21,35 @@ def boundaryClustering(BoundaryPoints, hyperparameter):
             
     return objList
 
-def findOneObjPlanes(obj, planeList, hyperparameter):
-    numOfPlanes = len(planeList)
+#one obj에서 planes edges vertex 다 만들어줌
+def proccessOneObj(obj):
+    planePairEdgeMap = defaultdict(list)
+    #key: set(plane1, plane2)
+    #value: edgepoints
 
     for p in obj.BoundaryPoints:
         planeNearP = []
-        for i in range(numOfPlanes):
-            for q in planeList[i].interiorPoints:
-                if p.distance(q) < hyperparameter.eps_point:
-                    if planeList[i] not in planeNearP:
-                        planeNearP.append(planeList[i])
-    
+        for q in p.nearby1:
+            if q.planeClass:
+                planeNearP.append(q.planeClass)
+        
         if len(planeNearP) == 2:
-            planeNearP[0].connected[planeNearP[1]].append(p)
-            planeNearP[1].connected[planeNearP[0]].append(p)
+            planePair = set()
+            planePair.add(planeNearP[0])
+            planePair.add(planeNearP[1])
+            planePairEdgeMap[planePair].append(p)
             planeNearP[0].containedObj.add(obj)
             planeNearP[1].containedObj.add(obj)
             obj.planes.add(planeNearP[0])
             obj.planes.add(planeNearP[1])
-        if len(planeNearP) >= 2:
-            pass
+        if len(planeNearP) > 2:
+            p.vertexClass = True
+    for planePair in planePairEdgeMap.keys():
+        plane1 = planePair[0]
+        plane2 = planePair[1]
 
+        planeNearP[0].connected[planeNearP[1]].append(p)
+        planeNearP[1].connected[planeNearP[0]].append(p)
 
             
 

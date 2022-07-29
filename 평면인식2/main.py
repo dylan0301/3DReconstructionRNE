@@ -122,93 +122,69 @@ ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[0] * len(BoundaryPoints), marker='o'
 plt.show()
 
 
-#7 boundaryFindNearby
-print('#7 boundaryFindNearby start')
-print(len(BoundaryPoints), 'BoundaryPoints before boundaryRemoveNoise')
-t = time.time()
-boundaryFindNearby(BoundaryPoints, hyperparameter)
-print('#7 boundaryFindNearby time:', time.time()-t)
-print()
 
 
 
-#8 findDirection
-print('#8 findDirection start')
-t = time.time()
-EdgePoints = []
-VertexPoints = []
-VertexPoints, EdgePoints = findDirection(BoundaryPoints, EdgePoints, VertexPoints, hyperparameter)
-print(len(VertexPoints), 'VertexPoints')
-print(len(EdgePoints), 'EdgePoints')
-print('#8 findDirection time:', time.time()-t)
-print()
 
 
-#방향벡터들 출력
-fig = plt.figure(figsize=(6, 6))
-ax = fig.add_subplot(111, projection='3d')
-ap = np.array([list(p.direction) for p in EdgePoints])
-ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[0] * len(EdgePoints), marker='o', s=15, cmap='rainbow')
-plt.show()
+# #9 directionClustering
+# print('#9 distanceClustering start')
+# t = time.time()
+# afterEdgePoints, edgePointMap, afterLabel= directionDBSCAN(EdgePoints, hyperparameter)
+# print(len(afterEdgePoints), 'EdgePoints after directionClustering')
+# print('#9 directionClustering time:', time.time()-t)
+# print()
 
-#9 directionClustering
-print('#9 distanceClustering start')
-t = time.time()
-afterEdgePoints, edgePointMap, afterLabel= directionDBSCAN(EdgePoints, hyperparameter)
-print(len(afterEdgePoints), 'EdgePoints after directionClustering')
-print('#9 directionClustering time:', time.time()-t)
-print()
+# fig = plt.figure(figsize=(6, 6))
+# ax = fig.add_subplot(111, projection='3d')
+# ap = np.array([[p.x, p.y, p.z] for p in afterEdgePoints])
+# ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=afterLabel, marker='o', s=15, cmap='rainbow')
+# plt.show()
 
-fig = plt.figure(figsize=(6, 6))
-ax = fig.add_subplot(111, projection='3d')
-ap = np.array([[p.x, p.y, p.z] for p in afterEdgePoints])
-ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=afterLabel, marker='o', s=15, cmap='rainbow')
-plt.show()
-
-#10 2DdistanceStairClustering
-print('#10 2DdistanceStairClustering start')
-t = time.time()
-NewEdgePointMap = defaultdict(list)
-NewEdgePointMap = divideAllEdge_DBSCAN(NewEdgePointMap, edgePointMap, hyperparameter)
-print('#10 2DdistanceStairClustering time:', time.time()-t)
-print()
+# #10 2DdistanceStairClustering
+# print('#10 2DdistanceStairClustering start')
+# t = time.time()
+# NewEdgePointMap = defaultdict(list)
+# NewEdgePointMap = divideAllEdge_DBSCAN(NewEdgePointMap, edgePointMap, hyperparameter)
+# print('#10 2DdistanceStairClustering time:', time.time()-t)
+# print()
     
-NewEdgePoints = []
-for k in NewEdgePointMap.keys():
-    NewEdgePoints.extend(NewEdgePointMap[k])
+# NewEdgePoints = []
+# for k in NewEdgePointMap.keys():
+#     NewEdgePoints.extend(NewEdgePointMap[k])
 
-NewEdgeLabels = []
-for k in NewEdgePointMap.keys():
-    NewEdgeLabels += [k] * len(NewEdgePointMap[k])
+# NewEdgeLabels = []
+# for k in NewEdgePointMap.keys():
+#     NewEdgeLabels += [k] * len(NewEdgePointMap[k])
 
-#distanceStairClustering 이후 EdgePoints
-fig = plt.figure(figsize=(6, 6))
-ax = fig.add_subplot(111, projection='3d')
-ap = np.array([[p.x, p.y, p.z] for p in NewEdgePoints])
-ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=NewEdgeLabels, marker='o', s=15, cmap='rainbow')
-plt.show()
+# #distanceStairClustering 이후 EdgePoints
+# fig = plt.figure(figsize=(6, 6))
+# ax = fig.add_subplot(111, projection='3d')
+# ap = np.array([[p.x, p.y, p.z] for p in NewEdgePoints])
+# ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=NewEdgeLabels, marker='o', s=15, cmap='rainbow')
+# plt.show()
 
-#VertexPoints
-fig = plt.figure(figsize=(6, 6))
-ax = fig.add_subplot(111, projection='3d')
-ap = np.array([[p.x, p.y, p.z] for p in VertexPoints])
-ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[0] * len(VertexPoints), marker='o', s=15, cmap='rainbow')
-plt.show()
+# #VertexPoints
+# fig = plt.figure(figsize=(6, 6))
+# ax = fig.add_subplot(111, projection='3d')
+# ap = np.array([[p.x, p.y, p.z] for p in VertexPoints])
+# ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[0] * len(VertexPoints), marker='o', s=15, cmap='rainbow')
+# plt.show()
 
-#11 vertexPointsClustering
-print('#11 vertexPointsClustering start')
-t = time.time()
-vertexPointMap, aftervertexPoints, aftervertexLabel= mergeVertex_DBSCAN(VertexPoints, hyperparameter)
-print(len(aftervertexPoints), 'VertexPoints after vertexPointsClustering')
-print('#11 vertexPointsClustering time:', time.time()-t)
-print()
+# #11 vertexPointsClustering
+# print('#11 vertexPointsClustering start')
+# t = time.time()
+# vertexPointMap, aftervertexPoints, aftervertexLabel= mergeVertex_DBSCAN(VertexPoints, hyperparameter)
+# print(len(aftervertexPoints), 'VertexPoints after vertexPointsClustering')
+# print('#11 vertexPointsClustering time:', time.time()-t)
+# print()
 
-#clustering 이후 VertexPoints
-fig = plt.figure(figsize=(6, 6))
-ax = fig.add_subplot(111, projection='3d')
-ap = np.array([[p.x, p.y, p.z] for p in aftervertexPoints])
-ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=aftervertexLabel, marker='o', s=15, cmap='rainbow')
-plt.show()
+# #clustering 이후 VertexPoints
+# fig = plt.figure(figsize=(6, 6))
+# ax = fig.add_subplot(111, projection='3d')
+# ap = np.array([[p.x, p.y, p.z] for p in aftervertexPoints])
+# ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=aftervertexLabel, marker='o', s=15, cmap='rainbow')
+# plt.show()
 
 
 #12 make3classes
