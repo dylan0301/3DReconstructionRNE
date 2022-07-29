@@ -454,7 +454,7 @@ def bang_moresimple():
     points = defaultdict(Point)
 
     hyperparameter = Hyperparameter(numOfPoints = 3000,
-    R1 = 5, OutlierThreshold1 = 85, H1 = 0.25, ratioThreshold1 = 0.6,
+    R1 = 5, OutlierThreshold1 = 120, H1 = 0.25, ratioThreshold1 = 0.56,
     eps_normal = 0.1, min_samples_normal = 9,
     eps_centerPoint = 4, min_samples_centerPoint = 30,
     eps_finalBoundaryPoint = 3, min_samples_finalBoundaryPoint = 10
@@ -498,8 +498,8 @@ def bang_moresimple():
 def bang_muchsimple():
     points = defaultdict(Point)
 
-    hyperparameter = Hyperparameter(numOfPoints = 2900,
-    R1 = 5, OutlierThreshold1 = 70, H1 = 0.5, ratioThreshold1 = 0.7,
+    hyperparameter = Hyperparameter(numOfPoints = 3400,
+    R1 = 2, OutlierThreshold1 = 28, H1 = 0.1, ratioThreshold1 = 0.7,
     eps_normal = 0.1, min_samples_normal = 9,
     eps_centerPoint = 4, min_samples_centerPoint = 30,
     eps_finalBoundaryPoint = 3, min_samples_finalBoundaryPoint = 10
@@ -513,29 +513,30 @@ def bang_muchsimple():
             x = r * i/50
             y = r * j/50
             z = 0
-            if 10 <= x and x <= 20 and 10 <= y and y <= 20:
-                z = 10
+            if 11 <= x and x <= 20 and 11 <= y and y <= 20:
+                z = 9
             p = Point(x, y, z, cnt)
             points[cnt] = p
     
-    for i in range(400):
-        if i < 100:
-            x = 10 + i % 10
-            y = 10
-            z = i // 10
-        elif i < 200:
-            x = 10 
-            y = 10 + (i-100) % 10
-            z = (i-100) // 10
-        elif i < 300:
-            x = 10 + (i-200) % 10
+    for i in range(900):
+        cnt += 1
+        if i < 225:
+            x = 11 + (i % 15)*3/5
+            y = 11
+            z = (i // 15)*3/5
+        elif i < 450:
+            x = 11 
+            y = 11 + ((i-225) % 15)*3/5
+            z = ((i-225) // 15)*3/5
+        elif i < 675:
+            x = 11 + ((i-450) % 15)*3/5
             y = 20
-            z = (i-200) % 10
+            z = ((i-450) // 15)*3/5
         else:
             x = 20
-            y = 10 + (i-300) % 10
-            z = (i-300) % 10
-        p = Point(x, y, z, i)
-        points[i] = p
+            y = 11 + ((i-675) % 15)*3/5
+            z = ((i-675) // 15)*3/5
+        p = Point(x, y, z, cnt)
+        points[cnt] = p
     
     return points, hyperparameter

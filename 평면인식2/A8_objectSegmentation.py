@@ -21,6 +21,10 @@ def boundaryClustering(BoundaryPoints, hyperparameter):
             
     return objList
 
+globalEdgePoints = []
+globalVertexPoints = []
+
+
 #one obj에서 planes edges vertex 다 만들어줌
 def proccessOneObj(obj, availableEdgeLabel, availableVertexLabel):
     planeListEdgeMap = defaultdict(set)
@@ -43,8 +47,10 @@ def proccessOneObj(obj, availableEdgeLabel, availableVertexLabel):
             planeNearP.sort(key=lambda x: x.label)
             planeNearP = tuple(planeNearP)
             planeListEdgeMap[planeNearP].add(p)
+            globalEdgePoints.append(p)
         if len(planeNearP) > 2:
             localVerticesPoints.add(p)
+            globalVertexPoints.append(p)
 
     for planePair in planeListEdgeMap.keys():
         planePairList = list(planePair)
@@ -142,5 +148,5 @@ def ObjectSegmentation(BoundaryPoints, planeSet, hyperparameter):
     for i in range(len(objList)):
         availableEdgeLabel, availableVertexLabel = proccessOneObj(objList[i], availableEdgeLabel, availableVertexLabel)
     
-    processGraph(planeSet)
+    #processGraph(planeSet)
     return objList

@@ -22,7 +22,7 @@ filepath = '/Users/jeewon/Library/CloudStorage/OneDrive-대구광ᄋ
 filename = 'twoBoxes.ply'
 
 #AllPoints, hyperparameter = importPly(filepath, filename)
-AllPoints, hyperparameter = bang_moresimple()
+AllPoints, hyperparameter = bang_muchsimple()
 print('#2 bring data time: ', time.time()-t)
 print(len(AllPoints), 'points')
 print()
@@ -135,4 +135,19 @@ print(len(objList), 'objects')
 print('#8 objectSegmentation time:', time.time()-t)
 print()
 
-objVisualization(objList)
+# objVisualization(objList)
+
+
+#EdgePoints
+fig = plt.figure(figsize=(6, 6))
+ax = fig.add_subplot(111, projection='3d')
+ap = np.array([[p.x, p.y, p.z] for p in globalEdgePoints])
+ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[0] * len(globalEdgePoints), marker='o', s=15, cmap='rainbow')
+plt.show()
+
+#VertexPoints
+fig = plt.figure(figsize=(6, 6))
+ax = fig.add_subplot(111, projection='3d')
+ap = np.array([[p.x, p.y, p.z] for p in globalVertexPoints])
+ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[0] * len(globalVertexPoints), marker='o', s=15, cmap='rainbow')
+plt.show()
