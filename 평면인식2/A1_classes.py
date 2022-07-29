@@ -57,6 +57,7 @@ class Hyperparameter:
         #6 3DdistanceStairClustering
         self.eps_centerPoint = eps_centerPoint #centerpoint DBSCAN eps
         self.min_samples_centerPoint = min_samples_centerPoint #centerpoint DBSCAN min_samples
+        
         #12 findEquations
         #self.planeRansacThreshold = planeRansacThreshold
         #최종적으로 평면 만들때 쓰는 랜색 오차허용범위
@@ -83,18 +84,17 @@ class Plane:
 
 
 class Edge:
-    def __init__(self, label):
+    def __init__(self, label, linePoints):
         self.label = label
-        self.linePoints = set()
-        self.vertex = []
-        self.midPoint = None
+        self.linePoints = linePoints
+        self.vertex = set() #len = 2일거임
 
 
 class Vertex:
-    def __init__(self, label):
+    def __init__(self, label, dotPoints):
         self.label = label
-        self.dotPoints = set()
-        self.edges = []
+        self.dotPoints = dotPoints
+        self.edges = set()
         self.mainPoint = None
 
         
