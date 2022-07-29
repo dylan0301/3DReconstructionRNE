@@ -5,7 +5,8 @@ from A4_findNormal import *
 from A5_normalClustering import *
 from A6_3DdistanceStairClustering import *
 from A7_makePlaneClass import *
-#from A8_objectSegmentation import *
+from A8_objectSegmentation import *
+from B1_Visualization import *
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -117,13 +118,21 @@ ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[0] * len(BoundaryPoints), marker='o'
 plt.show()
 
 
-
-
 #7 makePlaneClass
 print('#7 makePlaneClass start')
 t = time.time()
-PlaneSet = makePlaneClass(NewClusterPointMap, hyperparameter)
-print(len(PlaneSet), 'planes')
+planeSet = makePlaneClass(NewClusterPointMap, hyperparameter)
+print(len(planeSet), 'planes')
 print('#7 makePlaneClass time:', time.time()-t)
 print()
 
+
+#8 objectSegmentation
+print('#8 objectSegmentation start')
+t = time.time()
+objList = ObjectSegmentation(BoundaryPoints, planeSet, hyperparameter)
+print(len(planeSet), 'planes')
+print('#8 objectSegmentation time:', time.time()-t)
+print()
+
+objVisualization(objList)

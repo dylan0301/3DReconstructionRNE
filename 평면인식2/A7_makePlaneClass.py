@@ -4,11 +4,11 @@ from A4_findNormal import nearbyRansacPlane
 
 
 def makePlaneClass(NewClusterPointMap, hyperparameter):
-    PlaneSet = set()
+    planeSet = set()
     for i, points in NewClusterPointMap.items():
         plane = Plane(i, points)
-        PlaneSet.add(plane)
+        planeSet.add(plane)
         for p in points:
             p.planeClass = plane
         plane.equation, maxScore = nearbyRansacPlane(plane.interiorPoints, hyperparameter)
-    return PlaneSet
+    return planeSet

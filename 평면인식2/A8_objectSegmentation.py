@@ -84,26 +84,55 @@ def proccessOneObj(obj, availableEdgeLabel, availableVertexLabel):
 
             
 
-def processGraph(planeList):
-    for plane in planeList:
+def processGraph(planeSet):
+    #edge class set, vertex class set이 주어졌을때 Polygon vertex 리스트 뱉는다.
+    def polygonize(polygonEdges, polygonVertices):
+        graph = defaultdict(set) #key: vertex, value: 연결된 vertices
+        for edge in polygonEdges:
+            twosides = list(edge.vertex)
+            graph[twosides[0]].add(twosides[1])
+            graph[twosides[1]].add(twosides[0])
+       
+        nowVertex = twosides[0]
+        for vertex in graph.keys():
+            if len(graph[vertex]) == 1:
+                nowVertex = vertex
+        visited = [nowVertex]
+        while len(visited) < polygonVertices:
+            nextVertices = list(graph[nowVertex])
+            if visited[-1] != nextVertices[0]:
+                visited.append(nextVertices[0])
+            else:
+                visited.append(nextVertices[1])
+        return visited
+
+    #planeSet는 업데이트 안됨
+    for plane in planeSet:
         for obj in plane.containedObj:
             newPlane = Plane(None, None)
             newPlane.containedObj = obj #원래는 obj들의 set인데 이제부터 그냥 obj 하나
-            connectedEdges = set()
-            connectedVertices = set()
+            newPlane.equation = plane.equation
+            polygonEdges = set()
+            polygonVertices = set()
             for plane2 in obj:
                 if plane2 in plane.planeEdgeDict.keys():
                     newPlane.planeEdgeDict[plane2] = plane.planeEdgeDict[plane2]
-                    connectedEdges.add(plane.planeEdgeDict[plane2])
-
+                    plane2.planeEdgeDict[newPlane] = plane2.planeEdgeDict[plane]
+                    polygonEdges.add(plane.planeEdgeDict[plane2])
+                    polygonVertices = polygonVertices.union(plane.planeEdgeDict[plane2].vertex)
+                    del plane2.planeEdgeDict[plane]
+            newPlane.polygon = polygonize(polygonEdges, polygonVertices)
+            obj.planes.remove(plane)
+            obj.planes.add(newPlane)
 
 
 
  
-def ObjectSegmentation(BoundaryPoints, planeList, hyperparameter):
+def ObjectSegmentation(BoundaryPoints, planeSet, hyperparameter):
     objList = boundaryClustering(BoundaryPoints, hyperparameter)
     availableEdgeLabel = 0
     availableVertexLabel = 0
     for i in range(len(objList)):
         availableEdgeLabel, availableVertexLabel = proccessOneObj(objList[i], availableEdgeLabel, availableVertexLabel)
-    processGraph(planeList)
+    processGraph(planeSet)
+    return objList

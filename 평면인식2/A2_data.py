@@ -290,11 +290,6 @@ def unicorn_sample2():
     R1 = 5, OutlierThreshold1 = 37, H1 = 0.5, ratioThreshold1 = 0.7,
     eps_normal = 0.1, min_samples_normal = 9,
     eps_centerPoint = 4, min_samples_centerPoint = 8,
-    R2 = 7, OutlierThreshold2 = 7, H2 = 0.7, ratioThreshold2 = 0.3,
-    eps_direction = 0.1, min_samples_direction = 6,
-    eps_edgePoint = 5, min_samples_edgePoint = 5,
-    eps_vertexPoint = 2,  min_samples_vertexPoint = 2,
-    planeRansacThreshold = 1,
     eps_finalBoundaryPoint = 5, min_samples_finalBoundaryPoint = 5
     )
 
