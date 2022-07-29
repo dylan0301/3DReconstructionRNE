@@ -4,8 +4,8 @@ from A3_allFindNearby import *
 from A4_findNormal import *
 from A5_normalClustering import *
 from A6_3DdistanceStairClustering import *
-
-#from A13_objectSegmentation import *
+from A7_makePlaneClass import *
+#from A8_objectSegmentation import *
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -119,13 +119,11 @@ plt.show()
 
 
 
-
-
-#12 makePlaneClass
-print('#12 makePlaneClass start')
+#7 makePlaneClass
+print('#7 makePlaneClass start')
 t = time.time()
 PlaneSet = makePlaneClass(NewClusterPointMap, hyperparameter)
 print(len(PlaneSet), 'planes')
-print('#12 makePlaneClass time:', time.time()-t)
+print('#7 makePlaneClass time:', time.time()-t)
 print()
 

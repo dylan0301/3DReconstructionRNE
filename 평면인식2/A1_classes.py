@@ -32,11 +32,6 @@ class Hyperparameter:
                 R1 = 0.05, OutlierThreshold1 = 40, H1 = 0.01, ratioThreshold1 = 0.8,
                 eps_normal = 0.05, min_samples_normal = 10,
                 eps_centerPoint = 0.05, min_samples_centerPoint = 10,
-                R2 = 0.06, OutlierThreshold2 = 15, H2 = 0.01, ratioThreshold2 = 0.8,
-                eps_direction = 0.05, min_samples_direction = 7,
-                eps_edgePoint = 0.05, min_samples_edgePoint = 7,
-                eps_vertexPoint = 0.03,  min_samples_vertexPoint = 3,
-                planeRansacThreshold = 0.01,
                 eps_finalBoundaryPoint = 0.05, min_samples_finalBoundaryPoint = 8):
 
         #2 data
@@ -58,12 +53,12 @@ class Hyperparameter:
         self.eps_centerPoint = eps_centerPoint #centerpoint DBSCAN eps
         self.min_samples_centerPoint = min_samples_centerPoint #centerpoint DBSCAN min_samples
         
-        #12 findEquations
+        #7 findEquations
         #self.planeRansacThreshold = planeRansacThreshold
         #최종적으로 평면 만들때 쓰는 랜색 오차허용범위
         #이건 그냥 H1 쓰자
 
-        #13 objectSegmentation
+        #8 objectSegmentation
         self.eps_finalBoundaryPoint = eps_finalBoundaryPoint #boundarypoint DBSCAN eps
         self.min_samples_finalBoundaryPoint= min_samples_finalBoundaryPoint #boundarypoint DBSCAN min_samples
     
@@ -76,11 +71,12 @@ class Plane:
     def __init__(self, label, interiorPoints):
         self.label = label
         self.interiorPoints = interiorPoints
-        self.planeEdgeDict = defaultdict(list) 
+        self.planeEdgeDict = defaultdict(Edge) 
         #key는 다른 plane, (연결된 plane만 있음)
         #value는 그 plane과 사이에 있는 edge class. 
         self.containedObj = set()
         self.equation = None #(a,b,c,d)
+        self.polygon = [] #vertices를 순서에 맞게 배열한것
 
 
 class Edge:
@@ -95,7 +91,7 @@ class Vertex:
         self.label = label
         self.dotPoints = dotPoints
         self.edges = set()
-        self.mainPoint = None
+        self.mainPoint = None #point class 아니라 그냥 길이 3짜리 Numpy array임
 
         
         
@@ -107,5 +103,3 @@ class Object:
         self.edges = set()
         self.vertices = set()
         
-        
-    
