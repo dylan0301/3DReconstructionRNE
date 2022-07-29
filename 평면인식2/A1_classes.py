@@ -102,4 +102,3 @@ class Object:
         self.planes = set() # Plane형
         self.edges = set()
         self.vertices = set()
-        

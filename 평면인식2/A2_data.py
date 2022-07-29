@@ -287,7 +287,7 @@ def unicorn_sample2():
     random.seed(0)
     points = defaultdict(Point)
     hyperparameter = Hyperparameter(numOfPoints = 3000,
-    R1 = 5, OutlierThreshold1 = 37, H1 = 0.5, ratioThreshold1 = 0.7,
+    R1 = 5, OutlierThreshold1 = 35, H1 = 0.5, ratioThreshold1 = 0.7,
     eps_normal = 0.1, min_samples_normal = 9,
     eps_centerPoint = 4, min_samples_centerPoint = 8,
     eps_finalBoundaryPoint = 5, min_samples_finalBoundaryPoint = 5
@@ -393,7 +393,7 @@ def bang_simple():
     random.seed(8)
     points = defaultdict(Point)
 
-    hyperparameter = Hyperparameter(pointLeastDifference = 0.001, numOfPoints = 10000,
+    hyperparameter = Hyperparameter(pointLeastDifference = 0.001, numOfPoints = 5000,
     OutlierThreshold = 10, R = 7, vectorRansacTrial = 100, vectorRansacThreshold = 0.4, normalLeastNorm = 0.001,
     ratioThreshold = 0.6, eps_vector = 0.1, min_samples_vector = 9,
     eps_point = 4, min_samples_point = 10, planeRansacTrial = 50, planeRansacThreshold = 0.15,
@@ -405,7 +405,7 @@ def bang_simple():
 
     for i in range(size):
         diff = 0.5*(random.random()-0.5)
-        if i < 7000:
+        if i < 3500:
             x = r * random.random()
             y = r * random.random()
             z = 0
@@ -413,7 +413,7 @@ def bang_simple():
                 z = 10
             if 13 <= x and x <= 16 and 13 <= y and y <= 16:
                 z = 13
-        elif i < 9500:
+        elif i < 4800:
             if i % 4 == 0:
                 x = 10 + 10 * random.random()
                 y = 10

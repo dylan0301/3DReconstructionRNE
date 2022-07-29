@@ -9,13 +9,13 @@ def boundaryClustering(BoundaryPoints, hyperparameter):
     boundary_points_np = np.array([[p.x, p.y, p.z] for p in BoundaryPoints])
     clustering = DBSCAN(eps = hyperparameter.eps_finalBoundaryPoint, min_samples = hyperparameter.min_samples_finalBoundaryPoint)
     labels = clustering.fit_predict(boundary_points_np)
-    BoundaryCluster = defaultdict(list())
+    BoundaryCluster = defaultdict(list)
     objList = []
     
     for i in range(len(BoundaryPoints)):
         BoundaryCluster[labels[i]].append(BoundaryPoints[i])
     
-    for i, points in BoundaryCluster.item():
+    for i, points in BoundaryCluster.items():
         obj = Object(i, points)
         objList.append(obj)
             
@@ -23,30 +23,32 @@ def boundaryClustering(BoundaryPoints, hyperparameter):
 
 #one obj에서 planes edges vertex 다 만들어줌
 def proccessOneObj(obj, availableEdgeLabel, availableVertexLabel):
-    planeSetEdgeMap = defaultdict(set)
-    #key: set(plane1, plane2)
+    planeListEdgeMap = defaultdict(set)
+    #key: label기준으로 정렬된 리스트 [plane1, plane2]
     #value: edgepoints set
     localVerticesPoints = set()
-    edgeSetVerticesMap = defaultdict(set)
-    #key: set of edges
+    edgeListVerticesMap = defaultdict(set)
+    #key: label기준으로 정렬된 리스트 [edge1, edge2, edge3, ...]
     #value: connected vertices points set
 
     for p in obj.BoundaryPoints:
-        planeNearP = set()
+        planeNearP = []
+        
         for q in p.nearby1:
             if q.planeClass:
-                planeNearP.add(q.planeClass)
+                planeNearP.append(q.planeClass)
         
         if len(planeNearP) == 2:
-            planeSetEdgeMap[planeNearP].add(p)
+            planeNearP.sort(key=lambda x: x.label)
+            planeListEdgeMap[planeNearP].add(p)
         if len(planeNearP) > 2:
             localVerticesPoints.add(p)
 
-    for planePair in planeSetEdgeMap.keys():
+    for planePair in planeListEdgeMap.keys():
         planePairList = list(planePair)
         plane1 = planePairList[0]
         plane2 = planePairList[1]
-        newEdge = Edge(availableEdgeLabel, planeSetEdgeMap[planePair])
+        newEdge = Edge(availableEdgeLabel, planeListEdgeMap[planePair])
         availableEdgeLabel += 1
         for p in newEdge.linePoints:
             p.edgeClass = newEdge
@@ -60,16 +62,17 @@ def proccessOneObj(obj, availableEdgeLabel, availableVertexLabel):
         obj.edges.add(newEdge)
 
     for p in localVerticesPoints:
-        edgeNearP = set()
+        edgeNearP = []
         for q in p.nearby1:
             if q.edgeClass:
-                edgeNearP.add(q.edgeClass)
-        edgeSetVerticesMap[edgeNearP].add(p)
+                edgeNearP.append(q.edgeClass)
+        edgeNearP.sort(key=lambda x: x.label)
+        edgeListVerticesMap[edgeNearP].add(p)
     
-    for edgeSet in edgeSetVerticesMap.keys():
-        newVertex = Vertex(availableVertexLabel, edgeSetVerticesMap[edgeSet])
+    for edgeList in edgeListVerticesMap.keys():
+        newVertex = Vertex(availableVertexLabel, edgeListVerticesMap[edgeList])
         availableVertexLabel += 1
-        for connectedEdge in edgeSet:
+        for connectedEdge in edgeList:
             connectedEdge.vertex.add(newVertex)
             newVertex.edges.add(connectedEdge)
         mainPoint = np.array([float(0),float(0),float(0)])
