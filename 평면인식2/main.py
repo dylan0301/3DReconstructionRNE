@@ -22,7 +22,7 @@ filepath = '/Users/jeewon/Library/CloudStorage/OneDrive-대구광ᄋ
 filename = 'twoBoxes.ply'
 
 #AllPoints, hyperparameter = importPly(filepath, filename)
-AllPoints, hyperparameter = unicorn_sample2()
+AllPoints, hyperparameter = bang_moresimple()
 print('#2 bring data time: ', time.time()-t)
 print(len(AllPoints), 'points')
 print()
@@ -47,14 +47,14 @@ print()
 
 
 #4 findNormal
-print('findNormal start')
+print('#4 findNormal start')
 t = time.time()
 BoundaryPoints = []
 CenterPoints = []
 BoundaryPoints, CenterPoints = findNormal(AllPoints, BoundaryPoints, CenterPoints, hyperparameter)
 print(len(BoundaryPoints), 'BoundaryPoints')
 print(len(CenterPoints), 'CenterPoints')
-print('findNormal time:', time.time()-t)
+print('#4 findNormal time:', time.time()-t)
 print()
 
 
@@ -131,7 +131,7 @@ print()
 print('#8 objectSegmentation start')
 t = time.time()
 objList = ObjectSegmentation(BoundaryPoints, planeSet, hyperparameter)
-print(len(planeSet), 'planes')
+print(len(objList), 'objects')
 print('#8 objectSegmentation time:', time.time()-t)
 print()
 

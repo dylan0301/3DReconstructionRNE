@@ -24,11 +24,11 @@ def boundaryClustering(BoundaryPoints, hyperparameter):
 #one obj에서 planes edges vertex 다 만들어줌
 def proccessOneObj(obj, availableEdgeLabel, availableVertexLabel):
     planeListEdgeMap = defaultdict(set)
-    #key: label기준으로 정렬된 리스트 [plane1, plane2]
+    #key: label기준으로 정렬된 tuple (plane1, plane2)
     #value: edgepoints set
     localVerticesPoints = set()
     edgeListVerticesMap = defaultdict(set)
-    #key: label기준으로 정렬된 리스트 [edge1, edge2, edge3, ...]
+    #key: label기준으로 정렬된 tuple (edge1, edge2, edge3, ...)
     #value: connected vertices points set
 
     for p in obj.BoundaryPoints:
@@ -40,6 +40,7 @@ def proccessOneObj(obj, availableEdgeLabel, availableVertexLabel):
         
         if len(planeNearP) == 2:
             planeNearP.sort(key=lambda x: x.label)
+            planeNearP = tuple(planeNearP)
             planeListEdgeMap[planeNearP].add(p)
         if len(planeNearP) > 2:
             localVerticesPoints.add(p)
@@ -67,6 +68,7 @@ def proccessOneObj(obj, availableEdgeLabel, availableVertexLabel):
             if q.edgeClass:
                 edgeNearP.append(q.edgeClass)
         edgeNearP.sort(key=lambda x: x.label)
+        edgeNearP = tuple(edgeNearP)
         edgeListVerticesMap[edgeNearP].add(p)
     
     for edgeList in edgeListVerticesMap.keys():
@@ -101,7 +103,7 @@ def processGraph(planeSet):
             if len(graph[vertex]) == 1:
                 nowVertex = vertex
         visited = [nowVertex]
-        while len(visited) < polygonVertices:
+        while len(visited) < len(polygonVertices):
             nextVertices = list(graph[nowVertex])
             if visited[-1] != nextVertices[0]:
                 visited.append(nextVertices[0])
@@ -117,7 +119,7 @@ def processGraph(planeSet):
             newPlane.equation = plane.equation
             polygonEdges = set()
             polygonVertices = set()
-            for plane2 in obj:
+            for plane2 in obj.planes:
                 if plane2 in plane.planeEdgeDict.keys():
                     newPlane.planeEdgeDict[plane2] = plane.planeEdgeDict[plane2]
                     plane2.planeEdgeDict[newPlane] = plane2.planeEdgeDict[plane]

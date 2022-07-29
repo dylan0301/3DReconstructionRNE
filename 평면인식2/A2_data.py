@@ -393,11 +393,7 @@ def bang_simple():
     random.seed(8)
     points = defaultdict(Point)
 
-    hyperparameter = Hyperparameter(pointLeastDifference = 0.001, numOfPoints = 5000,
-    OutlierThreshold = 10, R = 7, vectorRansacTrial = 100, vectorRansacThreshold = 0.4, normalLeastNorm = 0.001,
-    ratioThreshold = 0.6, eps_vector = 0.1, min_samples_vector = 9,
-    eps_point = 4, min_samples_point = 10, planeRansacTrial = 50, planeRansacThreshold = 0.15,
-    boundaryR = 4, boundaryOutlierThreshold = 9)
+    hyperparameter = Hyperparameter()
 
     size = hyperparameter.numOfPoints
     
@@ -447,6 +443,52 @@ def bang_simple():
                 x = 16 
                 y = 13 + 3 * random.random()
                 z = 10 + 3 * random.random()  
+        z += diff
+        p = Point(x, y, z, i)
+        points[i] = p
+    return points, hyperparameter
+
+def bang_moresimple():
+    import math as mt
+    random.seed(8)
+    points = defaultdict(Point)
+
+    hyperparameter = Hyperparameter(numOfPoints = 3000,
+    R1 = 3, OutlierThreshold1 = 55, H1 = 0.3, ratioThreshold1 = 0.66,
+    eps_normal = 0.1, min_samples_normal = 9,
+    eps_centerPoint = 4, min_samples_centerPoint = 30,
+    eps_finalBoundaryPoint = 3, min_samples_finalBoundaryPoint = 10
+    )
+
+    size = hyperparameter.numOfPoints
+    
+    r = 30
+
+    for i in range(size):
+        diff = 0.2*(random.random()-0.5)
+        if i < 2000:
+            x = r * random.random()
+            y = r * random.random()
+            z = 0
+            if 10 <= x and x <= 20 and 10 <= y and y <= 20:
+                z = 10
+        else:
+            if i % 4 == 0:
+                x = 10 + 10 * random.random()
+                y = 10
+                z = 10 * random.random()
+            elif i % 4 == 1:
+                x = 10 
+                y = 10 + 10 * random.random()
+                z = 10 * random.random()
+            elif i % 4 == 2:
+                x = 10 + 10 * random.random()
+                y = 20
+                z = 10 * random.random()
+            elif i % 4 == 3:
+                x = 20
+                y = 10 + 10 * random.random()
+                z = 10 * random.random() 
         z += diff
         p = Point(x, y, z, i)
         points[i] = p
