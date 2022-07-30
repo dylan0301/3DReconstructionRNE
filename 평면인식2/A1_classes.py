@@ -28,7 +28,7 @@ class Point:
 class Hyperparameter:
     #여기있는건 realdata 기준 값들, 거리단위 m
     def __init__(self, numOfPoints = 5000, 
-                R1 = 0.05, OutlierThreshold1 = 40, H1 = 0.005, ratioThreshold1 = 0.7,
+                R1 = 0.05, H1 = 0.005, ratioThreshold1 = 0.7,
                 eps_normal = 0.05, min_samples_normal = 10,
                 eps_centerPoint = 0.05, min_samples_centerPoint = 10,
                 eps_finalBoundaryPoint = 0.05, min_samples_finalBoundaryPoint = 8,
@@ -41,7 +41,6 @@ class Hyperparameter:
         self.R1 = R1 #AllPoints nearby
 
         #4 findNormal
-        self.OutlierThreshold1 = OutlierThreshold1 #noiseR 이내에 outlier 보다 적게있으면 이상점
         self.H1 = H1 #법선벡터구할때 랜색 오차허용범위 = H 
         self.ratioThreshold1 = ratioThreshold1 #ratio 방법으로 했을때 ratio 이거보다 크면 내부점
 

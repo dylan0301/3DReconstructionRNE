@@ -50,11 +50,6 @@ def nearbyRansacPlane(pts, hyperparameter):
 
 
 def normalVectorizeRatio(point, BoundaryPoints, CenterPoints, hyperparameter, BoundaryRatio, CenterRatio):
-    if len(point.nearby1) < hyperparameter.OutlierThreshold1:
-        BoundaryPoints.append(point)
-        BoundaryRatio.append(None)
-        return BoundaryPoints, CenterPoints, BoundaryRatio, CenterRatio
-    
     plane, maxScore = nearbyRansacPlane(point.nearby1, hyperparameter)
     plane_normal = np.array([plane[0], plane[1], plane[2]])
     plane_normal /= np.linalg.norm(plane_normal)
@@ -80,8 +75,9 @@ def findNormal(AllPoints, BoundaryPoints, CenterPoints, hyperparameter):
     CenterRatio = []
     for p in AllPoints.values():
         BoundaryPoints, CenterPoints, BoundaryRatio, CenterRatio = normalVectorizeRatio(p, BoundaryPoints, CenterPoints, hyperparameter, BoundaryRatio, CenterRatio)
-    print('BoundaryRatio')
-    print(BoundaryRatio[:200])
-    print('CenterRatio')
-    print(CenterRatio[:200])
+    # print('BoundaryRatio')
+    # print(BoundaryRatio[:200])
+    # print()
+    # print('CenterRatio')
+    # print(CenterRatio[:200])
     return BoundaryPoints, CenterPoints

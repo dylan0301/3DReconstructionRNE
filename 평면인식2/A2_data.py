@@ -453,12 +453,12 @@ def bang_moresimple():
     random.seed(8)
     points = defaultdict(Point)
 
-    hyperparameter = Hyperparameter(numOfPoints = 3000,
-    R1 = 5, OutlierThreshold1 = 120, H1 = 0.25, ratioThreshold1 = 0.56,
+    hyperparameter = Hyperparameter(numOfPoints = 8400,
+    R1 = 2, H1 = 0.2, ratioThreshold1 = 0.7,
     eps_normal = 0.1, min_samples_normal = 9,
     eps_centerPoint = 4, min_samples_centerPoint = 30,
-    eps_finalBoundaryPoint = 3, min_samples_finalBoundaryPoint = 10
-    )
+    eps_finalBoundaryPoint = 3, min_samples_finalBoundaryPoint = 10,
+    edgeRansacH = 0.1)
 
     size = hyperparameter.numOfPoints
     
@@ -499,11 +499,11 @@ def bang_muchsimple():
     points = defaultdict(Point)
 
     hyperparameter = Hyperparameter(numOfPoints = 8400,
-    R1 = 3, OutlierThreshold1 = 0, H1 = 0.2, ratioThreshold1 = 0.7,
+    R1 = 2, H1 = 0.2, ratioThreshold1 = 0.7,
     eps_normal = 0.1, min_samples_normal = 9,
     eps_centerPoint = 4, min_samples_centerPoint = 30,
-    eps_finalBoundaryPoint = 3, min_samples_finalBoundaryPoint = 10
-    )
+    eps_finalBoundaryPoint = 3, min_samples_finalBoundaryPoint = 10,
+    edgeRansacH = 0.1)
     
     r = 30
     cnt = -1    
@@ -564,7 +564,7 @@ def bang_verysimple():
     points = defaultdict(Point)
 
     hyperparameter = Hyperparameter(numOfPoints = 8400,
-    R1 = 2, OutlierThreshold1 = 0, H1 = 0.2, ratioThreshold1 = 0.7,
+    R1 = 2, H1 = 0.2, ratioThreshold1 = 0.7,
     eps_normal = 0.1, min_samples_normal = 9,
     eps_centerPoint = 4, min_samples_centerPoint = 30,
     eps_finalBoundaryPoint = 3, min_samples_finalBoundaryPoint = 10,

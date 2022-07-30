@@ -24,7 +24,7 @@ filepath = '/Users/jeewon/Library/CloudStorage/OneDrive-대구광ᄋ
 filename = 'twoBoxes.ply'
 
 #AllPoints, hyperparameter = importPly(filepath, filename)
-AllPoints, hyperparameter = bang_verysimple()
+AllPoints, hyperparameter = bang_moresimple()
 print('#2 bring data time: ', time.time()-t)
 print(len(AllPoints), 'points')
 print()
