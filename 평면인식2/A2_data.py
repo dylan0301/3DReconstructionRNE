@@ -453,21 +453,21 @@ def bang_moresimple():
     random.seed(8)
     points = defaultdict(Point)
 
-    hyperparameter = Hyperparameter(numOfPoints = 8400,
-    R1 = 2, H1 = 0.2, ratioThreshold1 = 0.7,
-    eps_normal = 0.1, min_samples_normal = 9,
-    eps_centerPoint = 4, min_samples_centerPoint = 30,
-    eps_finalBoundaryPoint = 3, min_samples_finalBoundaryPoint = 10,
-    edgeRansacH = 0.1)
+    hyperparameter = Hyperparameter(numOfPoints = 7800,
+    R1 = 1, H1 = 0.1, ratioThreshold1 = 0.8,
+    eps_normal = 0.1, min_samples_normal = 15,
+    eps_centerPoint = 3, min_samples_centerPoint = 30,
+    eps_finalBoundaryPoint = 3, min_samples_finalBoundaryPoint = 15,
+    edgeRansacH = 0.05)
 
     size = hyperparameter.numOfPoints
     
     r = 30
 
     for i in range(size):
-        diff = 0.2*(random.random()-0.5)
+        diff = 0.1*(random.random()-0.5)
         diff = 0
-        if i < 2000:
+        if i < 5400:
             x = r * random.random()
             y = r * random.random()
             z = 0

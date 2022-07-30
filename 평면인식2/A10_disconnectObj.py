@@ -17,12 +17,12 @@ def disconnectObj(planeSet):
                         connectedPlane.planeEdgeDict[planeB] = connectedPlane.planeEdgeDict[planeA]
                         edgeSet.add(planeA.planeEdgeDict[connectedPlane])
                         del connectedPlane.planeEdgeDict[planeA]
-                planeB.interiorPoints  = holeFill_1(planeB, edgeSet)
+                planeB.interiorPoints = holeFill_1(planeB, edgeSet)
                 obj.planes.remove(planeA)
                 obj.planes.add(planeB)
 
 #art gallery problem 방식
-#planeB.interiorPoints들을 채워줌
+#plane.interiorPoints들을 채워줌
 
 def holeFill_1(plane, edgeSet):
     
