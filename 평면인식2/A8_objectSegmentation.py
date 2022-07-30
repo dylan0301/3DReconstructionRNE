@@ -4,6 +4,8 @@ import numpy as np
 from collections import defaultdict
 from sklearn.cluster import DBSCAN
 from A1_classes import *
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 def boundaryClustering(BoundaryPoints, hyperparameter):
     boundary_points_np = np.array([[p.x, p.y, p.z] for p in BoundaryPoints])
@@ -18,7 +20,13 @@ def boundaryClustering(BoundaryPoints, hyperparameter):
     for i, points in BoundaryCluster.items():
         obj = Object(i, points)
         objList.append(obj)
-            
+        
+    fig = plt.figure(figsize=(6, 6))
+    ax = fig.add_subplot(111, projection='3d')
+    ap = np.array([[p.x, p.y, p.z] for p in BoundaryPoints])
+    ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=labels, marker='o', s=15, cmap='rainbow')
+    plt.show()
+
     return objList
 
 globalEdgePoints = []
@@ -149,4 +157,4 @@ def ObjectSegmentation(BoundaryPoints, planeSet, hyperparameter):
         availableEdgeLabel, availableVertexLabel = proccessOneObj(objList[i], availableEdgeLabel, availableVertexLabel)
     
     #processGraph(planeSet)
-    return objList
+    return objList, availableEdgeLabel, availableVertexLabel

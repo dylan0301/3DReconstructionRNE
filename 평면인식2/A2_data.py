@@ -498,8 +498,8 @@ def bang_moresimple():
 def bang_muchsimple():
     points = defaultdict(Point)
 
-    hyperparameter = Hyperparameter(numOfPoints = 3400,
-    R1 = 2, OutlierThreshold1 = 28, H1 = 0.1, ratioThreshold1 = 0.7,
+    hyperparameter = Hyperparameter(numOfPoints = 8400,
+    R1 = 3.5, OutlierThreshold1 = 40, H1 = 0.2, ratioThreshold1 = 0.7,
     eps_normal = 0.1, min_samples_normal = 9,
     eps_centerPoint = 4, min_samples_centerPoint = 30,
     eps_finalBoundaryPoint = 3, min_samples_finalBoundaryPoint = 10
@@ -539,4 +539,23 @@ def bang_muchsimple():
         p = Point(x, y, z, cnt)
         points[cnt] = p
     
+    for i in range(50):
+        for j in range(50):
+            cnt += 1
+            x = r * i/50
+            y = 0
+            z = r * j/50
+            p = Point(x, y, z, cnt)
+            points[cnt] = p
+            
+    for i in range(50):
+        for j in range(50):
+            cnt += 1
+            x = 0
+            y = r * i/50
+            z = r * j/50
+            p = Point(x, y, z, cnt)
+            points[cnt] = p
+            
+
     return points, hyperparameter

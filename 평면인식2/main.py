@@ -130,24 +130,35 @@ print()
 #8 objectSegmentation
 print('#8 objectSegmentation start')
 t = time.time()
-objList = ObjectSegmentation(BoundaryPoints, planeSet, hyperparameter)
+objList, availableEdgeLabel, availableVertexLabel = ObjectSegmentation(BoundaryPoints, planeSet, hyperparameter)
 print(len(objList), 'objects')
 print('#8 objectSegmentation time:', time.time()-t)
 print()
 
-# objVisualization(objList)
+
 
 
 #EdgePoints
 fig = plt.figure(figsize=(6, 6))
 ax = fig.add_subplot(111, projection='3d')
 ap = np.array([[p.x, p.y, p.z] for p in globalEdgePoints])
-ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[0] * len(globalEdgePoints), marker='o', s=15, cmap='rainbow')
+ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[p.edgeClass.label for p in globalEdgePoints], marker='o', s=15, cmap='rainbow')
 plt.show()
 
 #VertexPoints
 fig = plt.figure(figsize=(6, 6))
 ax = fig.add_subplot(111, projection='3d')
 ap = np.array([[p.x, p.y, p.z] for p in globalVertexPoints])
-ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[0] * len(globalVertexPoints), marker='o', s=15, cmap='rainbow')
+ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[p.vertexClass.label for p in globalVertexPoints], marker='o', s=15, cmap='rainbow')
 plt.show()
+
+globalPoints = globalEdgePoints + globalVertexPoints
+globalLabels =[0]*len(globalEdgePoints) + [1] * len(globalVertexPoints)
+
+fig = plt.figure(figsize=(6, 6))
+ax = fig.add_subplot(111, projection='3d')
+ap = np.array([[p.x, p.y, p.z] for p in globalPoints])
+ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=globalLabels, marker='o', s=15, cmap='rainbow')
+plt.show()
+
+objVisualization(objList)
