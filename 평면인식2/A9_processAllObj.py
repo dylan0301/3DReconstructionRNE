@@ -27,8 +27,12 @@ def proccessOneObj(obj, availableEdgeLabel, EdgePoints, hyperparameter):
         plane2 = planePair[1]
         newEdge = Edge(availableEdgeLabel, list(planeSetEdgeMap[planePair]))
         availableEdgeLabel += 1
+        midpoint = np.array([float(0), float(0), float(0)])
         for p in newEdge.linePoints:
             p.edgeClass = newEdge
+            midpoint += np.array([p.x, p.y, p.z])
+        midpoint /= len(newEdge.linePoints)
+        newEdge.midpoint = midpoint
         newEdge.directionVec, newEdge.pointOnLine = nearbyRansacLine(newEdge.linePoints, hyperparameter)
         plane1.planeEdgeDict[plane2] = newEdge
         plane2.planeEdgeDict[plane1] = newEdge
@@ -46,6 +50,8 @@ def nearbyRansacLine(pts, hyperparameter):
     
     def findLine(p1, p2):
         direction = np.array([p1.x-p2.x, p1.y-p2.y, p1.z-p2.z])
+        if np.linalg.norm(direction) < 0.0001:
+            return None
         return (direction, p2)
     
     #p에서 line까지 거리
@@ -59,11 +65,13 @@ def nearbyRansacLine(pts, hyperparameter):
     maxScore = 0
     bestLine = None
     for trial in range(50):
-        i1 = random.randrange(0,numOfpts)
-        i2 = random.randrange(0,numOfpts)
-        while i1 == i2:
+        line = None
+        while line == None:
+            i1 = random.randrange(0,numOfpts)
             i2 = random.randrange(0,numOfpts)
-        line = findLine(pts[i1], pts[i2])
+            while i1 == i2:
+                i2 = random.randrange(0,numOfpts)
+            line = findLine(pts[i1], pts[i2])
         score = 0
         for p in pts:
             d = pointLineDistance(p, line[0], line[1])

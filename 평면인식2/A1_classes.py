@@ -80,7 +80,8 @@ class Edge:
         self.label = label
         self.linePoints = linePoints #list
         self.directionVec = None #np.array([x,y,z])
-        self.pointOnLine = None #np.array([x,y,z])
+        self.pointOnLine = None #point class
+        self.midpoint = None #np.array([x,y,z])
   
 class Object:
     def __init__(self, idx, objBoundaryPoints):
@@ -90,6 +91,8 @@ class Object:
         self.edges = set()
         
 class Line:
-    def __init__(self, directionVec, pointOnLine):
+    def __init__(self, directionVec, midpoint):
         self.directionVec = directionVec
-        self.pointOnLine = pointOnLine
+        self.midpoint = midpoint
+        self.condition = None # f(x, y, z) > 0이면 True, f(x, y, z) < 0이면 False
+        

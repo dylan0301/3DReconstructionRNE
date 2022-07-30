@@ -159,6 +159,12 @@ ap = np.array([[p.x, p.y, p.z] for p in EdgePoints])
 ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[p.edgeClass.label for p in EdgePoints], marker='o', s=15, cmap='rainbow')
 plt.show()
 
+#10 disconnectObj
+print('#10 disconnectObj start')
+t = time.time()
+disconnectObj(planeSet)
+print('#10 disconnectObj time:', time.time()-t)
+print()
 
-
+#B1 Visualization
 objVisualization(objList)
