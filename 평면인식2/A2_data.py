@@ -499,7 +499,7 @@ def bang_muchsimple():
     points = defaultdict(Point)
 
     hyperparameter = Hyperparameter(numOfPoints = 8400,
-    R1 = 3.5, OutlierThreshold1 = 40, H1 = 0.2, ratioThreshold1 = 0.7,
+    R1 = 3, OutlierThreshold1 = 0, H1 = 0.2, ratioThreshold1 = 0.7,
     eps_normal = 0.1, min_samples_normal = 9,
     eps_centerPoint = 4, min_samples_centerPoint = 30,
     eps_finalBoundaryPoint = 3, min_samples_finalBoundaryPoint = 10
@@ -557,5 +557,96 @@ def bang_muchsimple():
             p = Point(x, y, z, cnt)
             points[cnt] = p
             
+
+    return points, hyperparameter
+
+def bang_verysimple():
+    points = defaultdict(Point)
+
+    hyperparameter = Hyperparameter(numOfPoints = 8400,
+    R1 = 2, R2 = 6, OutlierThreshold1 = 0, H1 = 0.2, ratioThreshold1 = 0.7,
+    eps_normal = 0.1, min_samples_normal = 9,
+    eps_centerPoint = 4, min_samples_centerPoint = 30,
+    eps_finalBoundaryPoint = 3, min_samples_finalBoundaryPoint = 10
+    )
+    
+    r = 30
+    cnt = -1    
+    for i in range(40):
+        for j in range(40):
+            cnt += 1
+            x = r * i/40
+            y = r * j/40
+            z = 0
+            if 11 <= x and x <= 20 and 11 <= y and y <= 20:
+                z = 9
+            p = Point(x, y, z, cnt)
+            points[cnt] = p
+    
+    for i in range(900):
+        cnt += 1
+        if i < 225:
+            x = 11 + (i % 15)*3/5
+            y = 11
+            z = (i // 15)*3/5
+        elif i < 450:
+            x = 11 
+            y = 11 + ((i-225) % 15)*3/5
+            z = ((i-225) // 15)*3/5
+        elif i < 675:
+            x = 11 + ((i-450) % 15)*3/5
+            y = 20
+            z = ((i-450) // 15)*3/5
+        else:
+            x = 20
+            y = 11 + ((i-675) % 15)*3/5
+            z = ((i-675) // 15)*3/5
+        p = Point(x, y, z, cnt)
+        points[cnt] = p
+    
+    for i in range(40):
+        for j in range(40):
+            cnt += 1
+            x = r * i/40
+            y = 0
+            z = r * j/40
+            p = Point(x, y, z, cnt)
+            points[cnt] = p
+            
+    for i in range(40):
+        for j in range(40):
+            cnt += 1
+            x = 0
+            y = r * i/40
+            z = r * j/40
+            p = Point(x, y, z, cnt)
+            points[cnt] = p
+     
+    for i in range(40):
+        for j in range(40):
+            cnt += 1
+            x = 30
+            y = r * i/40
+            z = r * j/40
+            p = Point(x, y, z, cnt)
+            points[cnt] = p 
+                   
+    for i in range(40):
+        for j in range(40):
+            cnt += 1
+            x = r * i/40
+            y = 30
+            z = r * j/40
+            p = Point(x, y, z, cnt)
+            points[cnt] = p
+
+    for i in range(40):
+        for j in range(40):
+            cnt += 1
+            x = r * i/40
+            y = r * j/40
+            z = 30
+            p = Point(x, y, z, cnt)
+            points[cnt] = p
 
     return points, hyperparameter

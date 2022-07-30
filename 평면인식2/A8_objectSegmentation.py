@@ -46,7 +46,7 @@ def proccessOneObj(obj, availableEdgeLabel, availableVertexLabel):
     for p in obj.BoundaryPoints:
         planeNearP = set()
         
-        for q in p.nearby1:
+        for q in p.nearby2:
             if q.planeClass:
                 planeNearP.add(q.planeClass)
         
@@ -79,7 +79,7 @@ def proccessOneObj(obj, availableEdgeLabel, availableVertexLabel):
 
     for p in localVerticesPoints:
         edgeNearP = set()
-        for q in p.nearby1:
+        for q in p.nearby2:
             if q.edgeClass:
                 edgeNearP.add(q.edgeClass)
         edgeNearP = list(edgeNearP)
@@ -156,5 +156,5 @@ def ObjectSegmentation(BoundaryPoints, planeSet, hyperparameter):
     for i in range(len(objList)):
         availableEdgeLabel, availableVertexLabel = proccessOneObj(objList[i], availableEdgeLabel, availableVertexLabel)
     
-    #processGraph(planeSet)
+    processGraph(planeSet)
     return objList, availableEdgeLabel, availableVertexLabel

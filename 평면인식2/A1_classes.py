@@ -11,6 +11,7 @@ class Point:
         self.G = G
         self.B = B
         self.nearby1 = [] #AllPoints에서 가까운 point들이 들어감
+        self.nearby2 = []
         self.normal = None #평면 법선벡터
         self.planeClass = None
         self.edgeClass = None
@@ -29,7 +30,7 @@ class Point:
 class Hyperparameter:
     #여기있는건 realdata 기준 값들, 거리단위 m
     def __init__(self, numOfPoints = 5000, 
-                R1 = 0.05, OutlierThreshold1 = 40, H1 = 0.01, ratioThreshold1 = 0.8,
+                R1 = 0.05, R2 = 0.08, OutlierThreshold1 = 40, H1 = 0.01, ratioThreshold1 = 0.8,
                 eps_normal = 0.05, min_samples_normal = 10,
                 eps_centerPoint = 0.05, min_samples_centerPoint = 10,
                 eps_finalBoundaryPoint = 0.05, min_samples_finalBoundaryPoint = 8):
@@ -39,6 +40,7 @@ class Hyperparameter:
 
         #3 allFindNearby
         self.R1 = R1 #AllPoints nearby
+        self.R2 = R2
 
         #4 findNormal
         self.OutlierThreshold1 = OutlierThreshold1 #noiseR 이내에 outlier 보다 적게있으면 이상점
