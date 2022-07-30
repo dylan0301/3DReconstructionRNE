@@ -567,8 +567,8 @@ def bang_verysimple():
     R1 = 2, OutlierThreshold1 = 0, H1 = 0.2, ratioThreshold1 = 0.7,
     eps_normal = 0.1, min_samples_normal = 9,
     eps_centerPoint = 4, min_samples_centerPoint = 30,
-    eps_finalBoundaryPoint = 3, min_samples_finalBoundaryPoint = 10
-    )
+    eps_finalBoundaryPoint = 3, min_samples_finalBoundaryPoint = 10,
+    edgeRansacH = 0.1)
     
     r = 30
     cnt = -1    

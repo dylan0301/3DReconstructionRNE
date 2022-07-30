@@ -8,7 +8,7 @@ def proccessOneObj(obj, availableEdgeLabel, EdgePoints, hyperparameter):
     #key: label기준으로 정렬된 tuple (plane1, plane2)
     #value: edgepoints set
     
-    for p in obj.BoundaryPoints:
+    for p in obj.objBoundaryPoints:
         planeNearP = set()
         
         for q in p.nearby1:
@@ -25,7 +25,7 @@ def proccessOneObj(obj, availableEdgeLabel, EdgePoints, hyperparameter):
     for planePair in planeSetEdgeMap.keys():
         plane1 = planePair[0]
         plane2 = planePair[1]
-        newEdge = Edge(availableEdgeLabel, planeSetEdgeMap[planePair])
+        newEdge = Edge(availableEdgeLabel, list(planeSetEdgeMap[planePair]))
         availableEdgeLabel += 1
         for p in newEdge.linePoints:
             p.edgeClass = newEdge
@@ -38,7 +38,7 @@ def proccessOneObj(obj, availableEdgeLabel, EdgePoints, hyperparameter):
         obj.planes.add(plane2)
         obj.edges.add(newEdge)
         
-    return availableEdgeLabel
+    return availableEdgeLabel, EdgePoints
 
 #Input: pts, Output: pts를 포함하는 line, Method: RANSAC
 def nearbyRansacLine(pts, hyperparameter):

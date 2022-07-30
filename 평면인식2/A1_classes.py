@@ -68,7 +68,7 @@ class Hyperparameter:
 class Plane:
     def __init__(self, label, interiorPoints):
         self.label = label
-        self.interiorPoints = interiorPoints
+        self.interiorPoints = interiorPoints #list
         self.planeEdgeDict = defaultdict(Edge) 
         #key는 다른 plane, (연결된 plane만 있음)
         #value는 그 plane과 사이에 있는 edge class. 
@@ -78,13 +78,18 @@ class Plane:
 class Edge:
     def __init__(self, label, linePoints):
         self.label = label
-        self.linePoints = linePoints
+        self.linePoints = linePoints #list
         self.directionVec = None #np.array([x,y,z])
         self.pointOnLine = None #np.array([x,y,z])
   
 class Object:
-    def __init__(self, idx, BoundaryPoints):
+    def __init__(self, idx, objBoundaryPoints):
         self.idx = idx
-        self.BoundaryPoints = BoundaryPoints  
+        self.objBoundaryPoints = objBoundaryPoints  
         self.planes = set() # Plane형
         self.edges = set()
+        
+class Line:
+    def __init__(self, directionVec, pointOnLine):
+        self.directionVec = directionVec
+        self.pointOnLine = pointOnLine

@@ -7,6 +7,7 @@ from A6_3DdistanceStairClustering import *
 from A7_makePlaneClass import *
 from A8_boundaryClustering import *
 from A9_processAllObj import *
+from A10_disconnectObj import *
 from B1_Visualization import *
 import numpy as np
 import matplotlib.pyplot as plt
@@ -147,7 +148,7 @@ plt.show()
 print('#9 processAllObj start')
 t = time.time()
 EdgePoints = processAllObj(objList, hyperparameter)
-print(len(objList), 'objects')
+print(len(EdgePoints), 'EdgePoints')
 print('#9 processAllObj time:', time.time()-t)
 print()
 
@@ -159,14 +160,5 @@ ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[p.edgeClass.label for p in EdgePoint
 plt.show()
 
 
-
-globalPoints = globalEdgePoints + globalVertexPoints
-globalLabels =[0]*len(globalEdgePoints) + [1] * len(globalVertexPoints)
-
-fig = plt.figure(figsize=(6, 6))
-ax = fig.add_subplot(111, projection='3d')
-ap = np.array([[p.x, p.y, p.z] for p in globalPoints])
-ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=globalLabels, marker='o', s=15, cmap='rainbow')
-plt.show()
 
 objVisualization(objList)
