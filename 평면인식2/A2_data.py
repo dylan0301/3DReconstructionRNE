@@ -564,7 +564,7 @@ def bang_verysimple():
     points = defaultdict(Point)
 
     hyperparameter = Hyperparameter(numOfPoints = 8400,
-    R1 = 2, R2 = 6, OutlierThreshold1 = 0, H1 = 0.2, ratioThreshold1 = 0.7,
+    R1 = 2, OutlierThreshold1 = 0, H1 = 0.2, ratioThreshold1 = 0.7,
     eps_normal = 0.1, min_samples_normal = 9,
     eps_centerPoint = 4, min_samples_centerPoint = 30,
     eps_finalBoundaryPoint = 3, min_samples_finalBoundaryPoint = 10

@@ -81,7 +81,7 @@ def findNormal(AllPoints, BoundaryPoints, CenterPoints, hyperparameter):
     for p in AllPoints.values():
         BoundaryPoints, CenterPoints, BoundaryRatio, CenterRatio = normalVectorizeRatio(p, BoundaryPoints, CenterPoints, hyperparameter, BoundaryRatio, CenterRatio)
     print('BoundaryRatio')
-    print(BoundaryRatio[:100])
+    print(BoundaryRatio[:200])
     print('CenterRatio')
-    print(CenterRatio[:100])
+    print(CenterRatio[:200])
     return BoundaryPoints, CenterPoints

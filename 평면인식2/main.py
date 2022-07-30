@@ -5,7 +5,8 @@ from A4_findNormal import *
 from A5_normalClustering import *
 from A6_3DdistanceStairClustering import *
 from A7_makePlaneClass import *
-from A8_objectSegmentation import *
+from A8_boundaryClustering import *
+from A9_processAllObj import *
 from B1_Visualization import *
 import numpy as np
 import matplotlib.pyplot as plt
@@ -127,30 +128,37 @@ print('#7 makePlaneClass time:', time.time()-t)
 print()
 
 
-#8 objectSegmentation
-print('#8 objectSegmentation start')
+#8 boundaryClustering
+print('#8 boundaryClustering start')
 t = time.time()
-objList, availableEdgeLabel, availableVertexLabel = ObjectSegmentation(BoundaryPoints, planeSet, hyperparameter)
+objList, boundaryObjLabels = boundaryClustering(BoundaryPoints, hyperparameter)
 print(len(objList), 'objects')
-print('#8 objectSegmentation time:', time.time()-t)
+print('#8 boundaryClustering time:', time.time()-t)
 print()
 
+#BoundaryPoints after boundaryClustering
+fig = plt.figure(figsize=(6, 6))
+ax = fig.add_subplot(111, projection='3d')
+ap = np.array([[p.x, p.y, p.z] for p in BoundaryPoints])
+ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=boundaryObjLabels, marker='o', s=15, cmap='rainbow')
+plt.show()
 
-
+#9 processAllObj
+print('#9 processAllObj start')
+t = time.time()
+EdgePoints = processAllObj(objList, hyperparameter)
+print(len(objList), 'objects')
+print('#9 processAllObj time:', time.time()-t)
+print()
 
 #EdgePoints
 fig = plt.figure(figsize=(6, 6))
 ax = fig.add_subplot(111, projection='3d')
-ap = np.array([[p.x, p.y, p.z] for p in globalEdgePoints])
-ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[p.edgeClass.label for p in globalEdgePoints], marker='o', s=15, cmap='rainbow')
+ap = np.array([[p.x, p.y, p.z] for p in EdgePoints])
+ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[p.edgeClass.label for p in EdgePoints], marker='o', s=15, cmap='rainbow')
 plt.show()
 
-#VertexPoints
-fig = plt.figure(figsize=(6, 6))
-ax = fig.add_subplot(111, projection='3d')
-ap = np.array([[p.x, p.y, p.z] for p in globalVertexPoints])
-ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[p.vertexClass.label for p in globalVertexPoints], marker='o', s=15, cmap='rainbow')
-plt.show()
+
 
 globalPoints = globalEdgePoints + globalVertexPoints
 globalLabels =[0]*len(globalEdgePoints) + [1] * len(globalVertexPoints)

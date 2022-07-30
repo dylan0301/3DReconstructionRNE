@@ -9,5 +9,3 @@ def allFindNearby(AllPoints, hyperparameter):
         for j in range(size):
             if distMat[i][j] <= hyperparameter.R1:
                 AllPoints[i].nearby1.append(AllPoints[j]) #자기자신도 포함
-            if distMat[i][j] <= hyperparameter.R2:
-                AllPoints[i].nearby2.append(AllPoints[j]) #자기자신도 포함
