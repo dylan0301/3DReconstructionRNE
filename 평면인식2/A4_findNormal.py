@@ -10,7 +10,7 @@ def nearbyRansacPlane(pts, hyperparameter):
         v12 = np.array([p1.x-p2.x, p1.y-p2.y, p1.z-p2.z])
         v13 = np.array([p1.x-p3.x, p1.y-p3.y, p1.z-p3.z])
         normal = np.cross(v12,v13)
-        if np.linalg.norm(normal) < 0.0001:
+        if np.linalg.norm(normal) < 0.0000001:
             return None
         d = -(normal[0]*p1.x + normal[1]*p1.y + normal[2]*p1.z)
         return (normal[0], normal[1], normal[2], d)

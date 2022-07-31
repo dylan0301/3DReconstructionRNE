@@ -27,15 +27,12 @@ class Point:
 
 class Hyperparameter:
     #여기있는건 realdata 기준 값들, 거리단위 m
-    def __init__(self, numOfPoints = 5000, 
-                R1 = 0.05, H1 = 0.005, ratioThreshold1 = 0.7,
+    def __init__(self, 
+                R1 = 0.03, H1 = 0.003, ratioThreshold1 = 0.7,
                 eps_normal = 0.05, min_samples_normal = 10,
                 eps_centerPoint = 0.05, min_samples_centerPoint = 10,
-                eps_finalBoundaryPoint = 0.05, min_samples_finalBoundaryPoint = 8,
-                edgeRansacH = 0.01):
-
-        #2 data
-        self.numOfPoints = numOfPoints #generatepoint 점개수
+                eps_finalBoundaryPoint = 0.03, min_samples_finalBoundaryPoint = 8,
+                edgeRansacH = 0.005):
 
         #3 allFindNearby
         self.R1 = R1 #AllPoints nearby

@@ -31,11 +31,21 @@ def objVisualization(objList):
     finalAllPoints = []
     finalAllLabels = []
     for obj in objList:
-        finalAllPoints.extend(obj.objBoundaryPoints)
-        finalAllLabels += [obj.idx]*len(obj.objBoundaryPoints)
+        thisObjPoints = []
+        thisObjLabels = []
+        thisObjPoints.extend(obj.objBoundaryPoints)
+        thisObjLabels += [obj.idx]*len(obj.objBoundaryPoints)
         for plane in obj.planes:
-            finalAllPoints.extend(plane.interiorPoints)
-            finalAllLabels += [obj.idx]*len(plane.interiorPoints)
+            thisObjPoints.extend(plane.interiorPoints)
+            thisObjLabels += [obj.idx]*len(plane.interiorPoints)
+        finalAllPoints.extend(thisObjPoints)
+        finalAllLabels.extend(thisObjLabels)
+        
+        fig = plt.figure(figsize=(6, 6))
+        ax = fig.add_subplot(111, projection='3d')
+        ap = np.array([[p.x, p.y, p.z] for p in thisObjPoints])
+        ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=thisObjLabels, marker='o', s=15, cmap='rainbow')
+        plt.show()
 
     fig = plt.figure(figsize=(6, 6))
     ax = fig.add_subplot(111, projection='3d')
