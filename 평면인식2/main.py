@@ -23,8 +23,8 @@ t = time.time()
 filepath = '/Users/jeewon/Library/CloudStorage/OneDrive-대구광역시교육청/지원/한과영/RnE/3DReconstructionRNE/pointclouddata/'
 filename = '3boxes.ply'
 
-#AllPoints, hyperparameter, name = importPly(filepath, filename)
-AllPoints, hyperparameter, name = FloorWall()
+AllPoints, hyperparameter, name = importPly(filepath, filename)
+#AllPoints, hyperparameter, name = FourCleanBoxes()
 print('#2 bring data time: ', time.time()-t)
 print(len(AllPoints), 'points')
 print()

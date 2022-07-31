@@ -984,19 +984,6 @@ def FourCleanBoxes():
         p = Point(x, y, z+diff, cnt)
         points[cnt] = p
 
-    p1 = Point(6.5, 6.5, 9, None)
-    p2 = Point(6.5, 10.5, 9, None)
-    p3 = Point(10.5, 6.5, 9, None)
-    p4 = Point(10.5, 10.5, 9, None)
-    q1 = Point(6.5, 6.5, 15, None)
-    q2 = Point(6.5, 10.5, 15, None)
-    q3 = Point(10.5, 6.5, 15, None)
-    q4 = Point(10.5, 10.5, 15, None)
-    points = fillRect(p1, q2, points, 3/5)
-    points = fillRect(p1, q3, points, 3/5)
-    points = fillRect(p2, q4, points, 3/5)
-    points = fillRect(p3, q4, points, 3/5)
-
     cnt = len(points)-1
     for i in range(900):
         diff = 0
