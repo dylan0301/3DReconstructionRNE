@@ -28,11 +28,11 @@ class Point:
 class Hyperparameter:
     #여기있는건 realdata 기준 값들, 거리단위 m
     def __init__(self, 
-                R1 = 0.03, H1 = 0.003, ratioThreshold1 = 0.7,
+                R1 = 0.03, H1 = 0.002, ratioThreshold1 = 0.7,
                 eps_normal = 0.05, min_samples_normal = 8,
                 eps_centerPoint = 0.05, min_samples_centerPoint = 8,
-                eps_finalBoundaryPoint = 0.05, min_samples_finalBoundaryPoint = 5,
-                edgeRansacH = 0.005):
+                eps_finalBoundaryPoint = 0.05, min_samples_finalBoundaryPoint = 10,
+                edgeRansacH = 0.005, lineardensity = 30):
 
         #3 allFindNearby
         self.R1 = R1 #AllPoints nearby
@@ -60,6 +60,9 @@ class Hyperparameter:
 
         #9 processAllObj
         self.edgeRansacH = edgeRansacH #find edge line h
+        
+        #10 disconnectObj
+        self.lineardensity = lineardensity
         
 class Plane:
     def __init__(self, label, interiorPoints):

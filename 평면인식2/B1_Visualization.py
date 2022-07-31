@@ -27,7 +27,7 @@ import numpy as np
 #     plt.show()
     
 
-def objVisualization(objList):
+def objVisualization(objList, name):
     finalAllPoints = []
     finalAllLabels = []
     for obj in objList:
@@ -40,15 +40,17 @@ def objVisualization(objList):
             thisObjLabels += [obj.idx]*len(plane.interiorPoints)
         finalAllPoints.extend(thisObjPoints)
         finalAllLabels.extend(thisObjLabels)
-        
+
         fig = plt.figure(figsize=(6, 6))
         ax = fig.add_subplot(111, projection='3d')
         ap = np.array([[p.x, p.y, p.z] for p in thisObjPoints])
         ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=thisObjLabels, marker='o', s=15, cmap='rainbow')
+        plt.title(name+": Object "+str(obj.idx))
         plt.show()
 
     fig = plt.figure(figsize=(6, 6))
     ax = fig.add_subplot(111, projection='3d')
     ap = np.array([[p.x, p.y, p.z] for p in finalAllPoints])
     ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=finalAllLabels, marker='o', s=15, cmap='rainbow')
+    plt.title(name+": All Objects")
     plt.show()

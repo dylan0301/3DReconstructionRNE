@@ -42,7 +42,7 @@ def importPly(filepath, filename):
                 continue
             
         if filename == 'twoBoxes.ply':
-            if x < -0.5 or x > 0.25 or z > -0.25 or z < -1.35:
+            if x < -0.5 or x > 0.3 or z > -0.25 or z < -1.35:
                 continue
 
         p = Point(x, y, z,
@@ -55,7 +55,7 @@ def importPly(filepath, filename):
     
     hyperparameter.numOfPoints = numOfPoints
 
-    return points, hyperparameter
+    return points, hyperparameter, filename
 
 
     
@@ -393,15 +393,85 @@ def bang_simple():
     random.seed(8)
     points = defaultdict(Point)
 
-    hyperparameter = Hyperparameter()
+    hyperparameter = Hyperparameter(
+    R1 = 1.7, H1 = 0.05, ratioThreshold1 = 0.7,
+    eps_normal = 0.1, min_samples_normal = 15,
+    eps_centerPoint = 1, min_samples_centerPoint = 10,
+    eps_finalBoundaryPoint = 2, min_samples_finalBoundaryPoint = 6,
+    edgeRansacH = 0.07)
 
-    size = hyperparameter.numOfPoints
+    size = 8000
     
     r = 30
 
     for i in range(size):
-        diff = 0.5*(random.random()-0.5)
-        if i < 3500:
+        diff = 0.03*(random.random()-0.5)
+        if i < 5400:
+            x = r * random.random()
+            y = r * random.random()
+            z = 0
+            if 5 <= x and x <= 25 and 5 <= y and y <= 25:
+                z = 20
+            if 10 <= x and x <= 16 and 10 <= y and y <= 16:
+                z = 26
+        elif i < 7800:
+            if i % 4 == 0:
+                x = 5 + 20 * random.random()
+                y = 5
+                z = 20 * random.random()
+            elif i % 4 == 1:
+                x = 5 
+                y = 5 + 20 * random.random()
+                z = 20 * random.random()
+            elif i % 4 == 2:
+                x = 5 + 20 * random.random()
+                y = 25
+                z = 20 * random.random()
+            elif i % 4 == 3:
+                x = 25
+                y = 5 + 20 * random.random()
+                z = 20 * random.random()
+        else:
+            if i % 4 == 0:
+                x = 10 + 6 * random.random()
+                y = 10
+                z = 20 + 6 * random.random()
+            elif i % 4 == 1:
+                x = 10
+                y = 10 + 6 * random.random()
+                z = 20 + 6 * random.random()
+            elif i % 4 == 2:
+                x = 10 + 6 * random.random()
+                y = 16
+                z = 20 + 6 * random.random()
+            elif i % 4 == 3:
+                x = 16 
+                y = 10 + 6 * random.random()
+                z = 20 + 6 * random.random()  
+        z += diff
+        p = Point(x, y, z, i)
+        points[i] = p
+    return points, hyperparameter
+
+def bang_simple_inde_byeok_da_it_seum():
+    import math as mt
+    random.seed(8)
+    points = defaultdict(Point)
+
+    hyperparameter = Hyperparameter(
+    R1 = 1, H1 = 0.04, ratioThreshold1 = 0.75,
+    eps_normal = 0.1, min_samples_normal = 15,
+    eps_centerPoint = 3, min_samples_centerPoint = 30,
+    eps_finalBoundaryPoint = 3, min_samples_finalBoundaryPoint = 15,
+    edgeRansacH = 0.05)
+
+    size = 4000
+    
+    r = 30
+
+    for i in range(size):
+        diff = 0.04*(random.random()-0.5)
+        if i < 2700:
             x = r * random.random()
             y = r * random.random()
             z = 0
@@ -409,7 +479,7 @@ def bang_simple():
                 z = 10
             if 13 <= x and x <= 16 and 13 <= y and y <= 16:
                 z = 13
-        elif i < 4800:
+        elif i < 3900:
             if i % 4 == 0:
                 x = 10 + 10 * random.random()
                 y = 10
@@ -446,7 +516,28 @@ def bang_simple():
         z += diff
         p = Point(x, y, z, i)
         points[i] = p
+                
+    for i in range(size, size + 3500*3):
+        diff = 0.1*(random.random()-0.5)
+        if i % 3 == 0:
+            x = r * random.random()
+            y = 0
+            z = r * random.random()      
+        if i % 3 == 1:
+            x = 0
+            y = r * random.random()
+            z = r * random.random()   
+        if i % 3 == 2:
+            x = r * random.random()
+            y = r
+            z = r * random.random()      
+
+        z += diff
+        p = Point(x, y, z, i)
+        points[i] = p
+        
     return points, hyperparameter
+
 
 def bang_moresimple():
     import math as mt
@@ -496,29 +587,32 @@ def bang_moresimple():
     return points, hyperparameter
 
 def bang_muchsimple():
+    random.seed(0)
     points = defaultdict(Point)
 
-    hyperparameter = Hyperparameter(numOfPoints = 8400,
-    R1 = 2, H1 = 0.2, ratioThreshold1 = 0.7,
+    hyperparameter = Hyperparameter(
+    R1 = 3, H1 = 0.4, ratioThreshold1 = 0.7,
     eps_normal = 0.1, min_samples_normal = 9,
-    eps_centerPoint = 4, min_samples_centerPoint = 30,
-    eps_finalBoundaryPoint = 3, min_samples_finalBoundaryPoint = 10,
-    edgeRansacH = 0.1)
+    eps_centerPoint = 3, min_samples_centerPoint = 30,
+    eps_finalBoundaryPoint = 2, min_samples_finalBoundaryPoint = 10,
+    edgeRansacH = 0.3)
     
     r = 30
     cnt = -1    
     for i in range(50):
         for j in range(50):
+            diff = 0.5*(random.random()-0.5)
             cnt += 1
             x = r * i/50
             y = r * j/50
             z = 0
             if 11 <= x and x <= 20 and 11 <= y and y <= 20:
                 z = 9
-            p = Point(x, y, z, cnt)
+            p = Point(x, y, z+diff, cnt)
             points[cnt] = p
     
     for i in range(900):
+        diff = 0.5*(random.random()-0.5)
         cnt += 1
         if i < 225:
             x = 11 + (i % 15)*3/5
@@ -536,29 +630,32 @@ def bang_muchsimple():
             x = 20
             y = 11 + ((i-675) % 15)*3/5
             z = ((i-675) // 15)*3/5
-        p = Point(x, y, z, cnt)
+        p = Point(x, y, z+diff, cnt)
         points[cnt] = p
     
     for i in range(50):
         for j in range(50):
+            diff = 0.5*(random.random()-0.5)
             cnt += 1
             x = r * i/50
             y = 0
             z = r * j/50
-            p = Point(x, y, z, cnt)
+            p = Point(x, y+diff, z, cnt)
             points[cnt] = p
             
     for i in range(50):
         for j in range(50):
+            diff = 0.5*(random.random()-0.5)
             cnt += 1
             x = 0
             y = r * i/50
             z = r * j/50
-            p = Point(x, y, z, cnt)
+            p = Point(x+diff, y, z, cnt)
             points[cnt] = p
             
+    name = 'bang_muchsimple'
 
-    return points, hyperparameter
+    return points, hyperparameter, name
 
 def bang_verysimple():
     points = defaultdict(Point)

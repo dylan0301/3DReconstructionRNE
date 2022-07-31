@@ -3,7 +3,7 @@ from A1_classes import *
 import numpy as np
 
 #planeSet는 업데이트 안됨
-def disconnectObj(planeSet):
+def disconnectObj(planeSet, hyperparameter):
     for planeA in planeSet:
         if len(planeA.containedObj) > 1:
             for obj in planeA.containedObj:
@@ -17,14 +17,14 @@ def disconnectObj(planeSet):
                         connectedPlane.planeEdgeDict[planeB] = connectedPlane.planeEdgeDict[planeA]
                         edgeSet.add(planeA.planeEdgeDict[connectedPlane])
                         del connectedPlane.planeEdgeDict[planeA]
-                planeB.interiorPoints = holeFill_1(planeB, edgeSet)
+                planeB.interiorPoints = holeFill_1(planeB, edgeSet, hyperparameter)
                 obj.planes.remove(planeA)
                 obj.planes.add(planeB)
 
 #art gallery problem 방식
 #plane.interiorPoints들을 채워줌
 
-def holeFill_1(plane, edgeSet):
+def holeFill_1(plane, edgeSet, hyperparameter):
     
     def projection(plane, edge):
         normal = np.array([plane.equation[0], plane.equation[1], plane.equation[2]])
@@ -67,7 +67,7 @@ def holeFill_1(plane, edgeSet):
                 if mincoor[1] > p.y:
                     mincoor[1] = p.y
                     
-        Iteration = [np.arange(mincoor[0], maxcoor[0], (maxcoor[0]-mincoor[0])/100), np.arange(mincoor[1], maxcoor[1], (maxcoor[1]-mincoor[1])/100)]
+        Iteration = [np.arange(mincoor[0], maxcoor[0], (maxcoor[0]-mincoor[0])/hyperparameter.lineardensity), np.arange(mincoor[1], maxcoor[1], (maxcoor[1]-mincoor[1])/hyperparameter.lineardensity)]
         
         for x in Iteration[0]:
             for y in Iteration[1]:
@@ -98,7 +98,7 @@ def holeFill_1(plane, edgeSet):
                 if mincoor[1] > p.z:
                     mincoor[1] = p.z
 
-        Iteration = [np.arange(mincoor[0], maxcoor[0], (maxcoor[0]-mincoor[0])/100), np.arange(mincoor[1], maxcoor[1], (maxcoor[1]-mincoor[1])/100)]
+        Iteration = [np.arange(mincoor[0], maxcoor[0], (maxcoor[0]-mincoor[0])/hyperparameter.lineardensity), np.arange(mincoor[1], maxcoor[1], (maxcoor[1]-mincoor[1])/hyperparameter.lineardensity)]
                     
         for x in Iteration[0]:
             for z in Iteration[1]:
@@ -129,7 +129,7 @@ def holeFill_1(plane, edgeSet):
                 if mincoor[1] > p.z:
                     mincoor[1] = p.z
                     
-        Iteration = [np.arange(mincoor[0], maxcoor[0], (maxcoor[0]-mincoor[0])/100), np.arange(mincoor[1], maxcoor[1], (maxcoor[1]-mincoor[1])/100)]
+        Iteration = [np.arange(mincoor[0], maxcoor[0], (maxcoor[0]-mincoor[0])/hyperparameter.lineardensity), np.arange(mincoor[1], maxcoor[1], (maxcoor[1]-mincoor[1])/hyperparameter.lineardensity)]
                     
         for y in Iteration[0]:
             for z in Iteration[1]:
