@@ -6,6 +6,31 @@ import numpy as np
 
 #현재 hyperparameter 설정이 덜됐음
 
+def fillRect(p1,p4, points, density): #p1이 제일 원점에 가깝고 p4가 멀다
+    i = 0
+    size = len(points)
+    if p1.x == p4.x:
+        Iteration = [np.arange(p1.y, p4.y, (p4.y-p1.y)/density), np.arange(p1.z, p4.z, (p4.z-p1.z)/density)]
+        for y in Iteration[0]:
+            for z in Iteration[1]:
+                p = Point(p1.x, y, z, size + i)
+                points[size + i] = p
+                i += 1
+    elif p1.y == p4.y:
+        Iteration = [np.arange(p1.x, p4.x, (p4.x-p1.x)/density), np.arange(p1.z, p4.z, (p4.z-p1.z)/density)]
+        for x in Iteration[0]:
+            for z in Iteration[1]:
+                p = Point(x, p1.y, z, size + i)
+                points[size + i] = p
+                i += 1
+    elif p1.z == p4.z:
+        Iteration = [np.arange(p1.x, p4.x, (p4.x-p1.x)/density), np.arange(p1.y, p4.y, (p4.y-p1.y)/density)]
+        for x in Iteration[0]:
+            for y in Iteration[1]:
+                p = Point(x, y, p1.z, size + i)
+                points[size + i] = p
+                i += 1
+    return points
 
 def importPly(filepath, filename):
     hyperparameter = Hyperparameter()
