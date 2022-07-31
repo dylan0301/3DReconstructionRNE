@@ -938,10 +938,10 @@ def FourCleanBoxes():
     name = 'FourCleanBoxes'
 
     hyperparameter = Hyperparameter(
-    R1 = 0.9, H1 = 0.05, ratioThreshold1 = 0.9,
+    R1 = 1, H1 = 0.05, ratioThreshold1 = 0.85,
     eps_normal = 0.15, min_samples_normal = 10,
-    eps_centerPoint = 0.5, min_samples_centerPoint = 5,
-    eps_finalBoundaryPoint = 0.8, min_samples_finalBoundaryPoint = 8,
+    eps_centerPoint = 0.8, min_samples_centerPoint = 5,
+    eps_finalBoundaryPoint = 1.3, min_samples_finalBoundaryPoint = 5,
     edgeRansacH = 0.1)
     
     r = 30
@@ -955,8 +955,8 @@ def FourCleanBoxes():
             z = 0
             if 4 <= x and x <= 13 and 4 <= y and y <= 13:
                 z = 9
-                if 7 <= x and x <= 10 and 7 <= y and y <= 10:
-                    z = 12
+                if 6.5 <= x and x <= 10.5 and 6.5 <= y and y <= 10.5:
+                    z = 15
             if 17 <= x and x <= 26 and 17 <= y and y <= 26:
                 z = 9
             p = Point(x, y, z+diff, cnt)
@@ -984,29 +984,20 @@ def FourCleanBoxes():
         p = Point(x, y, z+diff, cnt)
         points[cnt] = p
 
-    for i in range(100):
-        diff = 0
-        cnt += 1
-        if i < 25:
-            x = 7 + (i % 5)*3/5
-            y = 7
-            z = 9 + (i // 5)*3/5
-        elif i < 50:
-            x = 7 
-            y = 7 + ((i-25) % 5)*3/5
-            z = 9 + ((i-25) // 5)*3/5
-        elif i < 75:
-            x = 7 + ((i-50) % 5)*3/5
-            y = 10
-            z = 9 + ((i-50) // 5)*3/5
-        else:
-            x = 10
-            y = 7 + ((i-75) % 5)*3/5
-            z = 9 + ((i-75) // 5)*3/5
-        p = Point(x, y, z+diff, cnt)
-        points[cnt] = p
+    p1 = Point(6.5, 6.5, 9, None)
+    p2 = Point(6.5, 10.5, 9, None)
+    p3 = Point(10.5, 6.5, 9, None)
+    p4 = Point(10.5, 10.5, 9, None)
+    q1 = Point(6.5, 6.5, 15, None)
+    q2 = Point(6.5, 10.5, 15, None)
+    q3 = Point(10.5, 6.5, 15, None)
+    q4 = Point(10.5, 10.5, 15, None)
+    points = fillRect(p1, q2, points, 3/5)
+    points = fillRect(p1, q3, points, 3/5)
+    points = fillRect(p2, q4, points, 3/5)
+    points = fillRect(p3, q4, points, 3/5)
 
-
+    cnt = len(points)-1
     for i in range(900):
         diff = 0
         cnt += 1
@@ -1063,6 +1054,187 @@ def FourCleanBoxes():
             z = r * j/50
             p = Point(x, y+diff, z, cnt)
             points[cnt] = p
+    
+    for i in range(50):
+        for j in range(50):
+            diff = 0
+            cnt += 1
+            x = 0
+            y = r * i/50
+            z = r * j/50
+            p = Point(x, y+diff, z, cnt)
+            points[cnt] = p
+
+    return points, hyperparameter, name
+
+
+
+
+
+
+
+def OpenPlane():
+    random.seed(0)
+    points = defaultdict(Point)
+    name = 'OpenPlane'
+
+    hyperparameter = Hyperparameter(
+    R1 = 3, H1 = 0.3, ratioThreshold1 = 0.8,
+    eps_normal = 1, min_samples_normal = 15,
+    eps_centerPoint = 4, min_samples_centerPoint = 30,
+    eps_finalBoundaryPoint = 3, min_samples_finalBoundaryPoint = 7,
+    edgeRansacH = 0.1)
+    
+    ultung = 0.3
+    r = 30
+    cnt = -1    
+    for i in range(50):
+        for j in range(50):
+            diff = ultung*(random.random()-0.5)
+            cnt += 1
+            x = r * i/50
+            y = r * j/50
+            z = 0
+            p = Point(x, y, z+diff, cnt)
+            points[cnt] = p
+    
+    for i in range(50):
+        for j in range(50):
+            diff = ultung*(random.random()-0.5)
+            cnt += 1
+            x = 0
+            y = r * i/50
+            z = r * j/50
+            p = Point(x+diff, y, z, cnt)
+            points[cnt] = p
+
+    for i in range(20):
+        for j in range(20):
+            diff = ultung*(random.random()-0.5)
+            cnt += 1
+            x = 15
+            y = 10 + r*2/5 * i/20
+            z = r*2/5 * j/20
+            p = Point(x+diff, y, z, cnt)
+            points[cnt] = p
+        
+
+
+
+    return points, hyperparameter, name
+
+
+
+
+
+
+
+def FloorWall():
+    random.seed(0)
+    points = defaultdict(Point)
+    name = 'FloorWall'
+
+    hyperparameter = Hyperparameter(
+    R1 = 2, H1 = 0.05, ratioThreshold1 = 0.8,
+    eps_normal = 0.15, min_samples_normal = 10,
+    eps_centerPoint = 0.8, min_samples_centerPoint = 5,
+    eps_finalBoundaryPoint = 1.3, min_samples_finalBoundaryPoint = 10,
+    edgeRansacH = 0.05)
+    
+    r = 30
+    cnt = -1    
+    for i in range(50):
+        for j in range(50):
+            diff = 0
+            cnt += 1
+            x = r * i/50
+            y = r * j/50
+            z = 0
+            if 4 <= x and x <= 13 and 4 <= y and y <= 13:
+                z = 9
+            if 17 <= x and x <= 26 and 21 <= y and y <= 30:
+                z = 9
+            p = Point(x, y, z+diff, cnt)
+            points[cnt] = p
+
+    for i in range(50):
+        for j in range(50):
+            diff = 0
+            cnt += 1
+            x = r * i/50
+            y = r
+            z = r * j/50
+            if 4 <= x and x <= 13 and 17 <= z and z <= 26:
+                y = r - 9
+            if 17 <= x and x <= 26 and 0 <= z and z <= 9:
+                y = r - 9
+            p = Point(x, y+diff, z, cnt)
+            points[cnt] = p
+    
+    for i in range(900):
+        diff = 0
+        cnt += 1
+        if i < 225:
+            x = 4 + (i % 15)*3/5
+            y = 4
+            z = (i // 15)*3/5
+        elif i < 450:
+            x = 4 
+            y = 4 + ((i-225) % 15)*3/5
+            z = ((i-225) // 15)*3/5
+        elif i < 675:
+            x = 4 + ((i-450) % 15)*3/5
+            y = 13
+            z = ((i-450) // 15)*3/5
+        else:
+            x = 13
+            y = 4 + ((i-675) % 15)*3/5
+            z = ((i-675) // 15)*3/5
+        p = Point(x, y, z+diff, cnt)
+        points[cnt] = p
+
+    for i in range(900):
+        diff = 0
+        cnt += 1
+        if i < 225:
+            x = 4 + (i % 15)*3/5
+            y = r - (i // 15)*3/5
+            z = 17
+        elif i < 450:
+            x = 4 
+            y = r - ((i-225) // 15)*3/5
+            z = 17 + ((i-225) % 15)*3/5
+        elif i < 675:
+            x = 4 + ((i-450) % 15)*3/5
+            y = r - ((i-450) // 15)*3/5
+            z = 26
+        else:
+            x = 13
+            y = r - ((i-675) // 15)*3/5
+            z = 17 + ((i-675) % 15)*3/5
+        p = Point(x, y, z+diff, cnt)
+        points[cnt] = p
+
+
+
+    for i in range(450):
+        diff = 0
+        cnt += 1
+        if i < 225:
+            x = 17 
+            y = 21 + ((i) % 15)*3/5
+            z = ((i) // 15)*3/5
+        else:
+            x = 26
+            y = 21 + ((i-225) % 15)*3/5
+            z = ((i-225) // 15)*3/5
+        p = Point(x, y, z+diff, cnt)
+        points[cnt] = p
+    
+
+
+
+
     
     for i in range(50):
         for j in range(50):

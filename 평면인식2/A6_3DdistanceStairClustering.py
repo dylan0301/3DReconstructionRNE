@@ -15,7 +15,7 @@ def dividePlane_DBSCAN(cluster, NewClusterPointMap, hyperparameter):
             Newclusterpm[labels[i]+clusterNow].append(cluster[i]) 
 
     for i in range(max(labels) + 1):
-        if len(Newclusterpm[i + clusterNow]) <= 10:
+        if len(Newclusterpm[i + clusterNow]) <= 0:
             del Newclusterpm[i + clusterNow]
             
     return Newclusterpm
