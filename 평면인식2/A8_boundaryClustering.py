@@ -15,7 +15,8 @@ def boundaryClustering(BoundaryPoints, hyperparameter):
     objList = []
     
     for i in range(len(BoundaryPoints)):
-        BoundaryCluster[boundaryObjLabels[i]].append(BoundaryPoints[i])
+        if boundaryObjLabels[i] != -1:
+            BoundaryCluster[boundaryObjLabels[i]].append(BoundaryPoints[i])
     
     for i, points in BoundaryCluster.items():
         obj = Object(i, points)
