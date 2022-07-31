@@ -52,6 +52,8 @@ def nearbyRansacPlane(pts, hyperparameter):
 
 
 def normalVectorizeRatio(point, BoundaryPoints, CenterPoints, hyperparameter, BoundaryRatio, CenterRatio):
+    if len(point.nearby1) < 5:
+        return BoundaryPoints, CenterPoints, BoundaryRatio, CenterRatio
     plane, maxScore = nearbyRansacPlane(point.nearby1, hyperparameter)
     plane_normal = np.array([plane[0], plane[1], plane[2]])
     plane_normal /= np.linalg.norm(plane_normal)

@@ -28,10 +28,10 @@ class Point:
 class Hyperparameter:
     #여기있는건 realdata 기준 값들, 거리단위 m
     def __init__(self, 
-                R1 = 0.03, H1 = 0.002, ratioThreshold1 = 0.7,
-                eps_normal = 0.05, min_samples_normal = 25,
-                eps_centerPoint = 0.05, min_samples_centerPoint = 25,
-                eps_finalBoundaryPoint = 0.02, min_samples_finalBoundaryPoint = 5,
+                R1 = 0.03, H1 = 0.002, ratioThreshold1 = 0.6,
+                eps_normal = 0.03, min_samples_normal = 25,
+                eps_centerPoint = 0.03, min_samples_centerPoint = 25,
+                eps_finalBoundaryPoint = 0.01, min_samples_finalBoundaryPoint = 8,
                 edgeRansacH = 0.003, lineardensity = 30):
 
         #3 allFindNearby
