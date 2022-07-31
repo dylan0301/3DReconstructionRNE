@@ -148,6 +148,7 @@ def triPyramidClean():
 def cubeClean():
     random.seed(0)
     points = defaultdict(Point)
+    name = 'bang_muchsimple'
     hyperparameter = Hyperparameter()
     size = 3000
     for i in range(size-100):
@@ -550,6 +551,7 @@ def bang_moresimple():
 def bang_muchsimple():
     random.seed(0)
     points = defaultdict(Point)
+    name = 'bang_muchsimple'
 
     hyperparameter = Hyperparameter(
     R1 = 3, H1 = 0.4, ratioThreshold1 = 0.7,
@@ -613,13 +615,12 @@ def bang_muchsimple():
             z = r * j/50
             p = Point(x+diff, y, z, cnt)
             points[cnt] = p
-            
-    name = 'bang_muchsimple'
 
     return points, hyperparameter, name
 
 def bang_verysimple():
     points = defaultdict(Point)
+    name = 'bang_verysimple'
 
     hyperparameter = Hyperparameter(
     R1 = 2, H1 = 0.2, ratioThreshold1 = 0.7,
@@ -707,4 +708,345 @@ def bang_verysimple():
             p = Point(x, y, z, cnt)
             points[cnt] = p
 
-    return points, hyperparameter
+    return points, hyperparameter, name
+
+
+
+
+def cube_sameDensity():
+    random.seed(0)
+    points = defaultdict(Point)
+    name = 'cube_sameDensity'
+
+    hyperparameter = Hyperparameter(
+    R1 = 2, H1 = 0.2, ratioThreshold1 = 0.85,
+    eps_normal = 0.1, min_samples_normal = 9,
+    eps_centerPoint = 3, min_samples_centerPoint = 10,
+    eps_finalBoundaryPoint = 2, min_samples_finalBoundaryPoint = 10,
+    edgeRansacH = 0.3)
+    
+    r = 30
+    cnt = -1    
+    for i in range(50):
+        for j in range(50):
+            x = r * i/50
+            y = r * j/50
+            if 11 <= x and x <= 20 and 11 <= y and y <= 20:
+                cnt += 1
+                z = 0
+                p = Point(x, y, z, cnt)
+                points[cnt] = p
+
+    for i in range(50):
+        for j in range(50):
+            x = r * i/50
+            y = r * j/50
+            if 11 <= x and x <= 20 and 11 <= y and y <= 20:
+                cnt += 1
+                z = 9
+                p = Point(x, y, z, cnt)
+                points[cnt] = p
+    
+    for i in range(900):
+        cnt += 1
+        if i < 225:
+            x = 11 + (i % 15)*3/5
+            y = 11
+            z = (i // 15)*3/5
+        elif i < 450:
+            x = 11 
+            y = 11 + ((i-225) % 15)*3/5
+            z = ((i-225) // 15)*3/5
+        elif i < 675:
+            x = 11 + ((i-450) % 15)*3/5
+            y = 20
+            z = ((i-450) // 15)*3/5
+        else:
+            x = 20
+            y = 11 + ((i-675) % 15)*3/5
+            z = ((i-675) // 15)*3/5
+        p = Point(x, y, z, cnt)
+        points[cnt] = p
+
+    return points, hyperparameter, name
+
+
+
+
+def VertexDense():
+    random.seed(0)
+    points = defaultdict(Point)
+    name = 'VertexDense'
+
+    hyperparameter = Hyperparameter(
+    R1 = 2, H1 = 0.2, ratioThreshold1 = 0.8,
+    eps_normal = 0.1, min_samples_normal = 9,
+    eps_centerPoint = 3, min_samples_centerPoint = 30,
+    eps_finalBoundaryPoint = 2, min_samples_finalBoundaryPoint = 10,
+    edgeRansacH = 0.3)
+    
+    r = 30
+    cnt = -1    
+    for i in range(50):
+        for j in range(50):
+            diff = 0
+            cnt += 1
+            x = r * i/50
+            y = r * j/50
+            z = 0
+            if 11 <= x and x <= 20 and 11 <= y and y <= 20:
+                z = 9
+            p = Point(x, y, z+diff, cnt)
+            points[cnt] = p
+    
+    for i in range(900):
+        diff = 0
+        cnt += 1
+        if i < 225:
+            x = 11 + (i % 15)*3/5
+            y = 11
+            z = (i // 15)*3/5
+        elif i < 450:
+            x = 11 
+            y = 11 + ((i-225) % 15)*3/5
+            z = ((i-225) // 15)*3/5
+        elif i < 675:
+            x = 11 + ((i-450) % 15)*3/5
+            y = 20
+            z = ((i-450) // 15)*3/5
+        else:
+            x = 20
+            y = 11 + ((i-675) % 15)*3/5
+            z = ((i-675) // 15)*3/5
+        p = Point(x, y, z+diff, cnt)
+        points[cnt] = p
+    
+    for i in range(50):
+        for j in range(50):
+            diff = 0
+            cnt += 1
+            x = r * i/50
+            y = 0
+            z = r * j/50
+            p = Point(x, y+diff, z, cnt)
+            points[cnt] = p
+            
+    for i in range(50):
+        for j in range(50):
+            diff = 0
+            cnt += 1
+            x = 0
+            y = r * i/50
+            z = r * j/50
+            p = Point(x+diff, y, z, cnt)
+            points[cnt] = p
+
+    return points, hyperparameter, name
+
+
+
+
+
+def NonUniformCube():
+    random.seed(0)
+    points = defaultdict(Point)
+    name = 'NonUniformCube'
+
+    hyperparameter = Hyperparameter(
+    R1 = 2, H1 = 0.2, ratioThreshold1 = 0.85,
+    eps_normal = 0.1, min_samples_normal = 9,
+    eps_centerPoint = 3, min_samples_centerPoint = 10,
+    eps_finalBoundaryPoint = 2, min_samples_finalBoundaryPoint = 10,
+    edgeRansacH = 0.3)
+    
+    r = 30
+    cnt = -1    
+    for i in range(150):
+        for j in range(150):
+            x = r * i/150
+            y = r * j/150
+            if 11 <= x and x <= 20 and 11 <= y and y <= 20:
+                cnt += 1
+                z = 0
+                p = Point(x, y, z, cnt)
+                points[cnt] = p
+
+    for i in range(150):
+        for j in range(150):
+            x = r * i/150
+            y = r * j/150
+            if 11 <= x and x <= 20 and 11 <= y and y <= 20:
+                cnt += 1
+                z = 9
+                p = Point(x, y, z, cnt)
+                points[cnt] = p
+    
+    for i in range(900):
+        cnt += 1
+        if i < 225:
+            x = 11 + (i % 15)*3/5
+            y = 11
+            z = (i // 15)*3/5
+        elif i < 450:
+            x = 11 
+            y = 11 + ((i-225) % 15)*3/5
+            z = ((i-225) // 15)*3/5
+        elif i < 675:
+            x = 11 + ((i-450) % 15)*3/5
+            y = 20
+            z = ((i-450) // 15)*3/5
+        else:
+            x = 20
+            y = 11 + ((i-675) % 15)*3/5
+            z = ((i-675) // 15)*3/5
+        p = Point(x, y, z, cnt)
+        points[cnt] = p
+
+    return points, hyperparameter, name
+
+
+
+
+def FourCleanBoxes():
+    random.seed(0)
+    points = defaultdict(Point)
+    name = 'FourCleanBoxes'
+
+    hyperparameter = Hyperparameter(
+    R1 = 0.9, H1 = 0.05, ratioThreshold1 = 0.9,
+    eps_normal = 0.15, min_samples_normal = 10,
+    eps_centerPoint = 0.5, min_samples_centerPoint = 5,
+    eps_finalBoundaryPoint = 0.8, min_samples_finalBoundaryPoint = 8,
+    edgeRansacH = 0.1)
+    
+    r = 30
+    cnt = -1    
+    for i in range(50):
+        for j in range(50):
+            diff = 0
+            cnt += 1
+            x = r * i/50
+            y = r * j/50
+            z = 0
+            if 4 <= x and x <= 13 and 4 <= y and y <= 13:
+                z = 9
+                if 7 <= x and x <= 10 and 7 <= y and y <= 10:
+                    z = 12
+            if 17 <= x and x <= 26 and 17 <= y and y <= 26:
+                z = 9
+            p = Point(x, y, z+diff, cnt)
+            points[cnt] = p
+    
+    for i in range(900):
+        diff = 0
+        cnt += 1
+        if i < 225:
+            x = 4 + (i % 15)*3/5
+            y = 4
+            z = (i // 15)*3/5
+        elif i < 450:
+            x = 4 
+            y = 4 + ((i-225) % 15)*3/5
+            z = ((i-225) // 15)*3/5
+        elif i < 675:
+            x = 4 + ((i-450) % 15)*3/5
+            y = 13
+            z = ((i-450) // 15)*3/5
+        else:
+            x = 13
+            y = 4 + ((i-675) % 15)*3/5
+            z = ((i-675) // 15)*3/5
+        p = Point(x, y, z+diff, cnt)
+        points[cnt] = p
+
+    for i in range(100):
+        diff = 0
+        cnt += 1
+        if i < 25:
+            x = 7 + (i % 5)*3/5
+            y = 7
+            z = 9 + (i // 5)*3/5
+        elif i < 50:
+            x = 7 
+            y = 7 + ((i-25) % 5)*3/5
+            z = 9 + ((i-25) // 5)*3/5
+        elif i < 75:
+            x = 7 + ((i-50) % 5)*3/5
+            y = 10
+            z = 9 + ((i-50) // 5)*3/5
+        else:
+            x = 10
+            y = 7 + ((i-75) % 5)*3/5
+            z = 9 + ((i-75) // 5)*3/5
+        p = Point(x, y, z+diff, cnt)
+        points[cnt] = p
+
+
+    for i in range(900):
+        diff = 0
+        cnt += 1
+        if i < 225:
+            x = 17 + (i % 15)*3/5
+            y = 17
+            z = (i // 15)*3/5
+            if 20 <= x and x <= 23 and 3 <= z and z <= 6:
+                y = 14
+        elif i < 450:
+            x = 17 
+            y = 17 + ((i-225) % 15)*3/5
+            z = ((i-225) // 15)*3/5
+        elif i < 675:
+            x = 17 + ((i-450) % 15)*3/5
+            y = 26
+            z = ((i-450) // 15)*3/5
+        else:
+            x = 26
+            y = 17 + ((i-675) % 15)*3/5
+            z = ((i-675) // 15)*3/5
+        p = Point(x, y, z+diff, cnt)
+        points[cnt] = p
+    
+    for i in range(100):
+        diff = 0
+        cnt += 1
+        if i < 25:
+            x = 20 + (i % 5)*3/5
+            y = 14 + (i // 5)*3/5
+            z = 3
+        elif i < 50:
+            x = 20 
+            y = 14 + ((i-25) // 5)*3/5
+            z = 3 + ((i-25) % 5)*3/5
+        elif i < 75:
+            x = 20 + ((i-50) % 5)*3/5
+            y = 14 + ((i-50) // 5)*3/5
+            z = 6
+        else:
+            x = 23
+            y = 14 + ((i-75) // 5)*3/5
+            z = 3 + ((i-75) % 5)*3/5
+        p = Point(x, y, z+diff, cnt)
+        points[cnt] = p
+
+
+    for i in range(50):
+        for j in range(50):
+            diff = 0
+            cnt += 1
+            x = r * i/50
+            y = r
+            z = r * j/50
+            p = Point(x, y+diff, z, cnt)
+            points[cnt] = p
+    
+    for i in range(50):
+        for j in range(50):
+            diff = 0
+            cnt += 1
+            x = 0
+            y = r * i/50
+            z = r * j/50
+            p = Point(x, y+diff, z, cnt)
+            points[cnt] = p
+
+    return points, hyperparameter, name
