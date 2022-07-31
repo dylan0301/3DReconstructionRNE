@@ -21,10 +21,10 @@ print()
 print('#2 bring data start')
 t = time.time()
 filepath = '/Users/jeewon/Library/CloudStorage/OneDrive-대구광역시교육청/지원/한과영/RnE/3DReconstructionRNE/pointclouddata/'
-filename = 'twoBoxes.ply'
+filename = '3boxes.ply'
 
-#AllPoints, hyperparameter, name = importPly(filepath, filename)
-AllPoints, hyperparameter, name = bang_muchsimple()
+AllPoints, hyperparameter, name = importPly(filepath, filename)
+#AllPoints, hyperparameter, name = bang_muchsimple()
 print('#2 bring data time: ', time.time()-t)
 print(len(AllPoints), 'points')
 print()

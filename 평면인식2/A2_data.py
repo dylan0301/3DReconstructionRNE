@@ -45,6 +45,10 @@ def importPly(filepath, filename):
             if x < -0.5 or x > 0.3 or z > -0.25 or z < -1.35:
                 continue
 
+        if filename == '3boxes.ply':
+            if x < -0.45 or x > 0.7 or z > -0.4 or z < -1.45 or (x<0 and z<-1.2) or (x>0.2 and z>-0.8) or y <-1.05:
+                continue
+
         p = Point(x, y, z,
                 numOfPoints, sortedPoints[i][3], sortedPoints[i][4], sortedPoints[i][5]) #단위 m
         points[numOfPoints] = p
@@ -177,48 +181,6 @@ def cubeClean():
         p = Point(30*random.random(), 30*random.random(), 30*random.random(), size-100+i)
         points[size-100+i] = p
     return points, hyperparameter
-
-
-
-#30*30*30 정육면체, dirty
-def cubeDirty():
-    random.seed(0)
-    points = defaultdict(Point)
-    hyperparameter = Hyperparameter()
-    size = 3000
-    for i in range(size-100):
-        diff = 4*random.random()-2
-        if i%6 == 0:
-            x = 30*random.random()
-            y = 30*random.random()
-            z = diff
-        if i%6 == 1:
-            x = 30*random.random()
-            y = diff
-            z = 30*random.random()
-        if i%6 == 2:
-            x = diff
-            y = 30*random.random()
-            z = 30*random.random()
-        if i%6 == 3:
-            x = 30*random.random()
-            y = 30*random.random()
-            z = 30+diff
-        if i%6 == 4:
-            x = 30*random.random()
-            y = 30+diff
-            z = 30*random.random()
-        if i%6 == 5:
-            x = 30+diff
-            y = 30*random.random()
-            z = 30*random.random()                  
-        p = Point(x,y,z,i)
-        points[i] = p
-    for i in range(100):
-        p = Point(36*random.random()-3, 36*random.random()-3, 36*random.random()-3, size-100+i)
-        points[size-100+i] = p
-    return points, hyperparameter
-
 
 
     
