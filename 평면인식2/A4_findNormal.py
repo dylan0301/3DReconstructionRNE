@@ -24,6 +24,8 @@ def nearbyRansacPlane(pts, hyperparameter):
 
 
     numOfpts = len(pts)
+    if numOfpts < 3:
+        raise Exception('len(pts) < 3')
     maxScore = 0
     bestPlane = None
     for trial in range(50):

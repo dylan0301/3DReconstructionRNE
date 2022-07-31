@@ -50,7 +50,7 @@ def nearbyRansacLine(pts, hyperparameter):
     
     def findLine(p1, p2):
         direction = np.array([p1.x-p2.x, p1.y-p2.y, p1.z-p2.z])
-        if np.linalg.norm(direction) < 0.0001:
+        if np.linalg.norm(direction) < 0.000001:
             return None
         return (direction, p2)
     
@@ -62,6 +62,8 @@ def nearbyRansacLine(pts, hyperparameter):
 
 
     numOfpts = len(pts)
+    if numOfpts < 2:
+        raise Exception('len(pts) < 2')
     maxScore = 0
     bestLine = None
     for trial in range(50):

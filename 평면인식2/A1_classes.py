@@ -29,9 +29,9 @@ class Hyperparameter:
     #여기있는건 realdata 기준 값들, 거리단위 m
     def __init__(self, 
                 R1 = 0.03, H1 = 0.003, ratioThreshold1 = 0.7,
-                eps_normal = 0.05, min_samples_normal = 10,
-                eps_centerPoint = 0.05, min_samples_centerPoint = 10,
-                eps_finalBoundaryPoint = 0.03, min_samples_finalBoundaryPoint = 8,
+                eps_normal = 0.05, min_samples_normal = 8,
+                eps_centerPoint = 0.05, min_samples_centerPoint = 8,
+                eps_finalBoundaryPoint = 0.05, min_samples_finalBoundaryPoint = 5,
                 edgeRansacH = 0.005):
 
         #3 allFindNearby
