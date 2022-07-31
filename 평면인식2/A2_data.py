@@ -53,7 +53,6 @@ def importPly(filepath, filename):
     #             numOfPoints, sortedPoints[-1][3], sortedPoints[-1][4], sortedPoints[-1][5])
     # points[numOfPoints] = p #마지막점 추가해주기
     
-    hyperparameter.numOfPoints = numOfPoints
 
     return points, hyperparameter, filename
 
@@ -80,7 +79,7 @@ def halfCubeClean(size):
 
 
     )
-    size = hyperparameter.numOfPoints
+    size = 5000
     for i in range(size-100):
         if i%3 == 0:
             x = 100*random.random()
@@ -110,7 +109,7 @@ def triPyramidClean():
     hyperparameter = Hyperparameter(
 
     )
-    size = hyperparameter.numOfPoints
+    size = 5000
     for i in range(size-100):
         x,y,z = 100, 100, 100
         if i%4 == 0:
@@ -146,7 +145,7 @@ def cubeClean():
     random.seed(0)
     points = defaultdict(Point)
     hyperparameter = Hyperparameter()
-    size = hyperparameter.numOfPoints
+    size = 3000
     for i in range(size-100):
         if i%6 == 0:
             x = 30*random.random()
@@ -186,7 +185,7 @@ def cubeDirty():
     random.seed(0)
     points = defaultdict(Point)
     hyperparameter = Hyperparameter()
-    size = hyperparameter.numOfPoints
+    size = 3000
     for i in range(size-100):
         diff = 4*random.random()-2
         if i%6 == 0:
@@ -228,7 +227,7 @@ def unicorn_sample():
     points = defaultdict(Point)
     hyperparameter = Hyperparameter()
 
-    size = hyperparameter.numOfPoints
+    size = 3000
     for i in range(size):
         diff = 2*random.random()-1
         if i%12 == 0:
@@ -286,14 +285,14 @@ def unicorn_sample():
 def unicorn_sample2():
     random.seed(0)
     points = defaultdict(Point)
-    hyperparameter = Hyperparameter(numOfPoints = 3000,
+    hyperparameter = Hyperparameter(
     R1 = 5, OutlierThreshold1 = 35, H1 = 0.5, ratioThreshold1 = 0.7,
     eps_normal = 0.1, min_samples_normal = 9,
     eps_centerPoint = 4, min_samples_centerPoint = 8,
     eps_finalBoundaryPoint = 5, min_samples_finalBoundaryPoint = 5
     )
 
-    size = hyperparameter.numOfPoints
+    size = 3000
     for i in range(size):
         diff = 0.2*(random.random()-0.5)
         if i%6 == 0:
@@ -330,7 +329,7 @@ def Octahedron():
     
     hyperparameter = Hyperparameter()
 
-    size = hyperparameter.numOfPoints
+    size = 4000
     for i in range(size):
         diff = 0.5*(random.random()-0.5)
         x = 60*(random.random()-0.5)
@@ -352,7 +351,7 @@ def Sphere():
 
     hyperparameter = Hyperparameter()
 
-    size = hyperparameter.numOfPoints
+    size = 3000
     r = 30
 
     for i in range(size):
@@ -372,7 +371,7 @@ def butterfly(R = 20, alpha = np.pi/3, size=2000):
     random.seed(0)
     points = defaultdict(Point)
 
-    hyperparameter = Hyperparameter(numOfPoints=size)
+    hyperparameter = Hyperparameter()
 
     for i in range(size):
         if i % 2 == 0:
@@ -544,14 +543,14 @@ def bang_moresimple():
     random.seed(8)
     points = defaultdict(Point)
 
-    hyperparameter = Hyperparameter(numOfPoints = 7800,
+    hyperparameter = Hyperparameter(
     R1 = 1, H1 = 0.1, ratioThreshold1 = 0.8,
     eps_normal = 0.1, min_samples_normal = 15,
     eps_centerPoint = 3, min_samples_centerPoint = 30,
     eps_finalBoundaryPoint = 3, min_samples_finalBoundaryPoint = 15,
     edgeRansacH = 0.05)
 
-    size = hyperparameter.numOfPoints
+    size = 7800
     
     r = 30
 
@@ -660,7 +659,7 @@ def bang_muchsimple():
 def bang_verysimple():
     points = defaultdict(Point)
 
-    hyperparameter = Hyperparameter(numOfPoints = 8400,
+    hyperparameter = Hyperparameter(
     R1 = 2, H1 = 0.2, ratioThreshold1 = 0.7,
     eps_normal = 0.1, min_samples_normal = 9,
     eps_centerPoint = 4, min_samples_centerPoint = 30,
