@@ -939,120 +939,67 @@ def FourCleanBoxes():
     name = 'FourCleanBoxes'
 
     hyperparameter = Hyperparameter(
-    R1 = 1, H1 = 0.05, ratioThreshold1 = 0.85,
+    R1 = 0.8, H1 = 0.05, ratioThreshold1 = 0.8,
     eps_normal = 0.15, min_samples_normal = 10,
-    eps_centerPoint = 0.8, min_samples_centerPoint = 5,
-    eps_finalBoundaryPoint = 1.3, min_samples_finalBoundaryPoint = 5,
+    eps_centerPoint = 1, min_samples_centerPoint = 5,
+    eps_finalBoundaryPoint = 1, min_samples_finalBoundaryPoint = 5,
     edgeRansacH = 0.1)
     
-    ultung = 0
-    r = 50
-    cnt = -1    
-    for i in range(50):
-        for j in range(50):
-            diff = ultung * (random.random()-0.5)
-            cnt += 1
-            x = r * i/50
-            y = r * j/50
+    cnt = 0    
+    density = 0.5
+    #planes
+    for i in range(60):
+        for j in range(60):
+            x = 30 * i/60
+            y = 30 * j/60
             z = 0
-            if 4 <= x and x <= 13 and 4 <= y and y <= 13:
-                z = 9
-                if 6.5 <= x and x <= 10.5 and 6.5 <= y and y <= 10.5:
-                    z = 15
-            if 17 <= x and x <= 26 and 17 <= y and y <= 26:
-                z = 9
-            p = Point(x, y, z+diff, cnt)
+            if 3 <= x and x <= 14 and 3 <= y and y <= 14:
+                z = 11
+                if 6 <= x and x <= 11 and 6 <= y and y <= 11:
+                    z = 16
+            if 16 <= x and x <= 27 and 16 <= y and y <= 27:
+                z = 11
+            p = Point(x, y, z, cnt)
             points[cnt] = p
-    
-    for i in range(900):
-        diff = ultung * (random.random()-0.5)
-        cnt += 1
-        if i < 225:
-            x = 4 + (i % 15)*3/5
-            y = 4
-            z = (i // 15)*3/5
-        elif i < 450:
-            x = 4 
-            y = 4 + ((i-225) % 15)*3/5
-            z = ((i-225) // 15)*3/5
-        elif i < 675:
-            x = 4 + ((i-450) % 15)*3/5
-            y = 13
-            z = ((i-450) // 15)*3/5
-        else:
-            x = 13
-            y = 4 + ((i-675) % 15)*3/5
-            z = ((i-675) // 15)*3/5
-        p = Point(x, y, z+diff, cnt)
-        points[cnt] = p
-
-    cnt = len(points)-1
-    for i in range(900):
-        diff = ultung * (random.random()-0.5)
-        cnt += 1
-        if i < 225:
-            x = 17 + (i % 15)*3/5
-            y = 17
-            z = (i // 15)*3/5
-            if 20 <= x and x <= 23 and 3 <= z and z <= 6:
-                y = 14
-        elif i < 450:
-            x = 17 
-            y = 17 + ((i-225) % 15)*3/5
-            z = ((i-225) // 15)*3/5
-        elif i < 675:
-            x = 17 + ((i-450) % 15)*3/5
-            y = 26
-            z = ((i-450) // 15)*3/5
-        else:
-            x = 26
-            y = 17 + ((i-675) % 15)*3/5
-            z = ((i-675) // 15)*3/5
-        p = Point(x, y, z+diff, cnt)
-        points[cnt] = p
-    
-    for i in range(100):
-        diff = ultung * (random.random()-0.5)
-        cnt += 1
-        if i < 25:
-            x = 20 + (i % 5)*3/5
-            y = 14 + (i // 5)*3/5
-            z = 3
-        elif i < 50:
-            x = 20 
-            y = 14 + ((i-25) // 5)*3/5
-            z = 3 + ((i-25) % 5)*3/5
-        elif i < 75:
-            x = 20 + ((i-50) % 5)*3/5
-            y = 14 + ((i-50) // 5)*3/5
-            z = 6
-        else:
-            x = 23
-            y = 14 + ((i-75) // 5)*3/5
-            z = 3 + ((i-75) % 5)*3/5
-        p = Point(x, y, z+diff, cnt)
-        points[cnt] = p
-
-
-    for i in range(50):
-        for j in range(50):
-            diff = ultung * (random.random()-0.5)
             cnt += 1
-            x = r * i/50
-            y = r
-            z = r * j/50
-            p = Point(x, y+diff, z, cnt)
-            points[cnt] = p
     
-    for i in range(50):
-        for j in range(50):
-            diff = ultung * (random.random()-0.5)
-            cnt += 1
-            x = 0
-            y = r * i/50
-            z = r * j/50
-            p = Point(x, y+diff, z, cnt)
+    points = fillRect(Point(0,0,0,None), Point(0,30,20,None), points, density)
+    points = fillRect(Point(0,30,0,None), Point(30,30,20,None), points, density)
+
+    #cube1.1
+    points = fillRect(Point(3,3,0,None), Point(3,14,11,None), points, density)
+    points = fillRect(Point(3,3,0,None), Point(14,3,11,None), points, density)
+    points = fillRect(Point(3,14,0,None), Point(14,14,11,None), points, density)
+    points = fillRect(Point(14,3,0,None), Point(14,14,11,None), points, density)
+
+    #cube1.2
+    points = fillRect(Point(6,6,11,None), Point(6,11,16,None), points, density)
+    points = fillRect(Point(6,6,11,None), Point(11,6,16,None), points, density)
+    points = fillRect(Point(6,11,11,None), Point(11,11,16,None), points, density)
+    points = fillRect(Point(11,6,11,None), Point(11,11,16,None), points, density)
+
+    cnt = len(points)
+    #cube2.1
+    for i in range(22):
+        for j in range(22):
+            x = 16 + 11 * i/22
+            y = 16
+            z = 11 * j/22
+            if 19 <= x and x <= 24 and 3 <= z and z <= 8:
+                y = 11
+            p = Point(x, y, z, cnt)
             points[cnt] = p
+            cnt += 1
+    
+    points = fillRect(Point(16,16,0,None), Point(16,27,11,None), points, density)
+    points = fillRect(Point(27,16,0,None), Point(27,27,11,None), points, density)
+    points = fillRect(Point(16,27,0,None), Point(27,27,11,None), points, density)
+
+    #cube2.2
+    points = fillRect(Point(19,11,3,None), Point(19,16,8,None), points, density)
+    points = fillRect(Point(19,11,3,None), Point(24,16,3,None), points, density)
+    points = fillRect(Point(24,11,3,None), Point(24,16,8,None), points, density)
+    points = fillRect(Point(19,11,8,None), Point(24,16,8,None), points, density)
 
     return points, hyperparameter, name
 
@@ -1234,29 +1181,5 @@ def FloorWall():
             z = r * j/50
             p = Point(x, y+diff, z, cnt)
             points[cnt] = p
-
-    return points, hyperparameter, name
-
-
-
-
-
-
-def FourCleanBoxes2():
-    random.seed(0)
-    points = defaultdict(Point)
-    name = 'FourCleanBoxes2'
-
-    hyperparameter = Hyperparameter(
-    R1 = 2, H1 = 0.05, ratioThreshold1 = 0.8,
-    eps_normal = 0.15, min_samples_normal = 10,
-    eps_centerPoint = 0.8, min_samples_centerPoint = 5,
-    eps_finalBoundaryPoint = 1.3, min_samples_finalBoundaryPoint = 10,
-    edgeRansacH = 0.05)
-    
-    p1 = Point(0, 0, 0, None)
-    p4 = Point(0, 20, 20, None)
-    points = fillRect(p1, p4, points, 1)  
-   
 
     return points, hyperparameter, name
