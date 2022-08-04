@@ -41,13 +41,13 @@ def importPly(filepath, filename):
 
     points = defaultdict(Point)
     numOfPoints = 0
-    pointLeastDifference = 0.00001
+    pointLeastDifference = 0.0001
 
     #중복점제거하면서 포인트 추가
-    for i in range(len(sortedPoints)-1):
-        if sortedPoints[i+1][0] - sortedPoints[i][0] < pointLeastDifference:
-            if sortedPoints[i+1][1] - sortedPoints[i][1] < pointLeastDifference:
-                if sortedPoints[i+1][2] - sortedPoints[i][2] < pointLeastDifference:
+    for i in range(1, len(sortedPoints)):
+        if sortedPoints[i][0] - sortedPoints[i-1][0] < pointLeastDifference:
+            if sortedPoints[i][1] - sortedPoints[i-1][1] < pointLeastDifference:
+                if sortedPoints[i][2] - sortedPoints[i-1][2] < pointLeastDifference:
                     continue
         
         x = sortedPoints[i][0]
@@ -72,17 +72,13 @@ def importPly(filepath, filename):
                 continue
 
         if filename == '3boxes.ply':
-            if x < -0.45 or x > 0.7 or z > -0.4 or z < -1.45 or (x<0 and z<-1.2) or (x>0.2 and z>-0.8) or y <-1.05:
+            if x < -0.45 or x > 0.7 or z > -0.4 or z < -1.45 or (x<0.2 and z<-1.2) or (x>0.1 and z>-0.8) or y <-1.02:
                 continue
 
         p = Point(x, y, z,
                 numOfPoints, sortedPoints[i][3], sortedPoints[i][4], sortedPoints[i][5]) #단위 m
         points[numOfPoints] = p
         numOfPoints += 1
-    # p = Point(sortedPoints[-1][0], sortedPoints[-1][1], sortedPoints[-1][2],
-    #             numOfPoints, sortedPoints[-1][3], sortedPoints[-1][4], sortedPoints[-1][5])
-    # points[numOfPoints] = p #마지막점 추가해주기
-    
 
     return points, hyperparameter, filename
 
@@ -943,7 +939,7 @@ def FourCleanBoxes():
     eps_normal = 0.15, min_samples_normal = 20,
     eps_centerPoint = 1, min_samples_centerPoint = 20,
     eps_finalBoundaryPoint = 1, min_samples_finalBoundaryPoint = 10,
-    edgeRansacH = 0.05)
+    edgeRansacH = 0.05, lineardensity = 0.25)
     
     cnt = 0    
     density = 0.25
