@@ -10,21 +10,21 @@ def fillRect(p1,p4, points, density): #p1이 제일 원점에 가깝고 p4가 �
     i = 0
     size = len(points)
     if p1.x == p4.x:
-        Iteration = [np.arange(p1.y, p4.y, (p4.y-p1.y)/density), np.arange(p1.z, p4.z, (p4.z-p1.z)/density)]
+        Iteration = [np.arange(p1.y, p4.y, density), np.arange(p1.z, p4.z, density)]
         for y in Iteration[0]:
             for z in Iteration[1]:
                 p = Point(p1.x, y, z, size + i)
                 points[size + i] = p
                 i += 1
     elif p1.y == p4.y:
-        Iteration = [np.arange(p1.x, p4.x, (p4.x-p1.x)/density), np.arange(p1.z, p4.z, (p4.z-p1.z)/density)]
+        Iteration = [np.arange(p1.x, p4.x, density), np.arange(p1.z, p4.z, density)]
         for x in Iteration[0]:
             for z in Iteration[1]:
                 p = Point(x, p1.y, z, size + i)
                 points[size + i] = p
                 i += 1
     elif p1.z == p4.z:
-        Iteration = [np.arange(p1.x, p4.x, (p4.x-p1.x)/density), np.arange(p1.y, p4.y, (p4.y-p1.y)/density)]
+        Iteration = [np.arange(p1.x, p4.x, density), np.arange(p1.y, p4.y, density)]
         for x in Iteration[0]:
             for y in Iteration[1]:
                 p = Point(x, y, p1.z, size + i)
@@ -944,11 +944,12 @@ def FourCleanBoxes():
     eps_finalBoundaryPoint = 1.3, min_samples_finalBoundaryPoint = 5,
     edgeRansacH = 0.1)
     
-    r = 30
+    ultung = 0
+    r = 50
     cnt = -1    
     for i in range(50):
         for j in range(50):
-            diff = 0
+            diff = ultung * (random.random()-0.5)
             cnt += 1
             x = r * i/50
             y = r * j/50
@@ -963,7 +964,7 @@ def FourCleanBoxes():
             points[cnt] = p
     
     for i in range(900):
-        diff = 0
+        diff = ultung * (random.random()-0.5)
         cnt += 1
         if i < 225:
             x = 4 + (i % 15)*3/5
@@ -986,7 +987,7 @@ def FourCleanBoxes():
 
     cnt = len(points)-1
     for i in range(900):
-        diff = 0
+        diff = ultung * (random.random()-0.5)
         cnt += 1
         if i < 225:
             x = 17 + (i % 15)*3/5
@@ -1010,7 +1011,7 @@ def FourCleanBoxes():
         points[cnt] = p
     
     for i in range(100):
-        diff = 0
+        diff = ultung * (random.random()-0.5)
         cnt += 1
         if i < 25:
             x = 20 + (i % 5)*3/5
@@ -1034,7 +1035,7 @@ def FourCleanBoxes():
 
     for i in range(50):
         for j in range(50):
-            diff = 0
+            diff = ultung * (random.random()-0.5)
             cnt += 1
             x = r * i/50
             y = r
@@ -1044,7 +1045,7 @@ def FourCleanBoxes():
     
     for i in range(50):
         for j in range(50):
-            diff = 0
+            diff = ultung * (random.random()-0.5)
             cnt += 1
             x = 0
             y = r * i/50
@@ -1232,5 +1233,29 @@ def FloorWall():
             z = r * j/50
             p = Point(x, y+diff, z, cnt)
             points[cnt] = p
+
+    return points, hyperparameter, name
+
+
+
+
+
+
+def FourCleanBoxes2():
+    random.seed(0)
+    points = defaultdict(Point)
+    name = 'FourCleanBoxes2'
+
+    hyperparameter = Hyperparameter(
+    R1 = 2, H1 = 0.05, ratioThreshold1 = 0.8,
+    eps_normal = 0.15, min_samples_normal = 10,
+    eps_centerPoint = 0.8, min_samples_centerPoint = 5,
+    eps_finalBoundaryPoint = 1.3, min_samples_finalBoundaryPoint = 10,
+    edgeRansacH = 0.05)
+    
+    p1 = Point(0, 0, 0, None)
+    p4 = Point(0, 20, 20, None)
+    points = fillRect(p1, p4, points, 1)  
+   
 
     return points, hyperparameter, name
