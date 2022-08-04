@@ -6,6 +6,7 @@ import numpy as np
 
 #현재 hyperparameter 설정이 덜됐음
 
+#density = 점사이 간격
 def fillRect(p1,p4, points, density): #p1이 제일 원점에 가깝고 p4가 멀다
     i = 0
     size = len(points)
