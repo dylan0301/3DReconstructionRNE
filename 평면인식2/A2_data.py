@@ -939,19 +939,19 @@ def FourCleanBoxes():
     name = 'FourCleanBoxes'
 
     hyperparameter = Hyperparameter(
-    R1 = 0.8, H1 = 0.05, ratioThreshold1 = 0.8,
-    eps_normal = 0.15, min_samples_normal = 10,
-    eps_centerPoint = 1, min_samples_centerPoint = 5,
-    eps_finalBoundaryPoint = 1, min_samples_finalBoundaryPoint = 5,
-    edgeRansacH = 0.1)
+    R1 = 0.8, H1 = 0.05, ratioThreshold1 = 0.93,
+    eps_normal = 0.15, min_samples_normal = 20,
+    eps_centerPoint = 1, min_samples_centerPoint = 20,
+    eps_finalBoundaryPoint = 1, min_samples_finalBoundaryPoint = 10,
+    edgeRansacH = 0.05)
     
     cnt = 0    
-    density = 0.5
+    density = 0.25
     #planes
-    for i in range(60):
-        for j in range(60):
-            x = 30 * i/60
-            y = 30 * j/60
+    for i in range(120):
+        for j in range(120):
+            x = 30 * i/120
+            y = 30 * j/120
             z = 0
             if 3 <= x and x <= 14 and 3 <= y and y <= 14:
                 z = 11
@@ -980,11 +980,11 @@ def FourCleanBoxes():
 
     cnt = len(points)
     #cube2.1
-    for i in range(22):
-        for j in range(22):
-            x = 16 + 11 * i/22
+    for i in range(44):
+        for j in range(44):
+            x = 16 + 11 * i/44
             y = 16
-            z = 11 * j/22
+            z = 11 * j/44
             if 19 <= x and x <= 24 and 3 <= z and z <= 8:
                 y = 11
             p = Point(x, y, z, cnt)
