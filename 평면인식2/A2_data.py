@@ -72,7 +72,7 @@ def importPly(filepath, filename):
                 continue
 
         if filename == '3boxes.ply':
-            if x < -0.45 or x > 0.7 or z > -0.4 or z < -1.45 or (x<0.2 and z<-1.2) or (x>0.1 and z>-0.8) or y <-1.02:
+            if x < -0.45 or x > 0.7 or z > -0.4 or z < -1.45 or (x<0.2 and z<-1.2) or (x>0.1 and z>-0.8) or y <-1.01:
                 continue
 
         p = Point(x, y, z,
@@ -88,7 +88,7 @@ def importPly(filepath, filename):
 def _test_importPly():
     filepath = '/Users/jeewon/Library/CloudStorage/OneDrive-대구광역시교육청/지원/한과영/RnE/3DReconstructionRNE/pointclouddata/'
     filename = 'Box25K.ply'
-    AllPoints, hyperparameter = importPly(filepath+filename)
+    AllPoints, hyperparameter, filename = importPly(filepath+filename)
     print(len(AllPoints))
     for p in AllPoints.values():
         print(p)
