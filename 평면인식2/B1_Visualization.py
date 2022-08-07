@@ -3,6 +3,7 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 import numpy as np
+from A1_classes import *
 
 #polygon 방식
 #받는 데이터: objList
@@ -30,6 +31,8 @@ import numpy as np
 def objVisualization(objList, name):
     finalAllPoints = []
     finalAllLabels = []
+    additionalPoints = [Point(0,0,0,None) for i in range(len(objList))]
+    additionalLabels = [i for i in range(len(objList))]
     for obj in objList:
         thisObjPoints = []
         thisObjLabels = []
@@ -40,7 +43,9 @@ def objVisualization(objList, name):
             thisObjLabels += [obj.idx]*len(plane.interiorPoints)
         finalAllPoints.extend(thisObjPoints)
         finalAllLabels.extend(thisObjLabels)
-
+        
+        thisObjPoints.extend(additionalPoints)
+        thisObjLabels.extend(additionalLabels)
         fig = plt.figure(figsize=(6, 6))
         ax = fig.add_subplot(111, projection='3d')
         ap = np.array([[p.x, p.y, p.z] for p in thisObjPoints])
