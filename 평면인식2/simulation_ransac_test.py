@@ -3,17 +3,19 @@ import random
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-from A2_data import butterfly
+from A2_data import butterfly, butterfly_uniform
 from A1_classes import *
 
-R = 20
+R = 5
 alpha = np.pi/3
-size = 3000
+lineardensity = 0.1
 
-AllPoints, hyperparameter = butterfly(R = R, alpha = alpha, size = size)
+#AllPoints, hyperparameter = butterfly(R = R, alpha = alpha)
+AllPoints, hyperparameter = butterfly_uniform(R = R, alpha = alpha, lineardensity = lineardensity)
 
+size = len(AllPoints)
 
-hyperparameter.H1 = 2
+hyperparameter.H1 = 0.25
 
 
 
@@ -90,6 +92,7 @@ print()
 print()
 print('R =', R, '/ H =', hyperparameter.H1, '/ alpha =', alpha)
 print('alpha in degrees:', alpha*180/np.pi)
+print('2H/R:', 2*hyperparameter.H1/R)
 print()
 
 print(maxScore,'out of', len(AllPoints))
@@ -104,7 +107,7 @@ print('beta_experimental:', beta_experimental)
 print('beta_experimental in degrees:', beta_experimental*180/np.pi)
 print()
 
-print('beta_calculated = arcsin(2h/R)')
+print('beta_calculated = arcsin(2H/R)')
 beta_calculated = np.arcsin(2*hyperparameter.H1/R)
 print('beta_calculated:', beta_calculated)
 print('beta_calculated in degrees:', beta_calculated*180/np.pi)
@@ -119,8 +122,8 @@ print()
 
 
 planePoints = []
-for x in np.arange(-R, R, 1):
-    for y in np.arange(-R, R, 1):
+for x in np.arange(-R, R, lineardensity):
+    for y in np.arange(-R, R, lineardensity):
         if y > R*np.cos(alpha):
             continue
         z = -(bestPlane[0]*x + bestPlane[1]*y + bestPlane[3])/bestPlane[2]

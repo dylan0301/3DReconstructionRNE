@@ -352,7 +352,7 @@ def Sphere():
 
 
 
-def butterfly(R = 20, alpha = np.pi/3, size=2000):
+def butterfly(R = 20, alpha = np.pi/3, size=3000):
     random.seed(0)
     points = defaultdict(Point)
 
@@ -369,6 +369,32 @@ def butterfly(R = 20, alpha = np.pi/3, size=2000):
             z = np.tan(alpha)*y
         p = Point(x, y, z, i)
         points[i] = p
+    return points, hyperparameter
+
+
+def butterfly_uniform(R = 20, alpha = np.pi/3, lineardensity = 0.1):
+    points = defaultdict(Point)
+
+    hyperparameter = Hyperparameter(lineardensity=lineardensity)
+
+    cnt = 0  
+    z = 0
+    for x in np.arange(-R, R, lineardensity):
+        for y in np.arange(-R, 0, lineardensity):
+            if x**2 + y**2 > R**2:
+                continue   
+            p = Point(x, y, z, cnt)
+            points[cnt] = p
+            cnt += 1
+
+    for x in np.arange(-R, R, lineardensity):
+        for y in np.arange(0, R*np.cos(alpha), lineardensity):
+            z = np.tan(alpha)*y
+            if x**2 + y**2 + z**2 > R**2:
+                continue   
+            p = Point(x, y, z, cnt)
+            points[cnt] = p
+            cnt += 1
     return points, hyperparameter
 
 
