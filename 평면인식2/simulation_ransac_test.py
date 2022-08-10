@@ -109,6 +109,11 @@ print('beta_calculated:', beta_calculated)
 print('beta_calculated in degrees:', beta_calculated*180/np.pi)
 
 print()
+#오차율 = (이론값-측정값)/이론값*100
+error_rate = (beta_calculated-beta_experimental)/beta_calculated*100
+print('error_rate:',error_rate)
+
+print()
 print()
 
 
