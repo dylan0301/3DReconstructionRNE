@@ -323,11 +323,11 @@ def maketable():
     samples  = [(5, np.pi/2.5, 0.4),
                 (5, np.pi/3, 0.4),
                 (5, np.pi/4, 0.4),
-                (5, np.pi/5, 0.2),
-                (5, np.pi/2.5, 0.2),
-                (5, np.pi/3, 0.2),
-                (5, np.pi/4, 0.2),
-                (5, np.pi/5, 0.2)]
+                (5, np.pi/5, 0.4),
+                (5, np.pi/2.5, 0.8),
+                (5, np.pi/3, 0.8),
+                (5, np.pi/4, 0.8),
+                (5, np.pi/5, 0.8)]
     
     content = []
 
@@ -340,8 +340,9 @@ def maketable():
     
     
     df = pd.DataFrame(data = content, columns=col)
-    df.to_excel("justification.xlsx")
     display(df)
+    df.to_excel("justification.xlsx")
+    
 
 
 maketable()
