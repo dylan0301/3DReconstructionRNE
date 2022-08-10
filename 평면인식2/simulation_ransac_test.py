@@ -4,16 +4,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from A2_data import butterfly
+from A1_classes import *
 
 R = 10
-alpha = np.pi/4
+alpha = np.pi/3
 size = 500
 
 AllPoints, hyperparameter = butterfly(R = R, alpha = alpha, size = size)
 
-hyperparameter.vectorRansacTrial=1000
-hyperparameter.vectorRansacThreshold=1
-hyperparameter.normalLeastNorm = 0
+
+hyperparameter.H1 = 1
+
 
 
 
@@ -40,7 +41,7 @@ def P_RansacPlane(AllPoints, hyperparameter):
         v12 = np.array([p1.x-p2.x, p1.y-p2.y, p1.z-p2.z])
         v13 = np.array([p1.x-p3.x, p1.y-p3.y, p1.z-p3.z])
         normal = np.cross(v12,v13)
-        if np.linalg.norm(normal) < hyperparameter.normalLeastNorm:
+        if np.linalg.norm(normal) < 0:
             return None
         d = -(normal[0]*p1.x + normal[1]*p1.y + normal[2]*p1.z)
         return (normal[0], normal[1], normal[2], d)
@@ -51,7 +52,7 @@ def P_RansacPlane(AllPoints, hyperparameter):
     maxScore = 0
     bestPlane = None
     bestSatisfied = set()
-    for trial in range(hyperparameter.vectorRansacTrial):
+    for trial in range(500):
         plane = None
         while plane == None:
             i1 = random.randrange(0,numOfpts)
@@ -67,7 +68,7 @@ def P_RansacPlane(AllPoints, hyperparameter):
         satisfied = set()
         for p in pts:
             d = sujikDistance(p, plane)
-            if d < hyperparameter.vectorRansacThreshold:
+            if d < hyperparameter.H1:
                 score +=1
                 satisfied.add(p)
         if score > maxScore:
@@ -86,13 +87,48 @@ def isSatisfied(p):
     return 0
 
 print()
-print('R =', R, '/ H =', hyperparameter.vectorRansacThreshold, '/ alpha =', alpha)
+print()
+print('R =', R, '/ H =', hyperparameter.H1, '/ alpha =', alpha)
+print('alpha in degrees:', alpha*180/np.pi)
+print()
+
 print(maxScore,'out of', len(AllPoints))
 print('ratio:', maxScore/len(AllPoints))
+normal = np.array([bestPlane[0], bestPlane[1], bestPlane[2]])
+normal /= np.linalg.norm(normal)
+print('normal vector:',normal)
 print()
+
+beta_experimental = np.arctan(-normal[1]/normal[2])
+print('beta_experimental:', beta_experimental)
+print('beta_experimental in degrees:', beta_experimental*180/np.pi)
+print()
+
+beta_calculated = np.arcsin(2*hyperparameter.H1/R)
+print('beta_calculated:', beta_calculated)
+print('beta_calculated in degrees:', beta_calculated*180/np.pi)
+
+print()
+print()
+
+
+planePoints = []
+for x in np.arange(-R, R, 1):
+    for y in np.arange(-R, R, 1):
+        z = -(bestPlane[0]*x + bestPlane[1]*y + bestPlane[3])/bestPlane[2]
+        if z < 0:
+            continue
+        p = Point(x, y, z, None)        
+        planePoints.append(p)
+
 
 fig = plt.figure(figsize=(6, 6))
 ax = fig.add_subplot(111, projection='3d')
-ap = np.array([[p.x, p.y, p.z] for p in AllPoints.values()])
-ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[isSatisfied(p) for p in AllPoints.values()], marker='o', s=15, cmap='rainbow')
+
+labels = [isSatisfied(p) for p in AllPoints.values()]
+labels.extend([2 for i in range(len(planePoints))])
+
+ap = np.array([[p.x, p.y, p.z] for p in AllPoints.values()]+[[p.x, p.y, p.z] for p in planePoints])
+ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=labels, marker='o', s=15, cmap='rainbow')
+plt.title("justification example")
 plt.show()
