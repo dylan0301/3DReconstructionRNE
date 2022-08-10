@@ -7,7 +7,7 @@ from A2_data import butterfly, butterfly_uniform
 from A1_classes import *
 
 R = 5
-alpha = np.pi/4
+alpha = np.pi/3
 lineardensity = 0.05
 
 #AllPoints, hyperparameter = butterfly(R = R, alpha = alpha)
@@ -15,7 +15,7 @@ AllPoints, hyperparameter = butterfly_uniform(R = R, alpha = alpha, lineardensit
 
 size = len(AllPoints)
 
-hyperparameter.H1 = 0.25
+hyperparameter.H1 = 0.4
 
 
 
@@ -111,28 +111,36 @@ print('beta_calculated = arcsin(2H/R)')
 beta_calculated = np.arcsin(2*hyperparameter.H1/R)
 print('beta_calculated:', beta_calculated)
 print('beta_calculated in degrees:', beta_calculated*180/np.pi)
-
+print('angle difference in degrees:', (beta_calculated-beta_experimental)*180/np.pi)
 print()
+
+print('beta_calculated = alpha/2')
+beta_calculated = alpha/2
+print('beta_calculated:', beta_calculated)
+print('beta_calculated in degrees:', beta_calculated*180/np.pi)
+print('angle difference in degrees:', (beta_calculated-beta_experimental)*180/np.pi)
+print()
+
 #오차율 = (이론값-측정값)/이론값*100
 #각도에서는 오차율 따지면 안됨. 똑같은 1도차이여도 오차율 너무 달라짐.
 #그래서 그냥 각도차이 따진다.
 #error_rate = (beta_calculated-beta_experimental)/beta_calculated*100
 #print('error_rate:',error_rate)
-print('angle difference in degrees:', (beta_calculated-beta_experimental)*180/np.pi)
+
 
 print()
 print()
 
 
 planePoints = []
-for x in np.arange(-R, R, lineardensity/5):
-    for y in np.arange(-R, R, lineardensity/5):
-        if y > R*np.cos(alpha):
-            continue
+for x in np.arange(-R-1, R+1, lineardensity*2):
+    for y in np.arange(-R-1, R+1, lineardensity*2):
         z = -(bestPlane[0]*x + bestPlane[1]*y + bestPlane[3])/bestPlane[2]
+        if y > R*np.cos(alpha)+R/5:
+            continue
         if z < -R/5:
             continue
-        if z > R*np.sin(alpha):
+        if z > R*np.sin(alpha)+R/5:
             continue
         p = Point(x, y, z, None)        
         planePoints.append(p)

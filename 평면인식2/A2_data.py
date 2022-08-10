@@ -387,14 +387,24 @@ def butterfly_uniform(R = 20, alpha = np.pi/3, lineardensity = 0.1):
             points[cnt] = p
             cnt += 1
 
-    for x in np.arange(-R, R, lineardensity):
-        for y in np.arange(0, R*np.cos(alpha), lineardensity):
-            z = np.tan(alpha)*y
-            if x**2 + y**2 + z**2 > R**2:
-                continue   
-            p = Point(x, y, z, cnt)
-            points[cnt] = p
-            cnt += 1
+    if abs(alpha-np.pi/2) > 0.5:
+        for x in np.arange(-R, R, lineardensity):
+            for y in np.arange(0, R*np.cos(alpha), lineardensity):
+                z = np.tan(alpha)*y
+                if x**2 + y**2 + z**2 > R**2:
+                    continue   
+                p = Point(x, y, z, cnt)
+                points[cnt] = p
+                cnt += 1
+    else:
+        for x in np.arange(-R, R, lineardensity):
+            for z in np.arange(0, R*np.sin(alpha), lineardensity):
+                y = z/np.tan(alpha)
+                if x**2 + y**2 + z**2 > R**2:
+                    continue   
+                p = Point(x, y, z, cnt)
+                points[cnt] = p
+                cnt += 1
     return points, hyperparameter
 
 
