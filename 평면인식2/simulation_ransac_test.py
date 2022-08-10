@@ -6,14 +6,14 @@ from mpl_toolkits.mplot3d import Axes3D
 from A2_data import butterfly
 from A1_classes import *
 
-R = 10
+R = 20
 alpha = np.pi/3
-size = 500
+size = 3000
 
 AllPoints, hyperparameter = butterfly(R = R, alpha = alpha, size = size)
 
 
-hyperparameter.H1 = 1
+hyperparameter.H1 = 2
 
 
 
@@ -104,6 +104,7 @@ print('beta_experimental:', beta_experimental)
 print('beta_experimental in degrees:', beta_experimental*180/np.pi)
 print()
 
+print('beta_calculated = arcsin(2h/R)')
 beta_calculated = np.arcsin(2*hyperparameter.H1/R)
 print('beta_calculated:', beta_calculated)
 print('beta_calculated in degrees:', beta_calculated*180/np.pi)
@@ -120,8 +121,12 @@ print()
 planePoints = []
 for x in np.arange(-R, R, 1):
     for y in np.arange(-R, R, 1):
+        if y > R*np.cos(alpha):
+            continue
         z = -(bestPlane[0]*x + bestPlane[1]*y + bestPlane[3])/bestPlane[2]
         if z < 0:
+            continue
+        if z > R*np.sin(alpha):
             continue
         p = Point(x, y, z, None)        
         planePoints.append(p)
