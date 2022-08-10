@@ -147,7 +147,7 @@ def simulation_ransac_test_func(R = 5, alpha = np.pi/3, lineardensity = 0.05, H 
 
     return bestPlane, AllPoints, bestSatisfied
 
-def simulation_ransac_test_visual(bestPlane, AllPoints, bestSatisfied, lineardensity):
+def simulation_ransac_test_visual(bestPlane, AllPoints, bestSatisfied, R, alpha, lineardensity):
     planePoints = []
     for x in np.arange(-R-1, R+1, lineardensity*10):
         for y in np.arange(-R-1, R+1, lineardensity*10):
@@ -185,21 +185,21 @@ def simulation_ransac_test_visual(bestPlane, AllPoints, bestSatisfied, linearden
 
 
 
+def makeimages():
+
+    R = 5
+    alpha = np.pi/3
+    lineardensity = 0.025
+    H = 0.4
+
+    bestPlane, AllPoints, bestSatisfied = simulation_ransac_test_func(R, alpha, lineardensity, H)
+    simulation_ransac_test_visual(bestPlane, AllPoints, bestSatisfied, R, alpha, lineardensity)
 
 
-R = 5
-alpha = np.pi/3
-lineardensity = 0.025
-H = 0.4
+    R = 5
+    alpha = np.pi/4
+    lineardensity = 0.025
+    H = 0.4
 
-#bestPlane, AllPoints, bestSatisfied = simulation_ransac_test_func(R, alpha, lineardensity, H)
-#simulation_ransac_test_visual(bestPlane, AllPoints, bestSatisfied, lineardensity)
-
-
-R = 5
-alpha = np.pi/4
-lineardensity = 0.025
-H = 0.4
-
-#bestPlane, AllPoints, bestSatisfied = simulation_ransac_test_func(R, alpha, lineardensity, H)
-#simulation_ransac_test_visual(bestPlane, AllPoints, bestSatisfied, lineardensity)
+    bestPlane, AllPoints, bestSatisfied = simulation_ransac_test_func(R, alpha, lineardensity, H)
+    simulation_ransac_test_visual(bestPlane, AllPoints, bestSatisfied, R, alpha, lineardensity)
