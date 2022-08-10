@@ -104,26 +104,35 @@ def simulation_ransac_test_func(R = 5, alpha = np.pi/3, lineardensity = 0.05, H 
     print('beta_experimental in degrees:', beta_experimental*180/np.pi)
     print()
 
-    print('beta_calculated1 = arcsin(2H/R)')
-    beta_calculated1 = np.arcsin(2*H/R)
-    print('beta_calculated1:', beta_calculated1)
-    print('beta_calculated1 in degrees:', beta_calculated1*180/np.pi)
+    print('beta_calculated1 = 0')
+    beta_calculated1 = 0
     print('angle difference in degrees:', (beta_calculated1-beta_experimental)*180/np.pi)
-    def sik1(insideSin):
+    def sik(insideSin):
         repeated = 2*H/R/np.sin(insideSin)
         return (repeated*np.sqrt(1-repeated**2)+np.arcsin(repeated))/np.pi
-    calculated1_ratio = sik1(alpha-beta_calculated1)+sik1(beta_calculated1)
+    calculated1_ratio = 0.5+sik(alpha)
     print('calculated1_ratio:', calculated1_ratio)
     print()
 
-    print('beta_calculated2 = alpha/2')
-    beta_calculated2 = alpha/2
+
+
+    print('beta_calculated2 = arcsin(2H/R)')
+    beta_calculated2 = np.arcsin(2*H/R)
     print('beta_calculated2:', beta_calculated2)
     print('beta_calculated2 in degrees:', beta_calculated2*180/np.pi)
     print('angle difference in degrees:', (beta_calculated2-beta_experimental)*180/np.pi)
-    repeated = 2*np.arcsin(2*H/R/np.sin(beta_calculated2))
-    calculated2_ratio = (np.sin(repeated)+repeated)/np.pi
+    calculated2_ratio = sik(alpha-beta_calculated2)+sik(beta_calculated2)
     print('calculated2_ratio:', calculated2_ratio)
+    print()
+
+    print('beta_calculated3 = alpha/2')
+    beta_calculated3 = alpha/2
+    print('beta_calculated3:', beta_calculated3)
+    print('beta_calculated3 in degrees:', beta_calculated3*180/np.pi)
+    print('angle difference in degrees:', (beta_calculated3-beta_experimental)*180/np.pi)
+    repeated = 2*np.arcsin(2*H/R/np.sin(beta_calculated3))
+    calculated3_ratio = (np.sin(repeated)+repeated)/np.pi
+    print('calculated3_ratio:', calculated3_ratio)
     print()
 
     #오차율 = (이론값-측정값)/이론값*100
@@ -180,17 +189,17 @@ def simulation_ransac_test_visual(bestPlane, AllPoints, bestSatisfied, linearden
 
 R = 5
 alpha = np.pi/3
-lineardensity = 0.05
+lineardensity = 0.025
 H = 0.4
 
-# bestPlane, AllPoints, bestSatisfied = simulation_ransac_test_func(R, alpha, lineardensity, H)
-# simulation_ransac_test_visual(bestPlane, AllPoints, bestSatisfied, lineardensity)
+#bestPlane, AllPoints, bestSatisfied = simulation_ransac_test_func(R, alpha, lineardensity, H)
+#simulation_ransac_test_visual(bestPlane, AllPoints, bestSatisfied, lineardensity)
 
 
 R = 5
-alpha = np.pi/3
-lineardensity = 0.05
+alpha = np.pi/4
+lineardensity = 0.025
 H = 0.4
 
-bestPlane, AllPoints, bestSatisfied = simulation_ransac_test_func(R, alpha, lineardensity, H)
-simulation_ransac_test_visual(bestPlane, AllPoints, bestSatisfied, lineardensity)
+#bestPlane, AllPoints, bestSatisfied = simulation_ransac_test_func(R, alpha, lineardensity, H)
+#simulation_ransac_test_visual(bestPlane, AllPoints, bestSatisfied, lineardensity)
