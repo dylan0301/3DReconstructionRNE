@@ -1,0 +1,2 @@
+    This is the supplementary material for the paper“An Explicit Approach to Boundary Detection for 3D Point Clouds Based on DBSCAN Clustering". We offer the point cloud of all the real dataset. 
+    If you find these datasets are useful, please consider to cite this paper.
