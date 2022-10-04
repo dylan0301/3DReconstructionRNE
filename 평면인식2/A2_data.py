@@ -37,6 +37,9 @@ def importTxt(filepath, filename):
     hyperparameter = Hyperparameter()
     if filename == 'Cuboid.txt':
         hyperparameter = Hyperparameter(10, 1, 0.75, 0.07, 200, 10, 20, 10, 6, 1, 2)
+    if filename == 'Curtin314.txt':
+        hyperparameter = Hyperparameter(3, 0.3, 0.75, 0.07, 200, 3, 8, 5, 6, 1, 2)
+
 
     rawPoints = read_txt_xyz(filepath+filename)
     sortedPoints = sorted(rawPoints, key = lambda x: (x[0],x[1],x[2]))

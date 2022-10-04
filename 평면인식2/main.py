@@ -25,6 +25,7 @@ filename = 'million_bestsayang.ply'
 
 filepath = '/Users/jeewon/Library/CloudStorage/OneDrive-대구광역시교육청/지원/한과영/RnE/3DReconstructionRNE/pointclouddata2/Supplementary materials S2/Point clouds of real dataset/'
 filename = 'Cuboid.txt'
+filename = 'Curtin314.txt'
 
 
 #AllPoints, hyperparameter, name = importPly(filepath, filename)
