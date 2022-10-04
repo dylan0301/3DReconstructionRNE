@@ -1,10 +1,8 @@
 from A1_classes import Point, Hyperparameter
-from A2_1_importPointCloud import read_ply_xyzrgb
+from A2_1_importPointCloud import read_ply_xyzrgb, read_txt_xyz
 from collections import defaultdict
 import random
 import numpy as np
-
-from 평면인식2.A2_1_importPointCloud import read_txt_xyz
 
 #현재 hyperparameter 설정이 덜됐음
 

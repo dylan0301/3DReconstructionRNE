@@ -40,7 +40,7 @@ def read_ply_xyzrgb(filename):
 def read_txt_xyz(filename):
     f = open(filename, 'r')
     lines = f.readlines()
-    vertices = np.array()
+    vertices = []
     for line in lines:
         line = line.strip()  # 줄 끝의 줄 바꿈 문자를 제거한다.
         line = list(line.split())
