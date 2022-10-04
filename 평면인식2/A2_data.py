@@ -4,6 +4,8 @@ from collections import defaultdict
 import random
 import numpy as np
 
+from 평면인식2.A2_1_importPointCloud import read_txt_xyz
+
 #현재 hyperparameter 설정이 덜됐음
 
 #density = 점사이 간격
@@ -32,6 +34,125 @@ def fillRect(p1,p4, points, density): #p1이 제일 원점에 가깝고 p4가 �
                 points[size + i] = p
                 i += 1
     return points
+
+def importTxt(filepath, filename):
+    hyperparameter = Hyperparameter()
+    
+    rawPoints = read_txt_xyz(filepath+filename)
+    sortedPoints = sorted(rawPoints, key = lambda x: (x[0],x[1],x[2]))
+
+    points = defaultdict(Point)
+    numOfPoints = 0
+    pointLeastDifference = 0.00001
+
+    #중복점제거하면서 포인트 추가
+    for i in range(1, len(sortedPoints)):
+        if sortedPoints[i][0] - sortedPoints[i-1][0] < pointLeastDifference:
+            if sortedPoints[i][1] - sortedPoints[i-1][1] < pointLeastDifference:
+                if sortedPoints[i][2] - sortedPoints[i-1][2] < pointLeastDifference:
+                    continue
+        
+        x = sortedPoints[i][0]
+        y = sortedPoints[i][1]
+        z = sortedPoints[i][2]
+
+
+        p = Point(x, y, z, numOfPoints)
+        points[numOfPoints] = p
+        numOfPoints += 1
+
+    return points, hyperparameter, filename
+
+
+    
+
+def _test_importPly():
+    filepath = '/Users/jeewon/Library/CloudStorage/OneDrive-대구광역시교육청/지원/한과영/RnE/3DReconstructionRNE/pointclouddata/'
+    filename = 'Box25K.ply'
+    AllPoints, hyperparameter, filename = importPly(filepath+filename)
+    print(len(AllPoints))
+    for p in AllPoints.values():
+        print(p)
+
+
+
+#100*100*100 직각삼각뿔, clean
+def triPyramidClean():
+    random.seed(0)
+    points = defaultdict(Point)
+    
+    hyperparameter = Hyperparameter(
+
+    )
+    size = 5000
+    for i in range(size-100):
+        x,y,z = 100, 100, 100
+        if i%4 == 0:
+            while x + y > 100:
+                x = 100*random.random()
+                y = 100*random.random()
+                z = 0
+        if i%4 == 1:
+            while x + z > 100:
+                x = 100*random.random()
+                y = 0
+                z = 100*random.random()
+        if i%4 == 2:
+            while y + z > 100:
+                x = 0
+                y = 100*random.random()
+                z = 100*random.random()  
+        if i%4 == 3:
+            while x + y > 100:
+                x = 100*random.random()
+                y = 100*random.random()
+                z = 100 - x - y
+        p = Point(x,y,z,i)
+        points[i] = p
+    for i in range(100):
+        p = Point(100*random.random(), 100*random.random(), 100*random.random(), size-100+i)
+        points[size-100+i] = p
+    return points, hyperparameter
+
+
+#30*30*30 정육면체, clean
+def cubeClean():
+    random.seed(0)
+    points = defaultdict(Point)
+    name = 'bang_muchsimple'
+    hyperparameter = Hyperparameter()
+    size = 3000
+    for i in range(size-100):
+        if i%6 == 0:
+            x = 30*random.random()
+            y = 30*random.random()
+            z = 0
+        if i%6 == 1:
+            x = 30*random.random()
+            y = 0
+            z = 30*random.random()
+        if i%6 == 2:
+            x = 0
+            y = 30*random.random()
+            z = 30*random.random()
+        if i%6 == 3:
+            x = 30*random.random()
+            y = 30*random.random()
+            z = 30
+        if i%6 == 4:
+            x = 30*random.random()
+            y = 30
+            z = 30*random.random()
+        if i%6 == 5:
+            x = 30
+            y = 30*random.random()
+            z = 30*random.random()                  
+        p = Point(x,y,z,i)
+        points[i] = p
+    for i in range(100):
+        p = Point(30*random.random(), 30*random.random(), 30*random.random(), size-100+i)
+        points[size-100+i] = p
+    return points, hyperparameter
 
 def importPly(filepath, filename):
     hyperparameter = Hyperparameter()

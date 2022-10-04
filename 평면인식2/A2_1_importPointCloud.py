@@ -37,6 +37,22 @@ def read_ply_xyzrgb(filename):
         vertices[:,5] = plydata['vertex'].data['blue']
     return vertices 
 
+def read_txt_xyz(filename):
+    f = open(filename, 'r')
+    lines = f.readlines()
+    vertices = np.array()
+    for line in lines:
+        line = line.strip()  # 줄 끝의 줄 바꿈 문자를 제거한다.
+        line = list(line.split())
+        for i in range(len(line)):
+            line[i] = float(line[i])
+        vertices.append(line)
+    f.close()
+    return vertices
+
+
+
+
 
 if __name__ == "__main__":
     #좌표값이 같은 점이 있는지 찾는 함수
