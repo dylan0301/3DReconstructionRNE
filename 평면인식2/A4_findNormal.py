@@ -1,8 +1,14 @@
 import numpy as np
 import random
 
-#Input: pts, Output: pts를 포함하는 평면, Method: RANSAC
-def nearbyRansacPlane(pts, hyperparameter):
+def weight(distance):
+    if distance == 0:
+        return 0
+    return 1/distance
+
+
+#Input: pts, Output: pts를 포함하는 평면, Method: RANSAC, point는 기준이 되는 점 P를 의미함.
+def nearbyRansacPlane(point, pts, hyperparameter):
     random.seed(0)
     
     #점 3개지나는 평면의 방정식 abcd 튜플로 리턴
@@ -27,6 +33,7 @@ def nearbyRansacPlane(pts, hyperparameter):
     if numOfpts < 3:
         raise Exception('len(pts) < 3')
     maxScore = 0
+    maxWeightscore = 0
     bestPlane = None
     for trial in range(50):
         plane = None
@@ -40,11 +47,14 @@ def nearbyRansacPlane(pts, hyperparameter):
                 i3 = random.randrange(0,numOfpts)
             plane = findPlane(pts[i1], pts[i2], pts[i3])
         score = 0
+        weightscore = 0
         for p in pts:
             d = pointPlaneDistance(p, plane)
             if d < hyperparameter.H1: 
-                score +=1
-        if score > maxScore:
+                score += 1
+                weightscore +=weight(point.distance(p))
+        if weightscore > maxWeightscore:
+            maxWeightscore = weightscore
             maxScore = score
             bestPlane = plane
     return bestPlane, maxScore
@@ -54,7 +64,7 @@ def nearbyRansacPlane(pts, hyperparameter):
 def normalVectorizeRatio(point, BoundaryPoints, CenterPoints, hyperparameter, BoundaryRatio, CenterRatio):
     if len(point.nearby1) < 5:
         return BoundaryPoints, CenterPoints, BoundaryRatio, CenterRatio
-    plane, maxScore = nearbyRansacPlane(point.nearby1, hyperparameter)
+    plane, maxScore = nearbyRansacPlane(point, point.nearby1, hyperparameter)
     plane_normal = np.array([plane[0], plane[1], plane[2]])
     plane_normal /= np.linalg.norm(plane_normal)
 
