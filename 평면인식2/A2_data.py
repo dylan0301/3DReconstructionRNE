@@ -38,7 +38,9 @@ def importTxt(filepath, filename):
     if filename == 'Cuboid.txt':
         hyperparameter = Hyperparameter(10, 1, 0.75, 0.07, 200, 10, 20, 10, 6, 1, 2)
     if filename == 'Curtin314.txt':
-        hyperparameter = Hyperparameter(0.8, 0.08, 0.6, 0.03, 500, 4, 20, 5, 25, 1, 2)
+        hyperparameter = Hyperparameter(0.5, 0.05, 0.6, 0.03, 500, 4, 20, 5, 25, 1, 2)
+    if filename == 'House.txt':
+        hyperparameter = Hyperparameter(0.5, 0.05, 0.6, 0.03, 500, 4, 20, 5, 25, 1, 2)
 
 
     rawPoints = read_txt_xyz(filepath+filename)

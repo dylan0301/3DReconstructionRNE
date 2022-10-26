@@ -8,7 +8,7 @@ def weight(distance):
 
 
 #Input: pts, Output: pts를 포함하는 평면, Method: RANSAC,
-def nearbyRansacPlane(point, pts, hyperparameter):
+def nearbyRansacPlane(pts, hyperparameter):
     random.seed(0)
     
     #점 3개지나는 평면의 방정식 abcd 튜플로 리턴
