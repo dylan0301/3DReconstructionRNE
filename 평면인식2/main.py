@@ -20,17 +20,17 @@ from collections import defaultdict
 print()
 print('#2 bring data start')
 t = time.time()
-#filepath = '/Users/jeewon/Library/CloudStorage/OneDrive-대구광역시교육청/지원/한과영/RnE/3DReconstructionRNE/pointclouddata/'
-#filename = '3boxes.ply'
+filepath = '/Users/jeewon/Library/CloudStorage/OneDrive-대구광역시교육청/지원/한과영/RnE/3DReconstructionRNE/pointclouddata/'
+filename = 'twobox1.ply'
 
-filepath = '/Users/jeewon/Library/CloudStorage/OneDrive-대구광역시교육청/지원/한과영/RnE/3DReconstructionRNE/pointclouddata2/Supplementary materials S2/Point clouds of real dataset/'
+#filepath = '/Users/jeewon/Library/CloudStorage/OneDrive-대구광역시교육청/지원/한과영/RnE/3DReconstructionRNE/pointclouddata2/Supplementary materials S2/Point clouds of real dataset/'
 #filename = 'Cuboid.txt'
 #filename = 'Curtin314.txt'
-filename = 'House.txt'
+#filename = 'House.txt'
 
-#AllPoints, hyperparameter, name = importPly(filepath, filename)
+AllPoints, hyperparameter, name = importPly(filepath, filename)
 #AllPoints, hyperparameter, name = FourCleanBoxes()
-AllPoints, hyperparameter, name = importTxt(filepath, filename)
+#AllPoints, hyperparameter, name = importTxt(filepath, filename)
 print('#2 bring data time: ', time.time()-t)
 print(len(AllPoints), 'points')
 print()

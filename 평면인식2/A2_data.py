@@ -125,6 +125,11 @@ def importPly(filepath, filename):
             if x < -0.45 or x > 0.57 or z > -0.4 or z < -1.45 or (x<0.2 and z<-1.1) or (x>0.1 and z>-0.8) or y <-1.01 or y>-0.8:
                 continue
 
+        if filename == 'twobox1.ply':
+            hyperparameter = Hyperparameter(0.02, 0.002, 0.7, 0.07, 300, 0.1, 15, 0.005, 20, 0.003, 0.01)
+            if x < -0.47 or x > 0.3 or z > -0.55 or z < -1 or y<-1.05 or y>-0.35 or (y > -0.75 and x < -0.4 and z<-0.75) or (y > -0.55 and x>0.175) or (x < -0.26 and y> -0.564):
+                continue
+
         p = Point(x, y, z,
                 numOfPoints, sortedPoints[i][3], sortedPoints[i][4], sortedPoints[i][5]) #단위 m
         points[numOfPoints] = p
