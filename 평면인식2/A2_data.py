@@ -130,6 +130,11 @@ def importPly(filepath, filename):
             if x < -0.47 or x > 0.3 or z > -0.55 or z < -1.05 or y<-1.05 or y>-0.35 or (y > -0.75 and x < -0.4 and z<-0.75) or (y > -0.55 and x>0.175) or (x < -0.26 and y> -0.564):
                 continue
 
+        if filename == 'final1.ply':
+            hyperparameter = Hyperparameter(0.05, 0.005, 0.75, 0.07, 200, 0.01, 10, 0.008, 10, 0.003, 0.001)
+            if z<-2.05 or x>0.7 or x<-0.5 or z>-0.5 or (z > -0.95 and  y<-0.85) or (x>0.1 and z>-0.95) or (x<-0.1 and z<-1.4):
+                continue
+
         p = Point(x, y, z,
                 numOfPoints, sortedPoints[i][3], sortedPoints[i][4], sortedPoints[i][5]) #단위 m
         points[numOfPoints] = p
