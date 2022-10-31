@@ -131,8 +131,8 @@ def importPly(filepath, filename):
                 continue
 
         if filename == 'final1.ply':
-            hyperparameter = Hyperparameter(0.05, 0.005, 0.75, 0.07, 200, 0.01, 10, 0.008, 10, 0.003, 0.001)
-            if z<-2.05 or x>0.7 or x<-0.5 or z>-0.5 or (z > -0.95 and  y<-0.85) or (x>0.1 and z>-0.95) or (x<-0.1 and z<-1.4):
+            hyperparameter = Hyperparameter(0.04, 0.004, 0.7, 0.1, 300, 0.05, 20, 0.008, 10, 0.003, 0.001)
+            if z<-2.05 or x>0.7 or x<-0.55 or z>-0.5 or (z > -0.95 and  y<-0.85) or (x>0.1 and z>-0.95) or (x<-0.1 and z<-1.4):
                 continue
 
         p = Point(x, y, z,
