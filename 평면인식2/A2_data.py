@@ -49,6 +49,7 @@ def importTxt(filepath, filename):
     points = defaultdict(Point)
     numOfPoints = 0
     pointLeastDifference = 0.00001
+    
 
     #중복점제거하면서 포인트 추가
     for i in range(1, len(sortedPoints)):
@@ -87,17 +88,20 @@ def importPly(filepath, filename):
     hyperparameter = Hyperparameter()
     
     rawPoints = read_ply_xyzrgb(filepath+filename)
-    sortedPoints = sorted(rawPoints, key = lambda x: (x[0],x[1],x[2]))
+    sortedPoints = sorted(rawPoints, key = lambda x: (x[0],x[2],x[1]))
 
     points = defaultdict(Point)
     numOfPoints = 0
-    pointLeastDifference = 0.00001
+    pointLeastDifference = 0.0001 #final1에서 바뀜
+
+    floorPointIndex = [] #바닥에 있는 점 일괄적으로 만들거임
+    floorLevel = 0
 
     #중복점제거하면서 포인트 추가
     for i in range(1, len(sortedPoints)):
         if sortedPoints[i][0] - sortedPoints[i-1][0] < pointLeastDifference:
-            if sortedPoints[i][1] - sortedPoints[i-1][1] < pointLeastDifference:
-                if sortedPoints[i][2] - sortedPoints[i-1][2] < pointLeastDifference:
+            if sortedPoints[i][2] - sortedPoints[i-1][2] < pointLeastDifference:
+                if sortedPoints[i][1] - sortedPoints[i-1][1] < pointLeastDifference:
                     continue
         
         x = sortedPoints[i][0]
@@ -132,13 +136,24 @@ def importPly(filepath, filename):
 
         if filename == 'final1.ply':
             hyperparameter = Hyperparameter(0.04, 0.004, 0.7, 0.1, 300, 0.05, 20, 0.008, 10, 0.003, 0.001)
-            if z<-2.05 or x>0.7 or x<-0.55 or z>-0.5 or (z > -0.95 and  y<-0.85) or (x>0.1 and z>-0.95) or (x<-0.1 and z<-1.4):
+            if z<-2.05 or x>0.7 or x<-0.6 or z>-0.45 or (z > -0.95 and  y<-0.86) or (x>0.1 and z > -1) or (x<-0.2 and z<-1.4):
                 continue
+            if y<-0.75:
+                y = -0.75
 
         if filename == 'realfinal1.ply':
-            hyperparameter = Hyperparameter(0.04, 0.004, 0.7, 0.1, 300, 0.05, 20, 0.008, 10, 0.003, 0.001)
-            if x < -0.73 or x > 0.3 or z > -0.72 or z < -2.5 or y<-1.036 or (x<-0.3 and z <-2 and y <-1.028) or (x>-0.1 and z>-2 and y<-1.017):
+            hyperparameter = Hyperparameter(0.035, 0.0035, 0.8, 0.1, 300, 0.05, 20, 0.008, 10, 0.003, 0.001)
+            floorLevel = -0.9
+            if x < -0.63 or x > 0.3 or z > -0.71 or z < -2.5 or y<-1.05 or (x > 0.2 and z > -1.2) or  (x < -0.43 and z > -1.3):
+                 continue
+            if x < -0.435 and z<-1.5 and y >-0.66:
+                y = -0.66 
+            if x<-0.55 and z < -1.5 and y>-0.9:
+                x = -0.55
+            if y<floorLevel:
+                floorPointIndex.append(i)
                 continue
+                
 
         if filename == 'realfinal2.ply':
             hyperparameter = Hyperparameter(0.04, 0.004, 0.7, 0.1, 300, 0.05, 20, 0.008, 10, 0.003, 0.001)
@@ -150,6 +165,19 @@ def importPly(filepath, filename):
         points[numOfPoints] = p
         numOfPoints += 1
 
+    floorPointLeastDifference = 0.001
+
+    for i in range(1, len(floorPointIndex)):
+        if sortedPoints[floorPointIndex[i]][0] - sortedPoints[floorPointIndex[i-1]][0] < floorPointLeastDifference:
+            if sortedPoints[floorPointIndex[i]][2] - sortedPoints[floorPointIndex[i-1]][2] < floorPointLeastDifference:
+                continue
+        x = sortedPoints[floorPointIndex[i]][0]
+        y = floorLevel
+        z = sortedPoints[floorPointIndex[i]][2]
+        p = Point(x, y, z,
+                numOfPoints, sortedPoints[floorPointIndex[i]][3], sortedPoints[floorPointIndex[i]][4], sortedPoints[floorPointIndex[i]][5]) #단위 m
+        points[numOfPoints] = p
+        numOfPoints += 1
     return points, hyperparameter, filename
 
 
