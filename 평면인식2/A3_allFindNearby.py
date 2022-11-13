@@ -11,5 +11,5 @@ def allFindNearby(AllPoints, hyperparameter):
                 AllPoints[i].nearby1.append(AllPoints[j]) #자기자신도 포함
         numOfpts = len(AllPoints[i].nearby1)
         if numOfpts < 10:
-            print('x: ', AllPoints[i].x, ' y: ' AllPoints[i].y, ' z: ' AllPoints[i].z)
+            print('x: ', AllPoints[i].x, ' y: ', AllPoints[i].y, ' z: ', AllPoints[i].z)
             raise Exception('len(pts) < 10')
