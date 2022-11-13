@@ -55,6 +55,9 @@ print('#3 allFindNearby time:', time.time()-t)
 print()
 #여기이후로 AllPoints는 안쓰인다. 만약 AllPoints 쓸려면 vectorDBSCAN 바꾸거라.
 
+import datetime
+now = datetime.datetime.now()
+print(now) 
 
 #4 findNormal
 print('#4 findNormal start')
