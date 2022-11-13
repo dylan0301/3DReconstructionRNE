@@ -9,3 +9,6 @@ def allFindNearby(AllPoints, hyperparameter):
         for j in range(size):
             if distMat[i][j] <= hyperparameter.R1:
                 AllPoints[i].nearby1.append(AllPoints[j]) #자기자신도 포함
+        numOfpts = len(AllPoints[i])
+        if numOfpts < 10:
+            raise Exception('len(pts) < 10')
