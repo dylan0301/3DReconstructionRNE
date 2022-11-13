@@ -185,8 +185,6 @@ def importPly(filepath, filename):
                 continue
             if y>-0.565:
                 continue
-            if y>-0.57:
-                y=-0.57
             if y>-0.85 and x>0.25:
                 continue
             if z>-1.5 and y>-0.585:
