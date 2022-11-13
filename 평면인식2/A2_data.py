@@ -92,7 +92,7 @@ def importPly(filepath, filename):
 
     points = defaultdict(Point)
     numOfPoints = 0
-    pointLeastDifference = 0.0001 #final1에서 바뀜
+    pointLeastDifference = 0.00001 #final1에서 바뀜
 
     floorPointIndex = [] #바닥에 있는 점 일괄적으로 만들거임
     floorLevel = 0
@@ -142,15 +142,17 @@ def importPly(filepath, filename):
                 y = -0.75
 
         if filename == 'realfinal1.ply':
-            hyperparameter = Hyperparameter(0.035, 0.0035, 0.8, 0.1, 300, 0.05, 20, 0.008, 10, 0.003, 0.001)
+            hyperparameter = Hyperparameter(0.04, 0.004, 0.65, 0.1, 300, 0.05, 15, 0.02, 10, 0.003, 0.001)
             floorLevel = -0.9
             if x < -0.63 or x > 0.3 or z > -0.71 or z < -2.5 or y<-1.05 or (x > 0.2 and z > -1.2) or  (x < -0.43 and z > -1.3):
                  continue
-            if x < -0.435 and z<-1.5 and y >-0.66:
-                y = -0.66 
+            if x < -0.435 and z<-1.5 and y >-0.68:
+                y = -0.68
             if x<-0.55 and z < -1.5 and y>-0.9:
                 x = -0.55
             if y<floorLevel:
+                if -0.01 < x and x < 0.04 and -1.4 < z and z < -1: 
+                    continue
                 floorPointIndex.append(i)
                 continue
                 
@@ -160,12 +162,47 @@ def importPly(filepath, filename):
             if x > 0.7 or x < -0.2 or z < -1.55 or z > -0.25 or y<-1.2 :
                 continue
 
+        if filename == 'superrealfinal1.ply':
+            hyperparameter = Hyperparameter(0.04, 0.004, 0.7, 0.1, 300, 0.05, 20, 0.008, 10, 0.003, 0.001)
+            if x < -0.5 or x > 0.2 or z < -2.2 or z > -0.5 or y<-0.92 :
+                continue
+            if -1.45 < z and z < -1.35:
+                continue
+            if -0.7 < z:
+                continue
+            if x > 0.12 and z>-1.3:
+                continue
+
+        if filename == 'superrealfinal2.ply':
+            hyperparameter = Hyperparameter(0.04, 0.004, 0.7, 0.1, 300, 0.05, 15, 0.02, 10, 0.003, 0.001)
+            if x < -0.9 or x > 0.3 or z < -2.5 or z > -0.55:
+                continue
+            if y<-0.95:
+                continue
+            if x>-0.2 and z>-1.35:
+                continue
+            if x<-0.45 and z<-1.65:
+                continue
+            if y>-0.565:
+                continue
+            if y>-0.85 and x>0.25:
+                continue
+            if z>-1.5 and y>-0.585:
+                y=-0.585
+            if z<-1.5 and y>-0.85 and x<-0.31:
+                continue
+            floorLevel = -0.85
+            if y<floorLevel:
+                floorPointIndex.append(i)
+                continue
+        
+
         p = Point(x, y, z,
                 numOfPoints, sortedPoints[i][3], sortedPoints[i][4], sortedPoints[i][5]) #단위 m
         points[numOfPoints] = p
         numOfPoints += 1
 
-    floorPointLeastDifference = 0.001
+    floorPointLeastDifference = 0.009
 
     for i in range(1, len(floorPointIndex)):
         if sortedPoints[floorPointIndex[i]][0] - sortedPoints[floorPointIndex[i-1]][0] < floorPointLeastDifference:
