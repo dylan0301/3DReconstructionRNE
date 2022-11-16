@@ -142,7 +142,7 @@ def importPly(filepath, filename):
                 y = -0.75
 
         if filename == 'realfinal1.ply':
-            hyperparameter = Hyperparameter(0.04, 0.004, 0.65, 0.1, 300, 0.05, 15, 0.02, 10, 0.003, 0.001)
+            
             floorLevel = -0.9
             if x < -0.63 or x > 0.3 or z > -0.71 or z < -2.5 or y<-1.05 or (x > 0.2 and z > -1.2) or  (x < -0.43 and z > -1.3):
                  continue

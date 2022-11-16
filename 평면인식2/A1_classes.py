@@ -26,13 +26,14 @@ class Point:
 
 
 class Hyperparameter:
+    #hyperparameter = Hyperparameter(0.05, 0.005, 0.8, 0.1, 100, 0.05, 15, 0.1, 10, 0.003, 0.01) 성공케이스
     #여기있는건 realdata 기준 값들, 거리단위 m
     def __init__(self, 
-                R1 = 0.015, H1 = 0.001, ratioThreshold1 = 0.75,
-                eps_normal = 0.07, min_samples_normal = 200,
-                eps_centerPoint = 0.05, min_samples_centerPoint = 20,
-                eps_finalBoundaryPoint = 0.008, min_samples_finalBoundaryPoint = 10,
-                edgeRansacH = 0.003, lineardensity = 0.001):
+                R1 = 0.05, H1 = 0.005, ratioThreshold1 = 0.8,
+                eps_normal = 0.1, min_samples_normal = 100,
+                eps_centerPoint = 0.05, min_samples_centerPoint = 15,
+                eps_finalBoundaryPoint = 0.01, min_samples_finalBoundaryPoint = 10,
+                edgeRansacH = 0.003, lineardensity = 0.01):
 
         #3 allFindNearby
         self.R1 = R1 #AllPoints nearby
