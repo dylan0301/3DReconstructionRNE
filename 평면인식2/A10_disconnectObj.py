@@ -36,7 +36,7 @@ def holeFill_1(plane, edgeSet, hyperparameter):
         return Newline
 
     def isPositive(line, point):
-        return np.dot(line.directionVec, point-line.midpoint) > 0
+        return np.cross(line.directionVec, point-line.midpoint) > 0
 
     lineList = []
     for edge in edgeSet:
@@ -75,10 +75,10 @@ def holeFill_1(plane, edgeSet, hyperparameter):
                 coor = np.array([x, y, z])
                 for line in lineList:
                     if line.condition:
-                        if np.dot(line.directionVec, coor-line.midpoint) < 0:
+                        if np.cross(line.directionVec, coor-line.midpoint) < 0:
                             break
                     else:
-                        if np.dot(line.directionVec, coor-line.midpoint) > 0:
+                        if np.cross(line.directionVec, coor-line.midpoint) > 0:
                             break
                 coor = Point(coor[0], coor[1], coor[2], None)
                 l.append(coor)
@@ -106,10 +106,10 @@ def holeFill_1(plane, edgeSet, hyperparameter):
                 coor = np.array([x, y, z])
                 for line in lineList:
                     if line.condition:
-                        if np.dot(line.directionVec, coor-line.midpoint) < 0:
+                        if np.cross(line.directionVec, coor-line.midpoint) < 0:
                             break
                     else:
-                        if np.dot(line.directionVec, coor-line.midpoint) > 0:
+                        if np.cross(line.directionVec, coor-line.midpoint) > 0:
                             break
                 coor = Point(coor[0], coor[1], coor[2], None)
                 l.append(coor)
@@ -137,10 +137,10 @@ def holeFill_1(plane, edgeSet, hyperparameter):
                 coor = np.array([x, y, z])
                 for line in lineList:
                     if line.condition:
-                        if np.dot(line.directionVec, coor-line.midpoint) > 0:
+                        if np.cross(line.directionVec, coor-line.midpoint) > 0:
                             break
                     else:
-                        if np.dot(line.directionVec, coor-line.midpoint) < 0:
+                        if np.cross(line.directionVec, coor-line.midpoint) < 0:
                             break
                 coor = Point(coor[0], coor[1], coor[2], None)
                 l.append(coor)
