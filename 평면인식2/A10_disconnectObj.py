@@ -26,6 +26,7 @@ def disconnectObj(planeSet, hyperparameter):
 
 def holeFill_1(plane, edgeSet, hyperparameter):
     
+
     def projection(plane, edge):
         normal = np.array([plane.equation[0], plane.equation[1], plane.equation[2]])
         norm_projected_linevec = normal*(np.dot(edge.directionVec, normal)/(np.linalg.norm(normal)**2)) 
@@ -35,8 +36,9 @@ def holeFill_1(plane, edgeSet, hyperparameter):
         Newline = Line(line_projected, norm_projected_pointvec)
         return Newline
 
+    normal = np.array([plane.equation[0], plane.equation[1], plane.equation[2]])
     def isPositive(line, point):
-        return np.cross(line.directionVec, point-line.midpoint) > 0
+        return np.dot(np.cross(line.directionVec, point-line.midpoint), normal) > 0
 
     lineList = []
     for edge in edgeSet:
@@ -75,10 +77,10 @@ def holeFill_1(plane, edgeSet, hyperparameter):
                 coor = np.array([x, y, z])
                 for line in lineList:
                     if line.condition:
-                        if np.cross(line.directionVec, coor-line.midpoint) < 0:
+                        if not isPositive(line, coor):
                             break
                     else:
-                        if np.cross(line.directionVec, coor-line.midpoint) > 0:
+                        if isPositive(line, coor):
                             break
                 coor = Point(coor[0], coor[1], coor[2], None)
                 l.append(coor)
@@ -106,10 +108,10 @@ def holeFill_1(plane, edgeSet, hyperparameter):
                 coor = np.array([x, y, z])
                 for line in lineList:
                     if line.condition:
-                        if np.cross(line.directionVec, coor-line.midpoint) < 0:
+                        if not isPositive(line, coor):
                             break
                     else:
-                        if np.cross(line.directionVec, coor-line.midpoint) > 0:
+                        if isPositive(line, coor):
                             break
                 coor = Point(coor[0], coor[1], coor[2], None)
                 l.append(coor)
@@ -137,10 +139,10 @@ def holeFill_1(plane, edgeSet, hyperparameter):
                 coor = np.array([x, y, z])
                 for line in lineList:
                     if line.condition:
-                        if np.cross(line.directionVec, coor-line.midpoint) > 0:
+                        if not isPositive(line, coor):
                             break
                     else:
-                        if np.cross(line.directionVec, coor-line.midpoint) < 0:
+                        if isPositive(line, coor):
                             break
                 coor = Point(coor[0], coor[1], coor[2], None)
                 l.append(coor)
