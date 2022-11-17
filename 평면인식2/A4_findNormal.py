@@ -71,7 +71,7 @@ def PCAplane(pts, mainpoint = None):
         mainpointArr = np.array([mainpoint.x, mainpoint.y, mainpoint.z])
     
     d = -np.dot(z_pca_axis, mainpointArr)
-    return z_pca_axis[0], z_pca_axis[1], z_pca_axis[2], d
+    return (z_pca_axis[0], z_pca_axis[1], z_pca_axis[2], d)
     
 
 def normalVectorizeRatioNew(point, BoundaryPoints, CenterPoints, hyperparameter, BoundaryRatio, CenterRatio):
@@ -93,6 +93,7 @@ def normalVectorizeRatioNew(point, BoundaryPoints, CenterPoints, hyperparameter,
                 score += 1
     planeRatio = score / len(point.nearby1)
 
+    #planeRatio = PCAscore #이거 잘 안된다. log라서 음수나오고 그럼.
     
     if planeRatio > hyperparameter.ratioThreshold1: #경계인 경우는 그대로 None
         point.normal = plane_normal

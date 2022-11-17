@@ -51,6 +51,7 @@ def plot_figs(fig_num, elev, azim):
     pca = PCA(n_components=3)
     pca.fit(Y)
     V = pca.components_.T
+    print(pca.score(Y))
 
     x_pca_axis, y_pca_axis, z_pca_axis = 3 * V
     x_pca_plane = np.r_[x_pca_axis[:2], -x_pca_axis[1::-1]]
