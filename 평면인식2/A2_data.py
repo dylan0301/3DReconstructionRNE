@@ -4,6 +4,7 @@ from collections import defaultdict
 import random
 import numpy as np
 
+
 #현재 hyperparameter 설정이 덜됐음
 
 #density = 점사이 간격
@@ -174,7 +175,8 @@ def importPly(filepath, filename):
                 continue
 
         if filename == 'superrealfinal2.ply':
-            hyperparameter = Hyperparameter(0.05, 0.005, 0.8, 0.1, 100, 0.05, 15, 0.1, 10, 0.003, 0.01)
+            #hyperparameter = Hyperparameter(0.05, 0.005, 0.8, 0.1, 100, 0.05, 15, 0.1, 10, 0.003, 0.01) #RANSAC ver
+            hyperparameter = Hyperparameter(0.05, 0.01, 0.3, 0.1, 100, 0.05, 15, 0.1, 10, 0.003, 0.01) #PCA ver
             if x < -0.9 or x > 0.3 or z < -2.5 or z > -0.55:
                 continue
             if y<-0.95:

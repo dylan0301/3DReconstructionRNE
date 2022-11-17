@@ -10,9 +10,9 @@ def pdf(x):
     return 0.5 * (stats.norm(scale=0.25 / e).pdf(x) + stats.norm(scale=4 / e).pdf(x))
 
 
-y = np.random.normal(scale=0.5, size=(30000))
-x = np.random.normal(scale=0.5, size=(30000))
-z = np.random.normal(scale=0.1, size=len(x))
+y = 5+np.random.normal(scale=0.5, size=(30000))
+x = 5+np.random.normal(scale=0.5, size=(30000))
+z = 5+np.random.normal(scale=0.1, size=len(x))
 
 density = pdf(x) * pdf(y)
 pdf_z = pdf(5 * z)
@@ -38,7 +38,7 @@ import mpl_toolkits.mplot3d  # noqa: F401
 
 def plot_figs(fig_num, elev, azim):
     fig = plt.figure(fig_num, figsize=(4, 3))
-    plt.clf()
+    #plt.clf()
     ax = fig.add_subplot(111, projection="3d", elev=elev, azim=azim)
     ax.set_position([0, 0, 0.95, 1])
 
@@ -63,6 +63,18 @@ def plot_figs(fig_num, elev, azim):
     ax.w_xaxis.set_ticklabels([])
     ax.w_yaxis.set_ticklabels([])
     ax.w_zaxis.set_ticklabels([])
+
+    howmany = 100
+    normal = np.cross(x_pca_axis,y_pca_axis)/2
+    ap = np.array([i/howmany*normal for i in range(howmany)])
+    ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c = ['gold']*len(ap))
+    ap = np.array([i/howmany*x_pca_axis for i in range(howmany)])
+    ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c = ['red']*len(ap))
+    ap = np.array([i/howmany*y_pca_axis for i in range(howmany)])
+    ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c = ['green']*len(ap))
+    ap = np.array([i/howmany*z_pca_axis for i in range(howmany)])
+    ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c = ['blue']*len(ap))
+    print(normal)
 
 
 elev = -40
