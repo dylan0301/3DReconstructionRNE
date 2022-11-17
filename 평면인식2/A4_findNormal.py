@@ -55,21 +55,21 @@ def nearbyRansacPlane(pts, hyperparameter):
 
 #Input: pts, mainpoint = 이 점을 평면이 지남. Output: pts를 포함하는 평면, Method: PCA,
 def PCAplane(pts, mainpoint = None):
-    if not mainpoint:
-        mainpoint = pts[0]
-    mainpointArr = np.array([mainpoint.x, mainpoint.y, mainpoint.z])
-
+    
     Y = np.array([[p.x, p.y, p.z] for p in pts])
     pca = PCA(n_components=3)
     pca.fit(Y)
     V = pca.components_.T
     x_pca_axis, y_pca_axis, z_pca_axis = V
     
-    mainpointArr = np.array([float(0),float(0),float(0)])
-    for p in Y:
-        mainpointArr += np.array([p[0], p[1], p[2]])
-    mainpointArr /= len(Y)
-
+    if not mainpoint:
+        mainpointArr = np.array([float(0),float(0),float(0)])
+        for p in Y:
+            mainpointArr += np.array([p[0], p[1], p[2]])
+        mainpointArr /= len(Y)
+    else:
+        mainpointArr = np.array([mainpoint.x, mainpoint.y, mainpoint.z])
+    
     d = -np.dot(z_pca_axis, mainpointArr)
     return z_pca_axis[0], z_pca_axis[1], z_pca_axis[2], d
     
