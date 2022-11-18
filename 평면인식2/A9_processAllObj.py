@@ -35,7 +35,7 @@ def proccessOneObj(obj, availableEdgeLabel, EdgePoints, hyperparameter):
         midpoint /= len(newEdge.linePoints)
         newEdge.midpoint = midpoint
         #newEdge.directionVec, newEdge.pointOnLine = nearbyRansacLine(newEdge.linePoints, hyperparameter)
-        newEdge.directionVec, newEdge.pointOnLine = PCAline(newEdge.linePoints)
+        newEdge.directionVec, newEdge.pointOnLine = PCAline(newEdge.linePoints) #pointonline = mean
         plane1.planeEdgeDict[plane2] = newEdge
         plane2.planeEdgeDict[plane1] = newEdge
         plane1.containedObj.add(obj)
