@@ -1,6 +1,7 @@
 import numpy as np
 import random
 from sklearn.decomposition import PCA
+import scipy.odr
 
 
 #Input: pts, Output: pts를 포함하는 평면, Method: RANSAC,
@@ -72,10 +73,27 @@ def PCAplane(pts, mainpoint = None):
     
     d = -np.dot(z_pca_axis, mainpointArr)
     return (z_pca_axis[0], z_pca_axis[1], z_pca_axis[2], d)
+
+#Input: pts, Output: pts를 포함하는 평면, Method: Orthogonal distance regression,
+def ODRplane(pts, dummy = None):
+    X = np.array([p.x for p in pts])
+    Y = np.array([p.y for p in pts])
+    Z = np.array([p.z for p in pts])
+
+    def linfit(beta, x): #x = (X,Y)
+        return beta[0]*x[0] + beta[1]*x[1] + beta[2]
+    x = np.row_stack( (X, Y) )
+
+    linmod = scipy.odr.Model(linfit)
+    data = scipy.odr.Data(x, Z)
+    odrfit = scipy.odr.ODR(data, linmod, beta0=[1., 1., 1.])
+    odrres = odrfit.run()
+    beta = odrres.beta
+    return (beta[0], beta[1], -1, beta[2])
     
 
 def normalVectorizeRatioNew(point, BoundaryPoints, CenterPoints, hyperparameter, BoundaryRatio, CenterRatio):
-    plane = PCAplane(point.nearby1, point)
+    plane = ODRplane(point.nearby1, point)
     plane_normal = np.array([plane[0], plane[1], plane[2]])
     plane_normal /= np.linalg.norm(plane_normal)
 

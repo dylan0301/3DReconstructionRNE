@@ -1,6 +1,6 @@
 import numpy as np
 from A1_classes import *
-from A4_findNormal import nearbyRansacPlane 
+from A4_findNormal import ODRplane
 
 
 def makePlaneClass(NewClusterPointMap, hyperparameter):
@@ -10,5 +10,5 @@ def makePlaneClass(NewClusterPointMap, hyperparameter):
         planeSet.add(plane)
         for p in points:
             p.planeClass = plane
-        plane.equation, maxScore = nearbyRansacPlane(plane.interiorPoints, hyperparameter)
+        plane.equation = ODRplane(plane.interiorPoints)
     return planeSet
