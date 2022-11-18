@@ -51,7 +51,7 @@ def holeFill_1(plane, edgeSet, hyperparameter):
                 pt = otherLine.midpoint
                 c += 1 if isPositive(line, pt) else -1
         line.condition = (c > 0)
-    
+        print(c)
     l = []
     
     if plane.equation[2] != 0:           
