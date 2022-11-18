@@ -1,6 +1,7 @@
 from collections import defaultdict
 from A1_classes import *
 import random
+from sklearn.decomposition import PCA
 
 #one obj에서 planes edges
 def proccessOneObj(obj, availableEdgeLabel, EdgePoints, hyperparameter):
@@ -33,7 +34,8 @@ def proccessOneObj(obj, availableEdgeLabel, EdgePoints, hyperparameter):
             midpoint += np.array([p.x, p.y, p.z])
         midpoint /= len(newEdge.linePoints)
         newEdge.midpoint = midpoint
-        newEdge.directionVec, newEdge.pointOnLine = nearbyRansacLine(newEdge.linePoints, hyperparameter)
+        #newEdge.directionVec, newEdge.pointOnLine = nearbyRansacLine(newEdge.linePoints, hyperparameter)
+        newEdge.directionVec, newEdge.pointOnLine = PCAline(newEdge.linePoints)
         plane1.planeEdgeDict[plane2] = newEdge
         plane2.planeEdgeDict[plane1] = newEdge
         plane1.containedObj.add(obj)
@@ -43,6 +45,13 @@ def proccessOneObj(obj, availableEdgeLabel, EdgePoints, hyperparameter):
         obj.edges.add(newEdge)
         
     return availableEdgeLabel, EdgePoints
+
+#Input: pts, Output: pts를 포함하는 line, Method: PCA
+def PCAline(pts):
+    X = np.array([[p.x,p.y,p.z] for p in pts])
+    pca = PCA(n_components=1)
+    pca.fit(X)
+    return pca.components_[0], pca.mean_
 
 #Input: pts, Output: pts를 포함하는 line, Method: RANSAC
 def nearbyRansacLine(pts, hyperparameter):
