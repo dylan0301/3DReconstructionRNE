@@ -174,7 +174,7 @@ def importPly(filepath, filename):
             if x > 0.12 and z>-1.3:
                 continue
 
-        if filename == 'superrealfinal2.ply':
+        if filename == 'Real2Boxes.ply':
             #hyperparameter = Hyperparameter(0.05, 0.005, 0.8, 0.1, 100, 0.05, 15, 0.1, 10, 0.003, 0.01) #RANSAC ver
             #hyperparameter = Hyperparameter(0.05, 0.013, 0.35, 0.08, 100, 0.05, 15, 0.1, 10, 0.003, 0.01) #PCA ver
             hyperparameter = Hyperparameter(0.04, 0.006, 0.8, 0.08, 150, 0.05, 15, 0.1, 10, 0.003, 0.01) #ODR ver
