@@ -1,6 +1,7 @@
 from collections import defaultdict
 from A1_classes import *
 import numpy as np
+import matplotlib.pyplot as plt
 
 #planeSet는 업데이트 안됨
 def disconnectObj(planeSet, hyperparameter):
@@ -25,18 +26,20 @@ def disconnectObj(planeSet, hyperparameter):
 #plane.interiorPoints들을 채워줌
 
 def holeFill_1(plane, edgeSet, hyperparameter):
-    
 
+    #proj_of_u_on_n = (np.dot(u, n)/n_norm**2)*n
     def projection(plane, edge):
         normal = np.array([plane.equation[0], plane.equation[1], plane.equation[2]])
-        norm_projected_linevec = normal*(np.dot(edge.directionVec, normal)/(np.linalg.norm(normal)**2)) 
+        proj_plane_line = edge.directionVec - normal*(np.dot(edge.directionVec, normal)/(np.linalg.norm(normal)**2))
+        
         midpoint_vec = edge.midpoint
-        norm_projected_pointvec = normal*(np.dot(midpoint_vec, normal)/(np.linalg.norm(normal)**2)) 
-        line_projected = edge.directionVec - norm_projected_linevec
-        Newline = Line(line_projected, norm_projected_pointvec)
+        midpoint_distance = (np.dot(midpoint_vec, normal)+plane.equation[3])/np.linalg.norm(normal)
+        proj_plane_midpoint = midpoint_vec - normal/np.linalg.norm(normal)*midpoint_distance
+        Newline = Line(proj_plane_line, proj_plane_midpoint)
         return Newline
 
     normal = np.array([plane.equation[0], plane.equation[1], plane.equation[2]])
+    
     def isPositive(line, point):
         return np.dot(np.cross(line.directionVec, point-line.midpoint), normal) > 0
 
@@ -44,6 +47,74 @@ def holeFill_1(plane, edgeSet, hyperparameter):
     for edge in edgeSet:
         lineList.append(projection(plane, edge))
     
+    #####################visual용 임시코드
+    label = []
+    labelNum = 0
+    X = np.linspace(-1.3, 0.7, 100)
+    Z = np.linspace(-2.5, -0.5, 100)
+    X, Z = np.meshgrid(X, Z)
+    Y = -(plane.equation[0]*X + plane.equation[2]*Z + plane.equation[3])/plane.equation[1]
+
+    label += [0]*len(Y)
+    labelNum+=1
+    fig = plt.figure(figsize=(6, 6))
+    ax = fig.add_subplot(111, projection='3d')
+    ax.plot_surface(X, Y, Z)
+    plt.show()
+
+    X = []
+    Y =[]
+    Z = []
+    label = []
+    added = [0.03*i for i in range(1, 50)]+[-0.03*i for i in range(1, 50)]
+    for testEdge in edgeSet:
+        X.append(testEdge.midpoint[0])
+        Y.append(testEdge.midpoint[1])
+        Z.append(testEdge.midpoint[2])
+        label.append(labelNum)
+        labelNum += 1
+        for step in added:
+            X.append(testEdge.midpoint[0] + step*testEdge.directionVec[0])
+            Y.append(testEdge.midpoint[1] + step*testEdge.directionVec[1])
+            Z.append(testEdge.midpoint[2] + step*testEdge.directionVec[2])
+            label.append(labelNum)
+        labelNum += 1
+    X = np.array(X)
+    Y = np.array(Y)
+    Z = np.array(Z)
+    fig = plt.figure(figsize=(6, 6))
+    ax = fig.add_subplot(111, projection='3d')
+    ax.scatter(X, Y, Z, c=label)
+    plt.show()
+
+    X = []
+    Y =[]
+    Z = []
+    label = []
+    added = [0.03*i for i in range(1, 50)]+[-0.03*i for i in range(1, 50)]
+    for testEdge in lineList:
+        X.append(testEdge.midpoint[0])
+        Y.append(testEdge.midpoint[1])
+        Z.append(testEdge.midpoint[2])
+        label.append(labelNum)
+        labelNum += 1
+        for step in added:
+            X.append(testEdge.midpoint[0] + step*testEdge.directionVec[0])
+            Y.append(testEdge.midpoint[1] + step*testEdge.directionVec[1])
+            Z.append(testEdge.midpoint[2] + step*testEdge.directionVec[2])
+            label.append(labelNum)
+        labelNum += 1
+    X = np.array(X)
+    Y = np.array(Y)
+    Z = np.array(Z)
+    fig = plt.figure(figsize=(6, 6))
+    ax = fig.add_subplot(111, projection='3d')
+    ax.scatter(X, Y, Z, c=label)
+    plt.show()
+    #############3
+
+
+
     for line in lineList:
         c = 0
         for otherLine in lineList:
