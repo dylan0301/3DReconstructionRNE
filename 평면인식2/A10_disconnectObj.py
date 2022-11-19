@@ -47,7 +47,7 @@ def holeFill_1(plane, edgeSet, hyperparameter):
     for edge in edgeSet:
         lineList.append(projection(plane, edge))
     
-    #####################visual용 임시코드
+    ############################visual test용 임시코드#######################################
     label = []
     labelNum = 0
     X = np.linspace(-1.3, 0.7, 100)
@@ -111,7 +111,7 @@ def holeFill_1(plane, edgeSet, hyperparameter):
     ax = fig.add_subplot(111, projection='3d')
     ax.scatter(X, Y, Z, c=label)
     plt.show()
-    #############3
+    #############################################################################
 
 
 
@@ -121,7 +121,7 @@ def holeFill_1(plane, edgeSet, hyperparameter):
             if line != otherLine:
                 pt = otherLine.midpoint
                 c += 1 if isPositive(line, pt) else -1
-        line.condition = (c > 0)
+        line.condition = bool(c > 0)
         print(c)
     l = []
     
@@ -146,15 +146,15 @@ def holeFill_1(plane, edgeSet, hyperparameter):
             for y in Iteration[1]:
                 z = (-1)*(plane.equation[0]*x+plane.equation[1]*y+plane.equation[3])/plane.equation[2]
                 coor = np.array([x, y, z])
+                flag = True
                 for line in lineList:
                     if line.condition:
-                        if not isPositive(line, coor):
-                            break
+                        flag = flag and isPositive(line, coor)
                     else:
-                        if isPositive(line, coor):
-                            break
-                coor = Point(coor[0], coor[1], coor[2], None)
-                l.append(coor)
+                        flag = flag and not isPositive(line, coor)
+                if flag:
+                    coor = Point(coor[0], coor[1], coor[2], None)
+                    l.append(coor)
                             
     elif plane.equation[1] != 0:           
         maxcoor = [(-1)*float('inf'), (-1)*float('inf')]
@@ -177,15 +177,15 @@ def holeFill_1(plane, edgeSet, hyperparameter):
             for z in Iteration[1]:
                 y = (-1)*(plane.equation[0]*x+plane.equation[2]*z+plane.equation[3])/plane.equation[1]
                 coor = np.array([x, y, z])
+                flag = True
                 for line in lineList:
                     if line.condition:
-                        if not isPositive(line, coor):
-                            break
+                        flag = flag and isPositive(line, coor)
                     else:
-                        if isPositive(line, coor):
-                            break
-                coor = Point(coor[0], coor[1], coor[2], None)
-                l.append(coor)
+                        flag = flag and not isPositive(line, coor)
+                if flag:
+                    coor = Point(coor[0], coor[1], coor[2], None)
+                    l.append(coor)
    
     elif plane.equation[0] != 0:           
         maxcoor = [(-1)*float('inf'), (-1)*float('inf')]
@@ -208,15 +208,15 @@ def holeFill_1(plane, edgeSet, hyperparameter):
             for z in Iteration[1]:
                 x = (-1)*(plane.equation[1]*y+plane.equation[2]*z+plane.equation[3])/plane.equation[0]
                 coor = np.array([x, y, z])
+                flag = True
                 for line in lineList:
                     if line.condition:
-                        if not isPositive(line, coor):
-                            break
+                        flag = flag and isPositive(line, coor)
                     else:
-                        if isPositive(line, coor):
-                            break
-                coor = Point(coor[0], coor[1], coor[2], None)
-                l.append(coor)
+                        flag = flag and not isPositive(line, coor)
+                if flag:
+                    coor = Point(coor[0], coor[1], coor[2], None)
+                    l.append(coor)
    
     else: 
         raise(InterruptedError)
