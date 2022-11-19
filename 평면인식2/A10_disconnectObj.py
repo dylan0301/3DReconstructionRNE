@@ -124,39 +124,8 @@ def holeFill_1(plane, edgeSet, hyperparameter):
         line.condition = bool(c > 0)
         print(c)
     l = []
-    
-    if plane.equation[2] != 0:           
-        maxcoor = [(-1)*float('inf'), (-1)*float('inf')]
-        mincoor = [float('inf'), float('inf')]
-        
-        for edge in edgeSet:
-            for p in edge.linePoints:
-                if maxcoor[0] < p.x:
-                    maxcoor[0] = p.x
-                if maxcoor[1] < p.y:
-                    maxcoor[1] = p.y
-                if mincoor[0] > p.x:
-                    mincoor[0] = p.x
-                if mincoor[1] > p.y:
-                    mincoor[1] = p.y
-                    
-        Iteration = [np.arange(mincoor[0], maxcoor[0], hyperparameter.lineardensity), np.arange(mincoor[1], maxcoor[1], hyperparameter.lineardensity)]
-        
-        for x in Iteration[0]:
-            for y in Iteration[1]:
-                z = (-1)*(plane.equation[0]*x+plane.equation[1]*y+plane.equation[3])/plane.equation[2]
-                coor = np.array([x, y, z])
-                flag = True
-                for line in lineList:
-                    if line.condition:
-                        flag = flag and isPositive(line, coor)
-                    else:
-                        flag = flag and not isPositive(line, coor)
-                if flag:
-                    coor = Point(coor[0], coor[1], coor[2], None)
-                    l.append(coor)
-                            
-    elif plane.equation[1] != 0:           
+
+    if plane.equation[1] != 0:           
         maxcoor = [(-1)*float('inf'), (-1)*float('inf')]
         mincoor = [float('inf'), float('inf')]
         
@@ -186,7 +155,38 @@ def holeFill_1(plane, edgeSet, hyperparameter):
                 if flag:
                     coor = Point(coor[0], coor[1], coor[2], None)
                     l.append(coor)
-   
+
+    elif plane.equation[2] != 0:           
+        maxcoor = [(-1)*float('inf'), (-1)*float('inf')]
+        mincoor = [float('inf'), float('inf')]
+        
+        for edge in edgeSet:
+            for p in edge.linePoints:
+                if maxcoor[0] < p.x:
+                    maxcoor[0] = p.x
+                if maxcoor[1] < p.y:
+                    maxcoor[1] = p.y
+                if mincoor[0] > p.x:
+                    mincoor[0] = p.x
+                if mincoor[1] > p.y:
+                    mincoor[1] = p.y
+                    
+        Iteration = [np.arange(mincoor[0], maxcoor[0], hyperparameter.lineardensity), np.arange(mincoor[1], maxcoor[1], hyperparameter.lineardensity)]
+        
+        for x in Iteration[0]:
+            for y in Iteration[1]:
+                z = (-1)*(plane.equation[0]*x+plane.equation[1]*y+plane.equation[3])/plane.equation[2]
+                coor = np.array([x, y, z])
+                flag = True
+                for line in lineList:
+                    if line.condition:
+                        flag = flag and isPositive(line, coor)
+                    else:
+                        flag = flag and not isPositive(line, coor)
+                if flag:
+                    coor = Point(coor[0], coor[1], coor[2], None)
+                    l.append(coor)
+    
     elif plane.equation[0] != 0:           
         maxcoor = [(-1)*float('inf'), (-1)*float('inf')]
         mincoor = [float('inf'), float('inf')]

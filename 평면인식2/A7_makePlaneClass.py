@@ -10,5 +10,5 @@ def makePlaneClass(NewClusterPointMap, hyperparameter):
         planeSet.add(plane)
         for p in points:
             p.planeClass = plane
-        plane.equation, maxScore_ = nearbyRansacPlane(plane.interiorPoints,hyperparameter)
+        plane.equation = ODRplane(plane.interiorPoints,hyperparameter)
     return planeSet
