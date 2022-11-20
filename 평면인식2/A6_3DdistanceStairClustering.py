@@ -1,3 +1,5 @@
+#A6_3DdistanceStairClustering.py
+
 import numpy as np
 from collections import defaultdict
 from sklearn.cluster import DBSCAN

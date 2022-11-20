@@ -1,3 +1,5 @@
+#A8_boundaryClustering.py
+
 #boundarypoint들을 위치를 기준으로 DBSCAN함.
 #같은 클러스터로 분류된 boundarypoint들을 같은 물체로 분류
 import numpy as np

@@ -1,3 +1,5 @@
+#A4_findNormal.py
+
 import numpy as np
 import random
 from sklearn.decomposition import PCA

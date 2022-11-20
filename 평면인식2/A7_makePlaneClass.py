@@ -1,3 +1,5 @@
+#A7_makePlaneClass.py
+
 import numpy as np
 from A1_classes import *
 from A4_findNormal import *
