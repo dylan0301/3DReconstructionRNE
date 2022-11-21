@@ -22,6 +22,7 @@ def allFindNearby(AllPoints, hyperparameter):
     for p in AllPoints.values():
         coorDict[(p.x, p.y, p.z)] = p
 
+    avgnearby = 0
 
     points = np.array([[p.x, p.y, p.z] for p in AllPoints.values()])
     point_tree = spatial.cKDTree(points)
@@ -30,5 +31,9 @@ def allFindNearby(AllPoints, hyperparameter):
         if len(nearby) < 4:
             print('x: ', AllPoints[i].x, ' y: ', AllPoints[i].y, ' z: ', AllPoints[i].z)
             raise Exception('len(pts) < 4')
+        avgnearby += len(nearby)
         for q in nearby:
             AllPoints[i].nearby1.append(coorDict[(q[0], q[1], q[2])])
+    
+    avgnearby /= size
+    print(avgnearby)
