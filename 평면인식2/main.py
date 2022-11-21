@@ -18,6 +18,10 @@ import time
 from collections import defaultdict
 
 
+import datetime
+now = datetime.datetime.now()
+print(now) 
+
 #2 data
 print()
 print('#2 bring data start')
@@ -30,8 +34,8 @@ filename = 'Real2Boxes.ply'
 #filename = 'Curtin314.txt'
 #filename = 'House.txt'
 
-AllPoints, hyperparameter, name = importPly(filepath, filename)
-#AllPoints, hyperparameter, name = FourCleanBoxes()
+#AllPoints, hyperparameter, name = importPly(filepath, filename)
+AllPoints, hyperparameter, name = FourCleanBoxes()
 #AllPoints, hyperparameter, name = importTxt(filepath, filename)
 print('#2 bring data time: ', time.time()-t)
 print(len(AllPoints), 'points')
@@ -47,9 +51,7 @@ ax.scatter(ap[:, 0], ap[:, 1], ap[:, 2], c=[i for i in range(len(AllPoints))], m
 plt.show()
 
 
-import datetime
-now = datetime.datetime.now()
-print(now) 
+
 
 #3 allFindNearby
 print('#3 allFindNearby start')

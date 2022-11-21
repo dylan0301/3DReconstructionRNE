@@ -660,13 +660,20 @@ def FourCleanBoxes():
     points = defaultdict(Point)
     name = 'FourCleanBoxes'
 
-    hyperparameter = Hyperparameter(
-    R1 = 0.8, H1 = 0.05, ratioThreshold1 = 0.93,
-    eps_normal = 0.15, min_samples_normal = 20,
-    eps_centerPoint = 1, min_samples_centerPoint = 20,
-    eps_finalBoundaryPoint = 1, min_samples_finalBoundaryPoint = 10,
-    edgeRansacH = 0.05, lineardensity = 0.25)
+    # hyperparameter = Hyperparameter(
+    # R1 = 0.8, H1 = 0.05, ratioThreshold1 = 0.93,
+    # eps_normal = 0.15, min_samples_normal = 20,
+    # eps_centerPoint = 1, min_samples_centerPoint = 20,
+    # eps_finalBoundaryPoint = 1, min_samples_finalBoundaryPoint = 10,
+    # edgeRansacH = 0.05, lineardensity = 0.25) # 옛날거
     
+    hyperparameter = Hyperparameter(
+    R1 = 0.5, H1 = 0.07, ratioThreshold1 = 0.8,
+    eps_normal = 0.15, min_samples_normal = 10,
+    eps_centerPoint = 1, min_samples_centerPoint = 20,
+    eps_finalBoundaryPoint = 1.5, min_samples_finalBoundaryPoint = 20,
+    edgeRansacH = 0.05, lineardensity = 0.25)
+
     cnt = 0    
     density = 0.25
     #planes
