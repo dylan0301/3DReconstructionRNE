@@ -17,7 +17,7 @@ from mpl_toolkits.mplot3d import Axes3D
 import time
 from collections import defaultdict
 
-
+print()
 import datetime
 now = datetime.datetime.now()
 print(now) 
@@ -34,8 +34,8 @@ filename = 'Real2Boxes.ply'
 #filename = 'Curtin314.txt'
 #filename = 'House.txt'
 
-#AllPoints, hyperparameter, name = importPly(filepath, filename)
-AllPoints, hyperparameter, name = FourCleanBoxes()
+AllPoints, hyperparameter, name = importPly(filepath, filename)
+#AllPoints, hyperparameter, name = FourCleanBoxes()
 #AllPoints, hyperparameter, name = importTxt(filepath, filename)
 print('#2 bring data time: ', time.time()-t)
 print(len(AllPoints), 'points')
