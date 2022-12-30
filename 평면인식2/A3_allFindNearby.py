@@ -6,7 +6,7 @@ import numpy as np
 import scipy.spatial as spatial
 from numba import jit
 
-@jit(nopython=True)
+
 def allFindNearby(AllPoints, hyperparameter):
     size = len(AllPoints)
     # pointxyz = [[p.x, p.y, p.z] for p in AllPoints.values()]
